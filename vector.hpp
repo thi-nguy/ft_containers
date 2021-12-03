@@ -1,22 +1,38 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include <iostream>
+#include <memory>
+
 
 namespace ft
 {
-    template <typename T>
+    template <class T, class Alloc = std::allocator<T> >
     class vector
     {
 
         public:
-            vector(void);
-            ~vector(void);
-            // vector(vector const& other);
-            // vector&     operator=(vector const& rhs);
+        // ! Member types
+            typedef T                                           value_type;
+            typedef Alloc                                       allocator_type;
+            typedef typename allocator_type::reference          reference;
+            typedef typename allocator_type::const_reference    const_reference;
+            typedef typename allocator_type::pointer            pointer;
+            typedef typename allocator_type::const_pointer      const_pointer;
+            typedef
+
+
+        // ! Canonical form
+            vector(void) {
+                std::cout << "constructor called\n";
+            }
+            ~vector(void) {
+                std::cout << "Deconstructor called\n";
+            }
+            vector(vector const& other);
+            vector&     operator=(vector const& rhs);
         /* public */
+
         private:
-            unsigned int _size;
         /* private */
 
     }; /* class vector */
