@@ -34,7 +34,7 @@ namespace ft
                 _end(std::nullptr_t()),
                 _end_capacity(std::nullptr_t()) 
             {
-                std::cout << "Empty constructor called\n";
+                std::cout << "Empty Constructor called\n";
             }
 
             explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
@@ -52,7 +52,7 @@ namespace ft
                     _end++;
                     n--;
                 }
-                std::cout << "Constructor with Capacity called\n";
+                std::cout << "Fill Constructor called\n";
             }
 
             template < class InputIterator >
@@ -80,8 +80,27 @@ namespace ft
                     _end++;
                     size--;
                 }
-                std::cout << "Constructor with Range called \n";
-            } 
+                std::cout << "Range Constructor called \n";
+            }
+
+            explicit vector(const vector& other)
+            {
+                *this = other;
+                std::cout << "Copy Constructor called \n";
+            }
+
+            vector&     operator=(const vector& rhs)
+            {
+                if (this != &rhs)
+                {
+                    std::cout << "Assignation Operator called \n";
+                    _start = rhs._start;
+                    _end = rhs._end;
+                    _end_capacity = rhs._end_capacity;
+                    _alloc = rhs._alloc;
+                }
+                return (*this);
+            }
 
         // * DESTRUCTOR 
             ~vector(void) 
@@ -102,6 +121,8 @@ namespace ft
             return (_end);
         }
 
+        // OVERLOAD
+
 
 
         /* public */
@@ -116,6 +137,27 @@ namespace ft
         /* private */
 
     }; /* class vector */
+
+    template <class T, class Alloc>
+    bool    operator ==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+    {
+        typename ft::vector<T>::iterator begin_lhs = lhs.begin();
+        typename ft::vector<T>::iterator begin_rhs = rhs.begin();
+        while (begin_lhs != lhs.end())
+        {
+            if (begin_rhs == rhs.end() || *begin_rhs != *begin_lhs)
+                return (false);
+            ++begin_lhs;
+            ++begin_rhs;
+        }
+        return (true);
+    }
+
+    template <class T, class Alloc>
+    bool     operator !=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+        {
+            return (!(lhs == rhs));
+        }
 
 } /* namespace ft */
 
