@@ -137,6 +137,11 @@ namespace ft
             return (allocator_type().max_size());
         }
 
+        void        resize(size_type n, value_type val = valude_type())
+        {
+            
+        }
+
         size_type   capacity(void) const
         {
             return (_end_capacity - _start);
@@ -154,11 +159,21 @@ namespace ft
             else if (n <= this->capacity())
                 return ;
             // ? allocator::allocate hoat dong nhu nao?, no allocate memory noi vao voi array cu hay sao?
-            _alloc.allocate(n);
-
+            pointer     old_start = _start;
+            pointer     old_end = _end;
+            size_type   old_size = this->size();
+            size_type   old_capacity = this->capacity();
+            _start = _alloc.allocate(n);
+            _end_capacity = _start + n;
+            _end = _start;
+            while (old_start != old_end)
+            {
+                _alloc.construct(_end, *old_start);
+                old_start++;
+                _end++;
+            }
+            _alloc.deallocate(old_start - old_size, old_capacity); // ! deallocate memory truoc do
         }
-
-
 
         // ! MEMBER FUNCTIONs - Element Access
         reference   operator [] (size_type n)
@@ -219,19 +234,19 @@ namespace ft
         // }
 
 
-        // iterator    erase (iterator position)
-        // {
-        //     pointer     position_to_erase = &(*position);
-        //     _alloc.destroy(position_to_erase);
+        iterator    erase (iterator position)
+        {
+            pointer     position_to_erase = &(*position);
+            _alloc.destroy(position_to_erase);
 
-        //     for (int i = 0; i < _end - position_to_erase; i++)
-        //     {
-        //         _alloc.construct(position_to_erase, *(position_to_erase + i + 1));
-        //         _alloc.destroy(position_to_erase + i + 1);
-        //     }
-        //     _end--;
-        //     return (iterator(position_to_erase));
-        // }
+            for (int i = 0; i < _end - position_to_erase; i++)
+            {
+                _alloc.construct(position_to_erase, *(position_to_erase + i + 1));
+                _alloc.destroy(position_to_erase + i + 1);
+            }
+            _end--;
+            return (iterator(position_to_erase));
+        }
 
         void        clear(void)
         {
