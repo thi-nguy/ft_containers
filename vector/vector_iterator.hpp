@@ -16,13 +16,13 @@ class vectorIterator
         typedef typename std::ptrdiff_t     difference_type;
 
         // ! Canonical form of of vectorIterator
-        vectorIterator(void) {}
-        vectorIterator(pointer ptr): _ptr(ptr) {}
-        vectorIterator(const vectorIterator&    other)
+        vectorIterator(void) {} // todo: X a;
+        vectorIterator(pointer ptr): _ptr(ptr) {} // ! no need? yes!!!
+        vectorIterator(const vectorIterator&    other) // todo: X b(a)
         {
             *this = other;
         }
-        vectorIterator&     operator=(const vectorIterator& rhs)
+        vectorIterator&     operator=(const vectorIterator& rhs) // todo: b = a
         {
             if (this != &rhs)
             {
@@ -32,26 +32,28 @@ class vectorIterator
         }
         ~vectorIterator(void) {}
         // ! Operator Overload. Tai sao can no? De co the dung iterator!!
-        bool operator !=(vectorIterator const& rhs) const
+        bool operator !=(vectorIterator const& rhs) const // todo: a != b
         {
             return (_ptr != rhs._ptr);
         }
 
-        vectorIterator operator ++(int)
+        vectorIterator operator ++(int) // todo: a++
         {
             _ptr++;
             return (vectorIterator(_ptr - 1));
         }
 
-        reference operator *(void)
+        reference operator *(void) // todo: *a
         {
             return (*_ptr);
         }
 
-        const_reference operator *() const
+        const_reference operator *() const // todo: *a
         {
             return (*_ptr);
         }
+
+
 
 
 
