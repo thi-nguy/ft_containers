@@ -1,10 +1,12 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include <memory> // to access Allocator
 #include "../utils/Utils.hpp"
 #include "vector_iterator.hpp"
-#include <cstddef> // nullptr_t(), ptrdiff_t
+#include <memory>       // Allocator
+#include <cstddef>      // nullptr_t(), ptrdiff_t
+#include <stdexcept>    // std::out_of_range
+#include <iostream>     // std::cout, std::endl, std::cerr
 
 namespace ft
 {
@@ -12,7 +14,7 @@ namespace ft
     class vector
     {
         public:
-        // ! Member types
+        // ! MEMBER TYPES
             typedef T                                           value_type;
             typedef Alloc                                       allocator_type;
             typedef typename allocator_type::reference          reference;
@@ -30,18 +32,18 @@ namespace ft
         // * CONSTRUCTOR (có 3 kiểu constructors và 1 copy constructor)
             explicit vector (const allocator_type& alloc = allocator_type()) // ! default value, goi constructor của std::allocator on T
             :   _alloc(alloc),
-                _start(std::nullptr_t()),
-                _end(std::nullptr_t()),
-                _end_capacity(std::nullptr_t()) 
+                _start(NULL),
+                _end(NULL),
+                _end_capacity(NULL) 
             {
                 std::cout << "Empty Constructor called\n";
             }
 
             explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
             :   _alloc(alloc),
-                _start(std::nullptr_t()),
-                _end(std::nullptr_t()),
-                _end_capacity(std::nullptr_t()) 
+                _start(NULL),
+                _end(NULL),
+                _end_capacity(NULL) 
             {
                 _start = _alloc.allocate(n); // ! giống malloc n memory vào object _alloc
                 _end_capacity = _start + n;
@@ -58,9 +60,9 @@ namespace ft
             template < class InputIterator >
             explicit vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
             :   _alloc(alloc),
-                _start(std::nullptr_t()),
-                _end(std::nullptr_t()),
-                _end_capacity(std::nullptr_t()) 
+                _start(NULL),
+                _end(NULL),
+                _end_capacity(NULL) 
             {
                 InputIterator tmp = first;
                 difference_type size = 0;
@@ -93,24 +95,25 @@ namespace ft
             {
                 if (this != &rhs)
                 {
-                    std::cout << "Assignation Operator called \n";
                     _start = rhs._start;
                     _end = rhs._end;
                     _end_capacity = rhs._end_capacity;
                     _alloc = rhs._alloc;
+                    std::cout << "Assignation Operator called \n";
                 }
                 return (*this);
             }
 
-        // * DESTRUCTOR 
-            ~vector(void) 
+        // ! DESTRUCTOR 
+            ~vector(void)  // ! leaks here
             {
+                
                 std::cout << "Deconstructor called\n";
             }
             // vector(vector const& other);
             // vector&     operator=(vector const& rhs);
         
-        // * MEMBER FUNCTIONS
+        // ! MEMBER FUNCTIONS - ITERATORs
         iterator    begin(void)
         {
             return (_start);
@@ -121,7 +124,82 @@ namespace ft
             return (_end);
         }
 
-        // OVERLOAD
+
+        // ! MEMBER FUNCTIONS - CAPACITY
+
+        size_type   size(void) const
+        {
+            return (_end - _start);
+        }
+
+        size_type   max_size(void) const
+        {
+            return (allocator_type().max_size());
+        }
+
+        size_type   capacity(void) const
+        {
+            return (_end_capacity - _start);
+        }
+
+        bool        empty(void) const
+        {
+            return (this->size() == 0);
+        }
+
+        // ! MEMBER FUNCTIONs - Element Access
+        reference   operator [] (size_type n)
+        {
+            return (*(_start + n));
+        }
+
+        const_reference operator [] (size_type n) const
+        {
+            return (*(_start + n));
+        }
+
+        reference   at(size_type n)
+        {
+            if (n >= this->size())
+                throw std::out_of_range("Out of range");  
+            return ((*this)[n]);
+        }
+
+        const_reference at(size_type n) const
+        {
+            if (n >= this->size())
+                throw std::out_of_range("Out of range");  
+            return ((*this)[n]);
+        }
+
+        reference       front(void)
+        {
+            return (*_start);
+        }
+
+        const_reference front(void) const
+        {
+            return (*_start);
+        }
+
+        reference       back(void)
+        {
+            return (*(_end - 1));
+        }
+    
+        const_reference back(void) const
+        {
+            return (*(_end - 1));
+        }
+
+
+
+
+
+
+        // ! OVERLOAD cho vector
+
+
 
 
 
@@ -138,8 +216,9 @@ namespace ft
 
     }; /* class vector */
 
+    // ! OVERLOAD cho vector
     template <class T, class Alloc>
-    bool    operator ==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+    bool    operator == (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
     {
         typename ft::vector<T>::iterator begin_lhs = lhs.begin();
         typename ft::vector<T>::iterator begin_rhs = rhs.begin();
@@ -154,10 +233,22 @@ namespace ft
     }
 
     template <class T, class Alloc>
-    bool     operator !=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
-        {
-            return (!(lhs == rhs));
-        }
+    bool     operator != (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+    {
+        return (!(lhs == rhs));
+    }
+
+    template <class T, class Alloc>
+    bool    operator < (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+
+    template <class T, class Alloc>
+    bool    operator <= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+
+    template <class T, class Alloc>
+    bool    operator >  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+
+    template <class T, class Alloc>
+    bool    operator >= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 
 } /* namespace ft */
 
