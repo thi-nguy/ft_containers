@@ -36,7 +36,7 @@ namespace ft
                 _end(NULL),
                 _end_capacity(NULL) 
             {
-                std::cout << "Empty Constructor called\n";
+                // std::cout << "Empty Constructor called\n";
             }
 
             explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
@@ -54,7 +54,7 @@ namespace ft
                     _end++;
                     n--;
                 }
-                std::cout << "Fill Constructor called\n";
+                // std::cout << "Fill Constructor called\n";
             }
 
             template < class InputIterator >
@@ -82,13 +82,13 @@ namespace ft
                     _end++;
                     size--;
                 }
-                std::cout << "Range Constructor called \n";
+                // std::cout << "Range Constructor called \n";
             }
 
             explicit vector(const vector& other)
             {
                 *this = other;
-                std::cout << "Copy Constructor called \n";
+                // std::cout << "Copy Constructor called \n";
             }
 
             vector&     operator=(const vector& rhs)
@@ -99,7 +99,7 @@ namespace ft
                     _end = rhs._end;
                     _end_capacity = rhs._end_capacity;
                     _alloc = rhs._alloc;
-                    std::cout << "Assignation Operator called \n";
+                    // std::cout << "Assignation Operator called \n";
                 }
                 return (*this);
             }
@@ -108,7 +108,7 @@ namespace ft
             ~vector(void)  // ! leaks here
             {
                 
-                std::cout << "Deconstructor called\n";
+                // std::cout << "Deconstructor called\n";
             }
             // vector(vector const& other);
             // vector&     operator=(vector const& rhs);
@@ -137,10 +137,10 @@ namespace ft
             return (allocator_type().max_size());
         }
 
-        void        resize(size_type n, value_type val = valude_type())
-        {
+        // void        resize(size_type n, value_type val = valude_type())
+        // {
             
-        }
+        // }
 
         size_type   capacity(void) const
         {
@@ -155,7 +155,8 @@ namespace ft
         void        reserve(size_type n)
         {
             if (n > this->max_size())
-                throw(); // todo: throw exception here
+                std::cout << "n is out of range\n";
+                // throw(); // todo: throw exception here
             else if (n <= this->capacity())
                 return ;
             // ? allocator::allocate hoat dong nhu nao?, no allocate memory noi vao voi array cu hay sao?
@@ -309,22 +310,13 @@ namespace ft
 
     }; /* class vector */
 
-    // ! OVERLOAD cho vector
+    // ! Non member function overloads
     template <class T, class Alloc>
     bool    operator == (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
     {
         if (lhs.size() != rhs.size())
             return (false);
-        typename ft::vector<T>::iterator begin_lhs = lhs.begin();
-        typename ft::vector<T>::iterator begin_rhs = rhs.begin();
-        while (begin_lhs != lhs.end())
-        {
-            if (begin_rhs == rhs.end() || *begin_lhs != *begin_rhs)
-                return (false);
-            ++begin_lhs;
-            ++begin_rhs;
-        }
-        return (true);
+        return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
     }
 
     template <class T, class Alloc>
@@ -336,19 +328,7 @@ namespace ft
     template <class T, class Alloc>
     bool    operator < (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
     {
-        typename ft::vector<T>::iterator begin_lhs = lhs.begin();
-        typename ft::vector<T>::iterator begin_rhs = rhs.begin();
-        while (begin_lhs != lhs.end())
-        {
-            if (begin_rhs == rhs.end() || *begin_rhs < *begin_lhs)
-                return (false);
-            else if (*begin_lhs < *begin_rhs)
-            {
-                ++begin_lhs;
-                ++begin_rhs;
-            }
-        }
-        return (true);
+        return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
     }
 
     template <class T, class Alloc>
@@ -360,7 +340,7 @@ namespace ft
     template <class T, class Alloc>
     bool    operator <= (const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
     {
-        return (!(lhs > rhs));
+        return (!(rhs < lhs));
     }
 
     template <class T, class Alloc>
@@ -368,6 +348,8 @@ namespace ft
     {
         return (!(lhs < rhs));
     }
+
+
 
 } /* namespace ft */
 
