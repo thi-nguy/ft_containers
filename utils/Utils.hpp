@@ -1,35 +1,39 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
-#include "../vector.hpp"
-
-static class nullptr_t // ! Cái vẹo gì đây ??
-{
-    public:
-    /*
-        ** @brief For conversion to any type
-        ** of null non-member pointer.
-        */
-        template < typename T>
-        operator T*() const
-        {
-            return (0);
-        }
- /*
-        ** @brief For conversion to any type of null
-        ** member pointer.
-        */
-        template < typename T, typename C >
-        operator T C::*() const
-        {
-            return (0);
-        }
-    private:
-        void    operator&() const; // Impossible to get address of a null pointer
-}   u_nullptr = {}; // ! cái vẹo gì đây?
+#include "../vector/vector.hpp"
 
 namespace ft
 {
+    template <class InputIterator1, class InputIterator2>
+    bool    equal(InputIterator1 first1, InputIterator1 last1,
+                    InputIterator2 first2)
+    {
+        while (first1 != last1)
+        {
+            if (!(*first1 == *first2))
+                return false;
+            ++first1;
+            ++first2;
+        }
+        return true;
+    }
+
+    template <class InputIterator1, class InputIterator2>
+    bool    lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
+                                        InputIterator2 first2, InputIterator2 last2)
+    {
+        while (first1 != last1)
+        {
+            if (first2 == last2 || *first2 < *first1)
+                return false;
+            else if( *first1 < *first2)
+                return true;
+            ++first1;
+            ++first2;
+        }
+        return (first2 != last2);
+    }
   
 } /* namespace ft */
 

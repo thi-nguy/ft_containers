@@ -1,8 +1,8 @@
 NAME	:= ft_containers
 CXX		:= c++ # change to clang++
-CXXFLAGS:= -g -Wall -Wextra -Werror -std=c++98 -fsanitize=address #delete -g -fsanitize=address
+CXXFLAGS:= -Wall -Wextra -Werror -std=c++98 -fsanitize=address #delete -g -fsanitize=address
 
-SRCS	:= main.cpp 
+SRCS	:= main.cpp
 						
 OBJS	:= $(SRCS:.cpp=.o)
 
