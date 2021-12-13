@@ -74,26 +74,57 @@ namespace ft
             // vector(vector const& other);
             // vector&     operator=(vector const& rhs);
         // * Member function
-        void    push_back(const value_type& value)
-        {
-            if (_end == _end_capacity)
+            void    push_back(const value_type& value)
             {
-                // todo: extend the vector, allocate memory
-                _alloc.allocate(5); // ! bug here
+                if (_end == _end_capacity)
+                {
+                    // todo: extend the vector, allocate memory
+                    int next_capacity = (this->size() > 0) ? (int)(this->size() * 2) : 1;
+                    this->reserve(next_capacity);
+                }
+                _alloc.construct(_end, value);
+                _end++;
             }
-            _alloc.construct(_end, value);
-            _end++;
-        }
 
-        pointer getBegin(void)
-        {
-            return (_start);
-        }
+            size_type   size(void) const { return (this->_end - this->_start); }
 
-        pointer getEnd(void)
-        {
-            return (_end);
-        }
+            void        reserve (size_type n)
+            {
+                if (n > this->max_size())
+                    throw (std::length_error("vector::reserve"));
+                else if (n > this->capacity())
+                {
+                    pointer prev_start = _start;
+                    pointer prev_end = _end;
+                    size_type prev_size = this->size();
+                    size_type prev_capacity = this->capacity();
+                    
+                    _start = _alloc.allocate( n );
+                    _end_capacity = _start + n;
+                    _end = _start;
+                    while (prev_start != prev_end)
+                    {
+                        _alloc.construct(_end, *prev_start);
+                        _end++;
+                        prev_start++;
+                    }
+                    _alloc.deallocate(prev_start - prev_size, prev_capacity);
+                }
+            }
+
+            size_type   max_size(void) const { return allocator_type().max_size(); }
+
+            size_type   capacity (void) const { return (this->_end_capacity - this->_start); }
+
+            pointer getBegin(void)
+            {
+                return (_start);
+            }
+
+            pointer getEnd(void)
+            {
+                return (_end);
+            }
 
 
 
