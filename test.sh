@@ -8,7 +8,7 @@ reset=`tput sgr0`
 sed 's/ft::vector/std::vector/g' main.cpp > main_real_containers.cpp
 
 # Compile with new main and put result into out1
-clang++ -Wall -Wextra -Werror -std=c++98 -fsanitize=address main_real_containers.cpp
+c++ -Wall -Wextra -Werror -std=c++98 -fsanitize=address main_real_containers.cpp
 ./a.out > out1
 
 # Compile our main and put result into out2

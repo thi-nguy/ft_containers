@@ -1,5 +1,5 @@
 NAME	:= practice
-CXX		:= clang++
+CXX		:= c++
 CXXFLAGS:= -g -Wall -Wextra -Werror -std=c++98 -fsanitize=address #delete -g -fsanitize=address
 
 SRCS	:= main.cpp
