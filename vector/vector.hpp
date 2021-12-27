@@ -338,11 +338,109 @@ namespace ft
 
             iterator    insert(iterator position, const value_type& val)
             {
-                
+                size_type n = this->size() + 1;
+                pointer     old_start = _start;
+                pointer     old_end = _end;
+                pointer     position_to_insert = &(*position);
+                size_type   old_size = this->size();
+                size_type   old_capacity = this->capacity();
+
+                _start = _alloc.allocate(n);
+                if (old_end == _end_capacity)
+                {
+                    if (old_size > 0)
+                        _end_capacity = _start + old_capacity * 2;
+                    else
+                        _end_capacity = _start + 1;
+                }
+                else
+                    _end_capacity = _start + n;
+                _end = _start;
+                while (old_start != position_to_insert)
+                {
+                    _alloc.construct(_end, *old_start);
+                    old_start++;
+                    _end++;
+                }
+                _alloc.construct(_end, val);
+                _end++;
+                while (old_start != old_end)
+                {
+                    _alloc.construct(_end, *old_start);
+                    old_start++;
+                    _end++;
+                }
+                _alloc.deallocate(old_start - old_size, old_capacity); 
+                return (iterator(position_to_insert));
             }
 
-            // ! destroy: "destroy" data, memory is remained
-            // ! deallocate: release memory.
+            void    insert(iterator position, size_type n, const value_type& val)
+            {
+                size_type   size = this->size() + n;
+                pointer     old_start = _start;
+                pointer     old_end = _end;
+                pointer     position_to_insert = &(*position);
+                size_type   old_size = this->size();
+                size_type   old_capacity = this->capacity();
+
+                _start = _alloc.allocate(size);
+                _end_capacity = _start + size;
+                _end = _start;
+                while (old_start != position_to_insert)
+                {
+                    _alloc.construct(_end, *old_start);
+                    old_start++;
+                    _end++;
+                }
+                for (size_type i = n; i > 0; i--)
+                {
+                    _alloc.construct(_end, val);
+                    _end++;
+                }
+                while (old_start != old_end)
+                {
+                    _alloc.construct(_end, *old_start);
+                    old_start++;
+                    _end++;
+                }
+                _alloc.deallocate(old_start - old_size, old_capacity); 
+            }
+
+            template <class InputIterator>
+            void    insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
+            {
+                size_type   insert_size = last - first;
+
+                size_type   size = this->size() + insert_size;
+                pointer     old_start = _start;
+                pointer     old_end = _end;
+                pointer     position_to_insert = &(*position);
+                size_type   old_size = this->size();
+                size_type   old_capacity = this->capacity();
+
+                _start = _alloc.allocate(size);
+                _end_capacity = _start + size;
+                _end = _start;
+                while (old_start != position_to_insert)
+                {
+                    _alloc.construct(_end, *old_start);
+                    old_start++;
+                    _end++;
+                }
+                while (first != last)
+                {
+                    _alloc.construct(_end, *first);
+                    _end++;
+                    first++;
+                }
+                while (old_start != old_end)
+                {
+                    _alloc.construct(_end, *old_start);
+                    old_start++;
+                    _end++;
+                }
+                _alloc.deallocate(old_start - old_size, old_capacity); 
+            }
 
             void    swap(vector& x)
             {

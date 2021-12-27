@@ -467,6 +467,78 @@ void        test_assign(std::string test_type)
     std::cout << "third's capacity = " << third.capacity() << "\n";
 }
 
+void        test_insert(std::string test_type)
+{
+    print_test_name(test_type);
+
+    ft::vector<int> myvector (3,100);
+    print_element(myvector);
+    std::cout << "size: " << myvector.size() << "\n";
+    std::cout << "capacity: " << myvector.capacity() << "\n";
+
+    ft::vector<int>::iterator it;
+    it = myvector.begin();
+    it = myvector.insert ( it , 200 );
+    print_element(myvector);
+    std::cout << "size: " << myvector.size() << "\n";
+    std::cout << "capacity: " << myvector.capacity() << "\n";
+
+    ft::vector<int> myvector2(1, 42);
+    print_element(myvector2);
+    std::cout << "size: " << myvector2.size() << "\n";
+    std::cout << "capacity: " << myvector2.capacity() << "\n";
+
+    ft::vector<int>::iterator it2;
+    it2 = myvector2.begin();
+    it2 = myvector2.insert ( it2 , 200 );
+    print_element(myvector2);
+    std::cout << "size: " << myvector2.size() << "\n";
+    std::cout << "capacity: " << myvector2.capacity() << "\n";
+
+    ft::vector<int> myvector3;
+    std::cout << "size: " << myvector3.size() << "\n";
+    std::cout << "capacity: " << myvector3.capacity() << "\n";
+
+    ft::vector<int>::iterator it3;
+    it3 = myvector3.begin();
+    it3 = myvector3.insert ( it3 , 200 );
+    print_element(myvector3);
+    std::cout << "size: " << myvector3.size() << "\n";
+    std::cout << "capacity: " << myvector3.capacity() << "\n";
+
+    ft::vector<int> myvector4(2, 42);
+    print_element(myvector4);
+    std::cout << "size: " << myvector4.size() << "\n";
+    std::cout << "capacity: " << myvector4.capacity() << "\n";
+
+    ft::vector<int>::iterator it4;
+    it4 = myvector4.begin();
+    myvector4.insert ( it4 , 3, 200 );
+    print_element(myvector4);
+    std::cout << "size: " << myvector4.size() << "\n";
+    std::cout << "capacity: " << myvector4.capacity() << "\n";
+
+    ft::vector<int> myvector5 (3,100);
+    ft::vector<int>::iterator it5;
+
+    it5 = myvector5.begin();
+    it5 = myvector5.insert ( it5 , 200 );
+    print_element(myvector5);
+
+    myvector5.insert (it5,2,300); // ! bug o day!!
+
+    // "it5" no longer valid, get a new one:
+    it5 = myvector5.begin();
+
+    ft::vector<int> anothervector (2,400);
+    myvector5.insert (it5+2,anothervector.begin(),anothervector.end());
+
+    int myarray [] = { 501,502,503 };
+    myvector5.insert (myvector5.begin(), myarray, myarray+3);
+
+    print_element(myvector5);
+}
+
 
 void        test_vector(std::string test_type)
 {
@@ -495,6 +567,7 @@ void        test_vector(std::string test_type)
     test_erase("erase");
     test_swap("swap");
     test_clear("clear");
+    test_insert("insert");
 
     // test_operator("operator");
 }
