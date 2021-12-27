@@ -3,6 +3,9 @@
 
 #include "../utils/utils.hpp"
 #include "vector_iterator.hpp"
+#include "vector_const_iterator.hpp"
+#include "vector_reverse_iterator.hpp"
+#include "vector_const_reverse_iterator.hpp"
 #include <memory>       // Allocator
 #include <cstddef>      // nullptr_t(), ptrdiff_t
 #include <stdexcept>    // std::out_of_range
@@ -23,7 +26,9 @@ namespace ft
             typedef typename allocator_type::const_pointer      const_pointer;
             
             typedef typename ft::vectorIterator<T>              iterator;
-            // Todo: iterator member types: const_iterator, reverse_iterator, const_reverse_iterator
+            typedef typename ft::vectorConstIterator<T>         const_iterator;
+            // typedef typename ft::vectorReverseIterator<T>       reverse_iterator;
+            // typedef typename ft::vectorConstReverseIterator<T>  const_reverse_iterator;
 
             typedef typename std::ptrdiff_t                     difference_type;
             typedef typename allocator_type::size_type          size_type;
@@ -123,15 +128,30 @@ namespace ft
         
         // ! MEMBER FUNCTIONS - ITERATORs
 
-            iterator    begin(void) const
+            iterator    begin(void)
             {
-                
                 return (_start);
             }
 
-            iterator    end(void) const
+            const_iterator begin(void) const
+            {
+                return (_start);
+            }
+
+            iterator    end(void)
             {
                 return (_end);
+            }
+
+            const_iterator end(void) const
+            {
+                return (_end);
+            }
+
+            //todo: rbegin, rend
+            reverse_iterator    rbegin(void)
+            {
+
             }
 
 
@@ -154,14 +174,8 @@ namespace ft
                     for (size_type i = this->size(); i > n; i--)
                         this->pop_back();
                 }
-                else if (n > this->size() && n < this->capacity())
+                else if (n > this->size())
                 {
-                    for (size_type i = this->size(); i < n; i++)
-                        this->push_back(val);
-                }
-                else if (n > this->capacity())
-                {
-                    this->reserve(n);
                     for (size_type i = this->size(); i < n; i++)
                         this->push_back(val);
                 }
@@ -196,7 +210,7 @@ namespace ft
                     old_start++;
                     _end++;
                 }
-                _alloc.deallocate(old_start - old_size, old_capacity); // ! deallocate memory truoc do
+                _alloc.deallocate(old_start - old_size, old_capacity);
             }
 
         // ! MEMBER FUNCTIONs - Element Access
@@ -363,6 +377,7 @@ namespace ft
                     _end++;
                 }
                 _alloc.construct(_end, val);
+                pointer ret = _end;
                 _end++;
                 while (old_start != old_end)
                 {
@@ -371,7 +386,7 @@ namespace ft
                     _end++;
                 }
                 _alloc.deallocate(old_start - old_size, old_capacity); 
-                return (iterator(position_to_insert));
+                return (iterator(ret));
             }
 
             void    insert(iterator position, size_type n, const value_type& val)

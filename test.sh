@@ -5,18 +5,20 @@ yellow=`tput setaf 3`
 reset=`tput sgr0`
 
 # Change ft::vector to std::vector and create a new main
-sed 's/ft::vector/std::vector/g' main.cpp > main_real_containers.cpp
+sed 's/ft::vector/std::vector/g' main.cpp > main_tmp.cpp
+# Change ft::VectorReverseIterator to std::reverse_iterator and create a new main
+sed 's/ft::VectorReverseIterator/std::reverse_iterator/g' main_tmp.cpp > main_real.cpp
 
 # Compile with new main and put result into out1
-c++ -Wall -Wextra -Werror -std=c++98 -fsanitize=address main_real_containers.cpp
-./a.out > out1
+c++ -Wall -Wextra -Werror -std=c++98 -fsanitize=address main_real.cpp
+./a.out > real_out
 
 # Compile our main and put result into out2
 make re
-./ft_containers > out2
+./ft_containers > my_out
 
 # Compare out1 out2
-result=$(diff -u out1 out2)
+result=$(diff -u real_out my_out)
 if [ "$result" = "" ]; 
 then
     echo "${green}It works!${reset}"
@@ -27,5 +29,7 @@ fi
 
 rm a.out
 make fclean
-rm out1 out2
-rm main_real_containers.cpp
+rm real_out
+rm my_out
+rm main_tmp.cpp
+rm main_real.cpp

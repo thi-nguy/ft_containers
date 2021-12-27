@@ -15,7 +15,7 @@ void        print_test_name(std::string name)
 }
 
 template <class T>
-void        print_element(ft::vector<T> my_vector)
+void        print_element(std::vector<T> my_vector)
 {
     int size = my_vector.size();
     if (size <= 0)
@@ -34,19 +34,19 @@ void        test_constructor(std::string test_type)
     print_test_name(test_type);
     {
         std::cout << "Default constructor called\n";
-        ft::vector<int> vector_a;
+        std::vector<int> vector_a;
         std::cout << "Size of vector_a: " << vector_a.size() << std::endl << std::endl;
 
         std::cout << "Range constructor called\n";
-        ft::vector<std::string> vector_b(4, "hello");
+        std::vector<std::string> vector_b(4, "hello");
         std::cout << "First element: " << vector_b.front() << std::endl << std::endl;
 
         std::cout << "Fill constructor called\n";
-        ft::vector<std::string> vector_c(vector_b.begin(), vector_b.end());
+        std::vector<std::string> vector_c(vector_b.begin(), vector_b.end());
         std::cout << "First element: " << vector_c.front() << std::endl << std::endl;
 
         std::cout << "Copy constructor called\n";
-        ft::vector<std::string> vector_d(vector_b);
+        std::vector<std::string> vector_d(vector_b);
         std::cout << "Size of vector_d: " << vector_d.size() << std::endl << std::endl;
         std::cout << "Erasing one element of vector_d\n";
         vector_d.erase(vector_d.begin());
@@ -54,7 +54,7 @@ void        test_constructor(std::string test_type)
         std::cout << "Size of vector_c: " << vector_b.size() << std::endl << std::endl;
 
         std::cout << "Assignation Operator called\n";
-        ft::vector<std::string> vector_e = vector_d;
+        std::vector<std::string> vector_e = vector_d;
         std::cout << "Size of vector_e: " << vector_e.size() << std::endl << std::endl;
         std::cout << "Erasing one element of vector_e\n";
         vector_e.erase(vector_e.begin());
@@ -66,7 +66,7 @@ void        test_constructor(std::string test_type)
 void      test_begin(std::string test_type)
 {
     print_test_name(test_type);
-    ft::vector<std::string> vector_b(4, "hello");
+    std::vector<std::string> vector_b(4, "hello");
 
     std::cout << "First element of vector_b: " << *(vector_b.begin()) << std::endl;
 }
@@ -74,11 +74,11 @@ void      test_begin(std::string test_type)
 void      test_end(std::string test_type)
 {
     print_test_name(test_type);
-    ft::vector<int> myvector;
+    std::vector<int> myvector;
     for (int i=1; i<=5; i++) myvector.push_back(i);
 
     std::cout << "myvector contains:";
-    for (ft::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+    for (std::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
         std::cout << ' ' << *it;
     std::cout << '\n';
 }
@@ -86,8 +86,8 @@ void      test_end(std::string test_type)
 void         test_size(std::string test_type)
 {
     print_test_name(test_type);
-    ft::vector<int> first;
-    ft::vector<std::string> second(4, "hello");
+    std::vector<int> first;
+    std::vector<std::string> second(4, "hello");
     std::cout << "size 1: " << first.size() << std::endl;
     std::cout << "size 2: " << second.size() << std::endl;
 
@@ -99,8 +99,8 @@ void         test_size(std::string test_type)
 void         test_max_size(std::string test_type)
 {
     print_test_name(test_type);
-    ft::vector<int> first;
-    ft::vector<std::string> second(4, "hello");
+    std::vector<int> first;
+    std::vector<std::string> second(4, "hello");
     std::cout << "max_size 1: " << first.max_size() << std::endl;
     std::cout << "max_size 2: " << second.max_size() << std::endl;
 
@@ -114,10 +114,10 @@ void        test_capacity(std::string test_type)
 {
     print_test_name(test_type);
     std::cout << "Original Capacity\n";
-    ft::vector<int> first;
-    ft::vector<std::string> second(4, "hello");
-    ft::vector<std::string> third(second.begin(), second.end());
-    ft::vector<std::string> fourth(third);
+    std::vector<int> first;
+    std::vector<std::string> second(4, "hello");
+    std::vector<std::string> third(second.begin(), second.end());
+    std::vector<std::string> fourth(third);
 
     std::cout << "capacity 1: " << first.capacity() << std::endl;
     std::cout << "capacity 2: " << second.capacity() << std::endl;
@@ -139,10 +139,10 @@ void        test_capacity(std::string test_type)
 void      test_empty(std::string test_type)
 {
     print_test_name(test_type);
-    ft::vector<int> first;
-    ft::vector<std::string> second(4, "hello");
-    ft::vector<std::string> third(second.begin(), second.end());
-    ft::vector<std::string> fourth(third);
+    std::vector<int> first;
+    std::vector<std::string> second(4, "hello");
+    std::vector<std::string> third(second.begin(), second.end());
+    std::vector<std::string> fourth(third);
 
     std::cout << "Test empty\n";
     std::cout << "empty 1: " << first.empty() << std::endl;
@@ -154,8 +154,8 @@ void      test_empty(std::string test_type)
 // void        test_operator(std::string test_type)
 // {
 //     print_test_name(test_type);
-//     ft::vector<int> foo (3,100);   // three ints with a value of 100
-//     ft::vector<int> bar (2,200);   // two ints with a value of 200
+//     std::vector<int> foo (3,100);   // three ints with a value of 100
+//     std::vector<int> bar (2,200);   // two ints with a value of 200
 
 //     if (foo==bar) std::cout << "foo and bar are equal\n";
 //     if (foo!=bar) std::cout << "foo and bar are not equal\n";
@@ -169,10 +169,10 @@ void        test_reserve(std::string test_type)
 {
     print_test_name(test_type);
     std::cout << "Original Capacity\n";
-    ft::vector<int> first;
-    ft::vector<std::string> second(4, "hello");
-    ft::vector<std::string> third(second.begin(), second.end());
-    ft::vector<std::string> fourth(third);
+    std::vector<int> first;
+    std::vector<std::string> second(4, "hello");
+    std::vector<std::string> third(second.begin(), second.end());
+    std::vector<std::string> fourth(third);
 
     std::cout << "capacity 1: " << first.capacity() << std::endl;
     std::cout << "capacity 2: " << second.capacity() << std::endl;
@@ -221,7 +221,7 @@ void        test_reserve(std::string test_type)
 void        test_operator_access(std::string test_type)
 {
     print_test_name(test_type);
-    ft::vector<std::string> second(4, "cat");
+    std::vector<std::string> second(4, "cat");
     second[0] = "dog";
     second[1] = "bird";
     second[2] = "fish";
@@ -234,7 +234,7 @@ void        test_operator_access(std::string test_type)
 void        test_at(std::string test_type)
 {
     print_test_name(test_type);
-    ft::vector<std::string> second(4, "songoku");
+    std::vector<std::string> second(4, "songoku");
     second.at(0) = "calic";
     second.at(2) = "buma";
     print_element(second);
@@ -254,8 +254,8 @@ void        test_at(std::string test_type)
 void        test_front(std::string test_type)
 {
     print_test_name(test_type);
-    ft::vector<std::string> first(1, "cat");
-    ft::vector<std::string> second(4, "songoku");
+    std::vector<std::string> first(1, "cat");
+    std::vector<std::string> second(4, "songoku");
     print_element(second);
     print_element(first);
     std::cout << "Changing the first element.... \n";
@@ -268,8 +268,8 @@ void        test_front(std::string test_type)
 void        test_back(std::string test_type)
 {
     print_test_name(test_type);
-    ft::vector<std::string> first(1, "hello");
-    ft::vector<std::string> second(4, "mama");
+    std::vector<std::string> first(1, "hello");
+    std::vector<std::string> second(4, "mama");
     print_element(second);
     print_element(first);
     std::cout << "Changing the end element.... \n";
@@ -284,7 +284,7 @@ void    test_push_back(std::string test_type)
     print_test_name(test_type);
     srand(time(NULL));
 
-    ft::vector<int> myvector;
+    std::vector<int> myvector;
     for (int i = 0; i < 1; i++)
     {
         int myint = rand() % 1000;
@@ -322,7 +322,7 @@ void    test_pop_back(std::string test_type)
 {
     print_test_name(test_type);
 
-    ft::vector<int> myvector;
+    std::vector<int> myvector;
     for (int i = 0; i < 15; i++)
     {
         myvector.push_back (i);
@@ -342,7 +342,7 @@ void    test_clear(std::string test_type)
 {
     print_test_name(test_type);
 
-    ft::vector<int> myvector;
+    std::vector<int> myvector;
     for (int i = 0; i < 15; i++)
     {
         myvector.push_back (i);
@@ -361,7 +361,7 @@ void    test_resize(std::string test_type)
 {
     print_test_name(test_type);
 
-    ft::vector<int> myvector;
+    std::vector<int> myvector;
     for (int i = 0; i < 15; i++)
     {
         myvector.push_back (i);
@@ -388,8 +388,8 @@ void        test_swap(std::string test_type)
 {
     print_test_name(test_type);
 
-    ft::vector<int> foo (3, 10);   // three ints with a value of 100
-    ft::vector<int> bar (5, 42);   // five ints with a value of 200
+    std::vector<int> foo (3, 10);   // three ints with a value of 100
+    std::vector<int> bar (5, 42);   // five ints with a value of 200
     std::cout << "foo contains:";
     print_element(foo);
     std::cout << "foo's size = " << int(foo.size()) << "\n";
@@ -413,7 +413,7 @@ void        test_swap(std::string test_type)
 void        test_erase(std::string test_type)
 {
     print_test_name(test_type);
-    ft::vector<int> myvector;
+    std::vector<int> myvector;
 
   // set some values (from 1 to 10)
     for (int i=0; i<=10; i++) myvector.push_back(i);
@@ -434,7 +434,7 @@ void        test_erase(std::string test_type)
 void        test_assign(std::string test_type)
 {
     print_test_name(test_type);
-    ft::vector<int> myvector;
+    std::vector<int> myvector;
     for (int i=0; i<10; i++) myvector.push_back(i);
     print_element(myvector);
     std::cout << "myvector's size = " << int(myvector.size()) << "\n";
@@ -446,26 +446,26 @@ void        test_assign(std::string test_type)
     std::cout << "myvector's capacity = " << myvector.capacity() << "\n";
 
     std::cout << "\nAssign 5 int with a value of 42 to empty vector\n";
-    ft::vector<int> first;
+    std::vector<int> first;
     first.assign(5, 42);
     print_element(first);
     std::cout << "first's size = " << int(first.size()) << "\n";
     std::cout << "first's capacity = " << first.capacity() << "\n";
 
     std::cout << "\nAssign central values of myvector\n";
-    ft::vector<int> myvector2;
+    std::vector<int> myvector2;
     for (int i=0; i<10; i++) myvector2.push_back(i);
-    ft::vector<int>::iterator it;
+    std::vector<int>::iterator it;
     it = myvector2.begin() + 2;
 
-    ft::vector<int> second;
+    std::vector<int> second;
     second.assign(it, myvector2.end() - 2); // the 5 central values of first
     print_element(second);
     std::cout << "second's size = " << int(second.size()) << "\n";
     std::cout << "second's capacity = " << second.capacity() << "\n";
 
     std::cout << "\nAssign central values of an array: {1776, 7, 4, 42, 100, 10}\n";
-    ft::vector<int> third;
+    std::vector<int> third;
     int myints[] = {1776, 7, 4, 42, 100, 10};
     third.assign(myints + 1, myints + 4);
     print_element(third);
@@ -477,55 +477,55 @@ void        test_insert(std::string test_type)
 {
     print_test_name(test_type);
 
-    ft::vector<int> myvector (3,100);
+    std::vector<int> myvector (3,100);
     print_element(myvector);
     std::cout << "size: " << myvector.size() << "\n";
     std::cout << "capacity: " << myvector.capacity() << "\n";
 
-    ft::vector<int>::iterator it;
+    std::vector<int>::iterator it;
     it = myvector.begin();
     it = myvector.insert ( it , 200 );
     print_element(myvector);
     std::cout << "size: " << myvector.size() << "\n";
     std::cout << "capacity: " << myvector.capacity() << "\n";
 
-    ft::vector<int> myvector2(1, 42);
+    std::vector<int> myvector2(1, 42);
     print_element(myvector2);
     std::cout << "size: " << myvector2.size() << "\n";
     std::cout << "capacity: " << myvector2.capacity() << "\n";
 
-    ft::vector<int>::iterator it2;
+    std::vector<int>::iterator it2;
     it2 = myvector2.begin();
     it2 = myvector2.insert ( it2 , 200 );
     print_element(myvector2);
     std::cout << "size: " << myvector2.size() << "\n";
     std::cout << "capacity: " << myvector2.capacity() << "\n";
 
-    ft::vector<int> myvector3;
+    std::vector<int> myvector3;
     std::cout << "size: " << myvector3.size() << "\n";
     std::cout << "capacity: " << myvector3.capacity() << "\n";
 
-    ft::vector<int>::iterator it3;
+    std::vector<int>::iterator it3;
     it3 = myvector3.begin();
     it3 = myvector3.insert ( it3 , 200 );
     print_element(myvector3);
     std::cout << "size: " << myvector3.size() << "\n";
     std::cout << "capacity: " << myvector3.capacity() << "\n";
 
-    ft::vector<int> myvector4(2, 42);
+    std::vector<int> myvector4(2, 42);
     print_element(myvector4);
     std::cout << "size: " << myvector4.size() << "\n";
     std::cout << "capacity: " << myvector4.capacity() << "\n";
 
-    ft::vector<int>::iterator it4;
+    std::vector<int>::iterator it4;
     it4 = myvector4.begin();
     myvector4.insert ( it4 , 3, 200 );
     print_element(myvector4);
     std::cout << "size: " << myvector4.size() << "\n";
     std::cout << "capacity: " << myvector4.capacity() << "\n";
 
-    ft::vector<int> myvector5 (3,100);
-    ft::vector<int>::iterator it5;
+    std::vector<int> myvector5 (3,100);
+    std::vector<int>::iterator it5;
 
     it5 = myvector5.begin();
     it5 = myvector5.insert ( it5 , 200 );
@@ -537,7 +537,7 @@ void        test_insert(std::string test_type)
     // "it5" no longer valid, get a new one:
     it5 = myvector5.begin();
 
-    ft::vector<int> anothervector (2,400);
+    std::vector<int> anothervector (2,400);
     myvector5.insert (it5+2,anothervector.begin(),anothervector.end());
 
     int myarray [] = { 501,502,503 };
@@ -550,70 +550,19 @@ void        test_reverse_iterator(std::string test_type)
 {
     print_test_name(test_type);
 
-    ft::vector<int> myvector;
+    std::vector<int> myvector;
     for (int i=0; i<10; i++) myvector.push_back(i);
 
-    typedef ft::vector<int>::iterator iter_type;
+    typedef std::vector<int>::iterator iter_type;
 
-    ft::VectorReverseIterator<iter_type> rev_end (myvector.begin());
-    ft::VectorReverseIterator<iter_type> rev_begin (myvector.end());
+    std::reverse_iterator<iter_type> rev_end (myvector.begin());
+    std::reverse_iterator<iter_type> rev_begin (myvector.end());
 
     std::cout << "myvector:";
     for (iter_type it = rev_end.base(); it != rev_begin.base(); ++it)
         std::cout << ' ' << *it;
     std::cout << '\n';
-}
 
-void        test_reverse_iterator_operator_increase(std::string test_type)
-{
-    print_test_name(test_type);
-    ft::vector<int> myvector;
-    for (int i=0; i<10; i++) myvector.push_back(i);
-
-    typedef ft::vector<int>::iterator iter_type;
-                                                            // ? 9 8 7 6 5 4 3 2 1 0 ?
-    iter_type from (myvector.begin());                     //   ^
-                                                            //         ------>
-    iter_type until (myvector.end());                      //                       ^
-                                                            //
-    ft::VectorReverseIterator<iter_type> rev_until (from);     // ^
-                                                            //         <------
-    ft::VectorReverseIterator<iter_type> rev_from (until);     //                     ^
-
-    std::cout << "myvector:";
-    while (rev_from != rev_until) {
-        std::cout << ' ' << *rev_from;
-        ++rev_from;
-    }
-    std::cout << '\n';
-}
-
-void        test_reverse_iterator_relation(std::string test_type)
-{
-    print_test_name(test_type);
-    int a[] {0, 1, 2, 3};
-    //             ↑  └───── x, y
-    //             └──────── z
- 
-    ft::VectorReverseIterator<int*>
-        x { std::rend(a) - std::size(a) },
-        y { std::rend(a) - std::size(a) },
-        z { std::rbegin(a) + 1 };
- 
-    std::cout
-        << std::boolalpha
-        << "*x == " << *x << '\n' // 3
-        << "*y == " << *y << '\n' // 3
-        << "*z == " << *z << '\n' // 2
-        << "x == y ? " << (x == y) << '\n' // true
-        << "x != y ? " << (x != y) << '\n' // false
-        << "x <  y ? " << (x <  y) << '\n' // false
-        << "x <= y ? " << (x <= y) << '\n' // true
-        << "x == z ? " << (x == z) << '\n' // false
-        << "x != z ? " << (x != z) << '\n' // true
-        << "x <  z ? " << (x <  z) << '\n' // true!
-        << "x <= z ? " << (x <= z) << '\n' // true
-        ;
 }
 
 
@@ -648,8 +597,6 @@ void        test_vector(std::string test_type)
 
     // Reverse Iterator
     test_reverse_iterator("reverse iterator");
-    test_reverse_iterator_operator_increase("reverse iterator operator ++");
-    test_reverse_iterator_relation("reverse iterator relation");
 
     // test_operator("operator");
 }

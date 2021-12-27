@@ -21,7 +21,7 @@ template <class T>
 class iterator_traits<T*>
 {
     public:
-        typedef std::ptrdiff_t                               difference_type;
+        typedef std::ptrdiff_t                          difference_type;
         typedef T                                       value_type;
         typedef T*                                      pointer;
         typedef T&                                      reference;
@@ -32,7 +32,7 @@ template <class T>
 class iterator_traits<const T*>
 {
     public:
-        typedef std::ptrdiff_t                               difference_type;
+        typedef std::ptrdiff_t                          difference_type;
         typedef T                                       value_type;
         typedef const T*                                pointer;
         typedef const T&                                reference;
@@ -52,7 +52,7 @@ class vectorIterator: public std::iterator<std::random_access_iterator_tag, T>
 
         // ! Canonical form of of vectorIterator
         vectorIterator(void) {} // todo: X a;
-        vectorIterator(pointer ptr): _ptr(ptr) {} // ! no need? yes!!!
+        vectorIterator(pointer ptr): _ptr(ptr) {} // todo: X(ptr) - typecast
         vectorIterator(const vectorIterator&    other) // todo: X b(a)
         {
             *this = other;
@@ -65,12 +65,40 @@ class vectorIterator: public std::iterator<std::random_access_iterator_tag, T>
             }
             return (*this);
         }
-        ~vectorIterator(void) {}
-        // ! Operator Overload. Tai sao can no? De co the dung iterator!!
+        ~vectorIterator(void) {} // todo: destructor
+
+        // ! Operator Overload
         bool operator !=(vectorIterator const& rhs) const // todo: a != b
         {
             return (_ptr != rhs._ptr);
         }
+
+        bool operator ==(vectorIterator const& rhs) const // todo: a == b
+        {
+            return (_ptr == rhs._ptr);
+        }
+
+        reference operator *(void) // todo: *a
+        {
+            return (*_ptr);
+        }
+
+        const_reference operator *(void) const // todo: *a
+        {
+            return (*_ptr);
+        }
+
+        pointer operator ->(void) // todo: a->m
+        {
+            return (_ptr);
+        }
+
+        pointer operator ->(void) const // todo: a->m
+        {
+            return (_ptr);
+        }
+
+        //todo: *a = t
 
         vectorIterator& operator ++(void) // todo: ++a
         {
@@ -84,25 +112,71 @@ class vectorIterator: public std::iterator<std::random_access_iterator_tag, T>
             return (vectorIterator(_ptr - 1));
         }
 
-        reference operator *(void) // todo: *a
+        //todo: *a++
+
+
+        vectorIterator operator --(void) // todo: --a
         {
-            return (*_ptr);
+            _ptr--;
+            return (*this);
         }
 
-        const_reference operator *() const // todo: *a
+        vectorIterator operator --(int) // todo: a--
         {
-            return (*_ptr);
+            _ptr--;
+            return (vectorIterator(_ptr + 1));
         }
+
+        //todo: *a--
 
         vectorIterator operator +(difference_type n) const // todo: a+n
         {
             return (vectorIterator(_ptr + n));
         }
+
+        //todo: n+a
         
 
-        vectorIterator operator -(difference_type n) const // todo: a-n
+        vectorIterator operator -(difference_type n) const // todo: a - n
         {
             return (vectorIterator(_ptr - n));
+        }
+
+        bool operator >(vectorIterator const& b) const // todo: a > b
+        {
+            return (_ptr > b._ptr);
+        }
+        bool operator <(vectorIterator const& b) const // todo: a < b
+        {
+            return (_ptr < b._ptr);
+        }
+        bool operator >=(vectorIterator const& b) const // todo: a >= b
+        {
+            return (_ptr >= b._ptr);
+        }
+        bool operator <=(vectorIterator const& b) const // todo: a <= b
+        {
+            return (_ptr <= b._ptr);
+        }
+
+        void    operator +=(difference_type n) // todo: a += n
+        {
+            _ptr += n;
+        }
+
+        void    operator -=(difference_type n) // todo: a -= n
+        {
+            _ptr -= n;
+        }
+
+        reference   operator [](difference_type n) // todo: a[n]
+        {
+            return (*(_ptr + n));
+        }
+
+        const_reference operator [](difference_type n) const // todo: a[n]
+        {
+            return (*(_ptr + n));
         }
 
         pointer     getPointer(void) const
@@ -110,15 +184,13 @@ class vectorIterator: public std::iterator<std::random_access_iterator_tag, T>
             return (_ptr);
         }
 
-    
-
     private:
         pointer     _ptr;
 }; /* class vectorIterator */
 
 template <typename T>
 typename ft::vectorIterator<T>::difference_type
-operator - (const ft::vectorIterator<T> a, const ft::vectorIterator<T> b)
+operator - (const ft::vectorIterator<T> a, const ft::vectorIterator<T> b) // todo: a - b
 {
     return (a.getPointer() - b.getPointer());
 }
