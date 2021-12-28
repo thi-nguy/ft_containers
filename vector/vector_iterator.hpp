@@ -6,26 +6,40 @@
 namespace ft
 {
 
-template <class Iterator>
-class iterator_traits
+class random_access_iterator_tag
+{};
+
+template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T*, class Reference = T&>
+class iterator
 {
     public:
-        typedef typename Iterator::difference_type      difference_type;
-        typedef typename Iterator::value_type           value_type;
-        typedef typename Iterator::pointer              pointer;
-        typedef typename Iterator::reference            reference;
-        typedef typename Iterator::iterator_category    iterator_category;
-}; /* class iterator_traits */
+        typedef T           value_type;
+        typedef Distance    difference_type;
+        typedef Pointer     pointer;
+        typedef Reference   reference;
+        typedef Category    iterator_category;
+
+};
+
+template <class Iterator>
+struct iterator_traits
+{
+    typedef typename Iterator::difference_type      difference_type;
+    typedef typename Iterator::value_type           value_type;
+    typedef typename Iterator::pointer              pointer;
+    typedef typename Iterator::reference            reference;
+    typedef typename Iterator::const_reference      const_reference;
+    typedef typename Iterator::iterator_category    iterator_category;
+}; /* struct iterator_traits */
 
 template <class T>
-class iterator_traits<T*>
+struct iterator_traits<T*>
 {
-    public:
-        typedef std::ptrdiff_t                          difference_type;
-        typedef T                                       value_type;
-        typedef T*                                      pointer;
-        typedef T&                                      reference;
-        typedef std::random_access_iterator_tag         iterator_category;
+    typedef std::ptrdiff_t                          difference_type;
+    typedef T                                       value_type;
+    typedef T*                                      pointer;
+    typedef T&                                      reference;
+    typedef std::random_access_iterator_tag         iterator_category;
 };
 
 template <class T>
@@ -39,16 +53,22 @@ class iterator_traits<const T*>
         typedef std::random_access_iterator_tag         iterator_category;
 };
 
+
 template <typename T>
-class vectorIterator: public std::iterator<std::random_access_iterator_tag, T>
+class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
 {
     public:
-        typedef T                           value_type;
-        typedef T&                          reference;
-        typedef const T&                    const_reference;
-        typedef T*                          pointer;
-        typedef const T*                    const_pointer;
-        typedef typename std::ptrdiff_t     difference_type;
+        // typedef T                           value_type;
+        // typedef T&                          reference;
+        // typedef const T&                    const_reference;
+        // typedef T*                          pointer;
+        // typedef const T*                    const_pointer;
+        // typedef typename std::ptrdiff_t     difference_type;
+        typedef typename ft::iterator<ft::random_access_iterator_tag, T>::iterator_category     iterator_category;
+        typedef typename ft::iterator<ft::random_access_iterator_tag, T>::value_type            value_type;
+        typedef typename ft::iterator<ft::random_access_iterator_tag, T>::difference_type       difference_type;
+        typedef T*               pointer;
+        typedef T&             reference;
 
         // ! Canonical form of of vectorIterator
         vectorIterator(void) {} // todo: X a;

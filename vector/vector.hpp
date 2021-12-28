@@ -27,8 +27,8 @@ namespace ft
             
             typedef typename ft::vectorIterator<T>              iterator;
             typedef typename ft::vectorConstIterator<T>         const_iterator;
-            // typedef typename ft::vectorReverseIterator<T>       reverse_iterator;
-            // typedef typename ft::vectorConstReverseIterator<T>  const_reverse_iterator;
+            typedef typename ft::VectorReverseIterator<T>       reverse_iterator;
+            typedef typename ft::VectorConstReverseIterator<T>  const_reverse_iterator;
 
             typedef typename std::ptrdiff_t                     difference_type;
             typedef typename allocator_type::size_type          size_type;
@@ -151,9 +151,23 @@ namespace ft
             //todo: rbegin, rend
             reverse_iterator    rbegin(void)
             {
-
+                return (reverse_iterator(this->end()));
             }
 
+            const_reverse_iterator  rbegin(void) const
+            {
+                return (reverse_iterator(this->end()));
+            }
+
+            reverse_iterator    rend(void)
+            {
+                return (reverse_iterator(this->begin()));
+            }
+
+            const_reverse_iterator rend(void) const
+            {
+                return (reverse_iterator(this->begin()));
+            }
 
         // ! MEMBER FUNCTIONS - CAPACITY
 

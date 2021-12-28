@@ -6,7 +6,9 @@
 
 #include "./vector/vector.hpp"
 #include "./vector/vector_iterator.hpp"
+#include "./vector/vector_const_iterator.hpp"
 #include "./vector/vector_reverse_iterator.hpp"
+#include "./vector/vector_const_reverse_iterator.hpp"
 
 void        print_test_name(std::string name)
 {
@@ -568,17 +570,19 @@ void        test_reverse_iterator_operator_increase(std::string test_type)
 {
     print_test_name(test_type);
     ft::vector<int> myvector;
-    for (int i=0; i<10; i++) myvector.push_back(i);
+    for (int i=9; i>=0; i--)
+        myvector.push_back(i);
 
     typedef ft::vector<int>::iterator iter_type;
-                                                            // ? 9 8 7 6 5 4 3 2 1 0 ?
+    print_element(myvector);
+                                                           // ? 9 8 7 6 5 4 3 2 1 0 ?
     iter_type from (myvector.begin());                     //   ^
-                                                            //         ------>
+                                                           //         ------>
     iter_type until (myvector.end());                      //                       ^
-                                                            //
-    ft::VectorReverseIterator<iter_type> rev_until (from);     // ^
-                                                            //         <------
-    ft::VectorReverseIterator<iter_type> rev_from (until);     //                     ^
+                                                           //
+    ft::VectorReverseIterator<iter_type> rev_until (from); // ^
+                                                           //         <------
+    ft::VectorReverseIterator<iter_type> rev_from (until); //                     ^
 
     std::cout << "myvector:";
     while (rev_from != rev_until) {
@@ -590,30 +594,72 @@ void        test_reverse_iterator_operator_increase(std::string test_type)
 
 void        test_reverse_iterator_relation(std::string test_type)
 {
-    print_test_name(test_type);
-    int a[] {0, 1, 2, 3};
-    //             ↑  └───── x, y
-    //             └──────── z
- 
-    ft::VectorReverseIterator<int*>
-        x { std::rend(a) - std::size(a) },
-        y { std::rend(a) - std::size(a) },
-        z { std::rbegin(a) + 1 };
+     print_test_name(test_type);
+    ft::vector<int> myvector;
+    for (int i=9; i>=0; i--)
+        myvector.push_back(i);
+
+    typedef ft::vector<int>::iterator iter_type;
+    print_element(myvector);
+                                                           // ? 9 8 7 6 5 4 3 2 1 0 ?
+    iter_type from (myvector.begin());                     //   ^
+                                                           //         ------>
+    iter_type until (myvector.end());                      //                       ^
+                                                           //
+    ft::VectorReverseIterator<iter_type> rev_x (from + 1); // ^
+    ft::VectorReverseIterator<iter_type> rev_z (from + 2); // ^
+                                                           //         <------
+    ft::VectorReverseIterator<iter_type> rev_y (until - 1);
  
     std::cout
         << std::boolalpha
-        << "*x == " << *x << '\n' // 3
-        << "*y == " << *y << '\n' // 3
-        << "*z == " << *z << '\n' // 2
-        << "x == y ? " << (x == y) << '\n' // true
-        << "x != y ? " << (x != y) << '\n' // false
-        << "x <  y ? " << (x <  y) << '\n' // false
-        << "x <= y ? " << (x <= y) << '\n' // true
-        << "x == z ? " << (x == z) << '\n' // false
-        << "x != z ? " << (x != z) << '\n' // true
-        << "x <  z ? " << (x <  z) << '\n' // true!
-        << "x <= z ? " << (x <= z) << '\n' // true
+        << "*rev_x == " << *rev_x << '\n' // 3
+        << "*rev_y == " << *rev_y << '\n' // 3
+        << "*rev_z == " << *rev_z << '\n' // 2
+        << "rev_x == rev_y ? " << (rev_x == rev_y) << '\n' // true
+        << "rev_x != rev_y ? " << (rev_x != rev_y) << '\n' // false
+        << "rev_x <  rev_y ? " << (rev_x <  rev_y) << '\n' // false
+        << "rev_x <= rev_y ? " << (rev_x <= rev_y) << '\n' // true
+        << "rev_x == rev_z ? " << (rev_x == rev_z) << '\n' // false
+        << "rev_x != rev_z ? " << (rev_x != rev_z) << '\n' // true
+        << "rev_x <  rev_z ? " << (rev_x <  rev_z) << '\n' // true!
+        << "rev_x <= rev_z ? " << (rev_x <= rev_z) << '\n' // true
         ;
+}
+
+void        test_reverse_iterator_operator_addition(std::string test_type)
+{
+    print_test_name(test_type);
+    ft::vector<int> myvector;
+    for (int i=0; i<10; i++) 
+        myvector.push_back(i);	// myvector: 0 1 2 3 4 5 6 7 8 9
+    print_element(myvector);
+
+    typedef ft::vector<int>::iterator iter_type;
+
+    ft::VectorReverseIterator<iter_type> rev_it (myvector.begin() + 4);
+
+    // rev_it += 3;
+
+    std::cout << "The fourth element from the end is: " << *rev_it << '\n';
+}
+
+void        test_rbegin(std::string test_type)
+{
+    print_test_name(test_type);
+    ft::vector<int> myvector (5);  // 5 default-constructed ints
+    print_element(myvector);
+
+    // int i=0;
+
+    ft::vector<int>::reverse_iterator rit = myvector.rbegin();
+    // for (; rit!= myvector.rend(); ++rit)
+    //     *rit = ++i;
+
+    // std::cout << "myvector contains:";
+    // for (ft::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+    //     std::cout << ' ' << *it;
+    // std::cout << '\n';
 }
 
 
@@ -646,10 +692,13 @@ void        test_vector(std::string test_type)
     // test_swap("swap");
     // test_clear("clear");
 
-    // Reverse Iterator
-    test_reverse_iterator("reverse iterator");
-    test_reverse_iterator_operator_increase("reverse iterator operator ++");
-    test_reverse_iterator_relation("reverse iterator relation");
+    // // Reverse Iterator
+    // test_reverse_iterator("reverse iterator");
+    // test_reverse_iterator_operator_increase("reverse iterator operator ++");
+    // test_reverse_iterator_relation("reverse iterator relation");
+    // test_reverse_iterator_operator_addition("reverse iterator operator +");
+
+    test_rbegin("rbegin");
 
     // test_operator("operator");
 }
