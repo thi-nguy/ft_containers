@@ -1,4 +1,6 @@
+#include <vector>
 #include <stack>
+#include <map>
 #include <iostream>
 #include <string>
 #include <ctime>

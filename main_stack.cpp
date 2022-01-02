@@ -1,4 +1,6 @@
+#include <vector>
 #include <stack>
+#include <map>
 #include <iostream>
 #include <string>
 #include <ctime>
@@ -13,21 +15,6 @@ void        print_test_name(std::string name)
     std::cout << "\n------- TEST ";
     std::cout << name << " ------------------\n";
 }
-
-// template <class T>
-// void        print_element(ft::stack<T> my_vector)
-// {
-//     int size = my_vector.size();
-//     if (size <= 0)
-//         return ;
-//     std::cout << "Elements in the stack: {";
-//     int i;
-//     for (i = 0; i < size - 1; i++)
-//     {
-//         std::cout << my_vector[i] << ", ";
-//     }
-//     std::cout << my_vector[i] << "}" << std::endl;
-// }
 
 void        test_constructor(std::string test_type)
 {
