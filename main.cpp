@@ -6,9 +6,8 @@
 
 #include "./vector/vector.hpp"
 #include "./vector/vector_iterator.hpp"
-#include "./vector/vector_const_iterator.hpp"
 #include "./vector/vector_reverse_iterator.hpp"
-#include "./vector/vector_const_reverse_iterator.hpp"
+#include "./utils/utils.hpp"
 
 void        print_test_name(std::string name)
 {
@@ -153,19 +152,23 @@ void      test_empty(std::string test_type)
     std::cout << "empty 4: " << fourth.empty() << std::endl;
 }
 
-// void        test_operator(std::string test_type)
-// {
-//     print_test_name(test_type);
-//     ft::vector<int> foo (3,100);   // three ints with a value of 100
-//     ft::vector<int> bar (2,200);   // two ints with a value of 200
+void        test_operator(std::string test_type)
+{
+    print_test_name(test_type);
+    ft::vector<int> foo (3,100);   // three ints with a value of 100
+    ft::vector<int> bar (2,200);   // two ints with a value of 200
 
-//     if (foo==bar) std::cout << "foo and bar are equal\n";
-//     if (foo!=bar) std::cout << "foo and bar are not equal\n";
-//     if (foo< bar) std::cout << "foo is less than bar\n";
-//     if (foo> bar) std::cout << "foo is greater than bar\n";
-//     if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
-//     if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
-// }
+    if (foo == bar) std::cout << "foo and bar are equal\n";
+    if (foo != bar) std::cout << "foo and bar are not equal\n";
+    if (foo < bar) std::cout << "foo is less than bar\n";
+    if (bar > foo) std::cout << "bar is greater than foo\n";
+    if (foo <= bar) std::cout << "foo is less than or equal to bar\n";
+    if (bar >= foo) std::cout << "bar is greater than or equal to foo\n";
+
+    ft::vector<int> foo2 (2,100);   // three ints with a value of 100
+    ft::vector<int> foo3 (2,100);   // two ints with a value of 200
+    if (foo2 == foo3) std::cout << "foo2 and foo3 are equal\n";
+}
 
 void        test_reserve(std::string test_type)
 {
@@ -639,8 +642,6 @@ void        test_reverse_iterator_operator_addition(std::string test_type)
 
     ft::VectorReverseIterator<iter_type> rev_it (myvector.begin() + 4);
 
-    // rev_it += 3;
-
     std::cout << "The fourth element from the end is: " << *rev_it << '\n';
 }
 
@@ -650,16 +651,81 @@ void        test_rbegin(std::string test_type)
     ft::vector<int> myvector (5);  // 5 default-constructed ints
     print_element(myvector);
 
-    // int i=0;
+    int i=0;
 
     ft::vector<int>::reverse_iterator rit = myvector.rbegin();
-    // for (; rit!= myvector.rend(); ++rit)
-    //     *rit = ++i;
+    for (; rit!= myvector.rend(); ++rit)
+        *rit = ++i;
 
-    // std::cout << "myvector contains:";
-    // for (ft::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
-    //     std::cout << ' ' << *it;
-    // std::cout << '\n';
+    std::cout << "myvector contains:";
+    for (ft::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+}
+
+void        test_rend(std::string test_type)
+{
+    print_test_name(test_type);
+    ft::vector<int> myvector (5);  // 5 default-constructed ints
+
+    ft::vector<int>::reverse_iterator rit = myvector.rbegin();
+
+    int i=0;
+    for (rit = myvector.rbegin(); rit!= myvector.rend(); ++rit)
+        *rit = ++i;
+
+    std::cout << "myvector contains:";
+    for (ft::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+}
+
+void        test_swap_non_member(std::string test_type)
+{
+    print_test_name(test_type);
+    ft::vector<int> foo (3,100);   // three ints with a value of 100
+    ft::vector<int> bar (5,200);   // five ints with a value of 200
+
+    std::cout << "foo ";
+    print_element(foo);
+    std::cout << "bar ";
+    print_element(bar);
+
+    std::cout << "Swap foo <-> bar\n";
+    foo.swap(bar);
+
+    std::cout << "foo contains:";
+    for (ft::vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+
+    std::cout << "bar contains:";
+    for (ft::vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+}
+
+void        test_get_allocator(std::string test_type)
+{
+    print_test_name(test_type);
+
+    ft::vector<int> myvector;
+    int * p;
+    unsigned int i;
+
+    // allocate an array with space for 5 elements using vector's allocator:
+    p = myvector.get_allocator().allocate(5);
+
+    // construct values in-place on the array:
+    for (i=0; i<5; i++) myvector.get_allocator().construct(&p[i],i);
+
+    std::cout << "The allocated array contains:";
+    for (i=0; i<5; i++) std::cout << ' ' << p[i];
+    std::cout << '\n';
+
+    // destroy and deallocate:
+    for (i=0; i<5; i++) myvector.get_allocator().destroy(&p[i]);
+    myvector.get_allocator().deallocate(p,5);
 }
 
 
@@ -667,43 +733,45 @@ void        test_vector(std::string test_type)
 {
     print_test_name(test_type);
 
-    // test_constructor("constructor");
-    // // Iterator
-    // test_begin("begin");
-    // test_end("end");
-    // // Capacity
-    // test_size("size");
-    // test_max_size("max_size");
-    // test_resize("resize");
-    // test_capacity("capacity");
-    // test_empty("empty");
-    // test_reserve("reserve");
-    // // Element access
-    // test_operator_access("operator []");
-    // test_at("at");
-    // test_front("front");
-    // test_back("back");
-    // // Modifiers
-    // test_assign("assign");
-    // test_push_back("push_back");
-    // test_pop_back("pop_back");
-    // test_insert("insert");
-    // test_erase("erase");
-    // test_swap("swap");
-    // test_clear("clear");
-
-    // // Reverse Iterator
-    // test_reverse_iterator("reverse iterator");
-    // test_reverse_iterator_operator_increase("reverse iterator operator ++");
-    // test_reverse_iterator_relation("reverse iterator relation");
-    // test_reverse_iterator_operator_addition("reverse iterator operator +");
-
+    test_constructor("constructor");
+    // Iterator
+    test_begin("begin");
+    test_end("end");
     test_rbegin("rbegin");
+    test_rend("rend");
+    // Capacity
+    test_size("size");
+    test_max_size("max_size");
+    test_resize("resize");
+    test_capacity("capacity");
+    test_empty("empty");
+    test_reserve("reserve");
+    // Element access
+    test_operator_access("operator []");
+    test_at("at");
+    test_front("front");
+    test_back("back");
+    // Modifiers
+    test_assign("assign");
+    test_push_back("push_back");
+    test_pop_back("pop_back");
+    test_insert("insert");
+    test_erase("erase");
+    test_swap("swap");
+    test_clear("clear");
 
-    // test_operator("operator");
+    // Reverse Iterator
+    test_reverse_iterator("reverse iterator");
+    test_reverse_iterator_operator_increase("reverse iterator operator ++");
+    test_reverse_iterator_relation("reverse iterator relation");
+    test_reverse_iterator_operator_addition("reverse iterator operator +");
+    // todo: Allocator
+    test_get_allocator("get_allocator");
+
+    // Todo: Non-member function overloads
+    test_swap_non_member("swap non member functions");
+    test_operator("operator");
 }
-
-
 
 int main(void)
 {

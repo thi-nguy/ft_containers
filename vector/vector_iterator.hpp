@@ -1,61 +1,13 @@
 #ifndef VECTOR_ITERATOR_HPP
 #define VECTOR_ITERATOR_HPP
 
-#include <iterator>
+#include "../utils/utils.hpp"
 
 namespace ft
 {
 
-class random_access_iterator_tag
-{};
-
-template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T*, class Reference = T&>
-class iterator
-{
-    public:
-        typedef T           value_type;
-        typedef Distance    difference_type;
-        typedef Pointer     pointer;
-        typedef Reference   reference;
-        typedef Category    iterator_category;
-
-};
-
-template <class Iterator>
-struct iterator_traits
-{
-    typedef typename Iterator::difference_type      difference_type;
-    typedef typename Iterator::value_type           value_type;
-    typedef typename Iterator::pointer              pointer;
-    typedef typename Iterator::reference            reference;
-    typedef typename Iterator::const_reference      const_reference;
-    typedef typename Iterator::iterator_category    iterator_category;
-}; /* struct iterator_traits */
-
-template <class T>
-struct iterator_traits<T*>
-{
-    typedef std::ptrdiff_t                          difference_type;
-    typedef T                                       value_type;
-    typedef T*                                      pointer;
-    typedef T&                                      reference;
-    typedef std::random_access_iterator_tag         iterator_category;
-};
-
-template <class T>
-class iterator_traits<const T*>
-{
-    public:
-        typedef std::ptrdiff_t                          difference_type;
-        typedef T                                       value_type;
-        typedef const T*                                pointer;
-        typedef const T&                                reference;
-        typedef std::random_access_iterator_tag         iterator_category;
-};
-
-
 template <typename T>
-class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
+class vectorIterator: ft::iterator<ft::random_access_iterator_tag, T>
 {
     public:
         // typedef T                           value_type;
@@ -99,11 +51,6 @@ class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
         }
 
         reference operator *(void) // todo: *a
-        {
-            return (*_ptr);
-        }
-
-        const_reference operator *(void) const // todo: *a
         {
             return (*_ptr);
         }
@@ -189,12 +136,7 @@ class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
             _ptr -= n;
         }
 
-        reference   operator [](difference_type n) // todo: a[n]
-        {
-            return (*(_ptr + n));
-        }
-
-        const_reference operator [](difference_type n) const // todo: a[n]
+        reference   operator [](difference_type n) const // todo: a[n]
         {
             return (*(_ptr + n));
         }

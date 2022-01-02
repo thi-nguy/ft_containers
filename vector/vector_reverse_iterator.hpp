@@ -1,7 +1,7 @@
 #ifndef VECTOR_REVERSE_ITERATOR_HPP
 #define VECTOR_REVERSE_ITERATOR_HPP
 
-#include <iterator>
+#include "../utils/utils.hpp"
 
 namespace ft
 {
@@ -10,13 +10,12 @@ class VectorReverseIterator
 {
     public:
 
-            typedef Iter                                                        iterator_type;
+            typedef Iter                                                       iterator_type;
             typedef typename ft::iterator_traits<Iter>::iterator_category      iterator_category;
             typedef typename ft::iterator_traits<Iter>::value_type             value_type;
             typedef typename ft::iterator_traits<Iter>::difference_type        difference_type;
             typedef typename ft::iterator_traits<Iter>::pointer                pointer;
             typedef typename ft::iterator_traits<Iter>::reference              reference;
-            typedef typename ft::iterator_traits<Iter>::const_reference        const_reference;
 
 
             // todo: Construction
@@ -131,16 +130,10 @@ class VectorReverseIterator
                 return (&(operator*()));
             }
             // ! operator []
-            reference operator [] (difference_type b)
+            reference operator [] (difference_type b) const
             {
                 return (this->base()[-b - 1]);
             }
-
-            const_reference operator [] (difference_type b) const
-            {
-                return (this->base()[-b - 1]);
-            }
-
 
     private:
         iterator_type _ptr;
