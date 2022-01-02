@@ -1,12 +1,10 @@
-#include <vector>
+#include <stack>
 #include <iostream>
 #include <string>
 #include <ctime>
 #include <cstdlib>
 
 #include "./vector/vector.hpp"
-#include "./vector/vector_iterator.hpp"
-#include "./vector/vector_reverse_iterator.hpp"
 #include "./utils/utils.hpp"
 
 void        print_test_name(std::string name)
@@ -165,8 +163,8 @@ void        test_operator(std::string test_type)
     if (foo <= bar) std::cout << "foo is less than or equal to bar\n";
     if (bar >= foo) std::cout << "bar is greater than or equal to foo\n";
 
-    ft::vector<int> foo2 (2,100);   // three ints with a value of 100
-    ft::vector<int> foo3 (2,100);   // two ints with a value of 200
+    ft::vector<int> foo2 (2,100);   // two ints with a value of 100
+    ft::vector<int> foo3 (2,100);   // two ints with a value of 100
     if (foo2 == foo3) std::cout << "foo2 and foo3 are equal\n";
 }
 

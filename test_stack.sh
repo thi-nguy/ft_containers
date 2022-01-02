@@ -4,13 +4,13 @@ green=`tput setaf 2`
 yellow=`tput setaf 3`
 reset=`tput sgr0`
 
-# Change ft::vector to std::vector and create a new main
-sed 's/ft::vector/std::vector/g' main.cpp > main_tmp.cpp
-# Change ft::VectorReverseIterator to std::reverse_iterator and create a new main
-sed 's/ft::VectorReverseIterator/std::reverse_iterator/g' main_tmp.cpp > main_real.cpp
+# Change ft::stack to std::stack and create a new main
+sed 's/ft::stack/std::stack/g' main_stack.cpp > main_stack_tmp.cpp
+# Change ft::stackReverseIterator to std::reverse_iterator and create a new main
+sed 's/ft::stackReverseIterator/std::reverse_iterator/g' main_stack_tmp.cpp > main_stack_real.cpp
 
 # Compile with new main and put result into out1
-c++ -Wall -Wextra -Werror -std=c++98 -fsanitize=address main_real.cpp
+c++ -Wall -Wextra -Werror -std=c++98 -fsanitize=address main_stack_real.cpp
 ./a.out > real_out
 
 # Compile our main and put result into out2
@@ -31,5 +31,5 @@ rm a.out
 make fclean
 rm real_out
 rm my_out
-rm main_tmp.cpp
-rm main_real.cpp
+rm main_stack_tmp.cpp
+rm main_stack_real.cpp
