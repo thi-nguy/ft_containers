@@ -44,11 +44,11 @@ namespace ft
             {
                 if (this != &rhs)
                 {
-                    this->value = other.value;
-                    this->parent = other.parent;
-                    this->left = other.left;
-                    this->right = other.right;
-                    this->color = other.color;
+                    this->value = rhs.value;
+                    this->parent = rhs.parent;
+                    this->left = rhs.left;
+                    this->right = rhs.right;
+                    this->color = rhs.color;
                 }
                 return (*this);
             }
@@ -72,7 +72,7 @@ namespace ft
 
             // Todo: iterator and other typedef
 
-            // Member Functions
+            // ! Canonical form
             RedBlackTree(const Node_Alloc& node_alloc = Node_Alloc()) // call constructor of allocator
             :   _root(NULL),
                 _alloc_node(node_alloc)
@@ -82,13 +82,29 @@ namespace ft
                 _alloc_node.construct(_root, Node(_root, _root, _root)); // ! What's the hell?
             }
 
-            
+            RedBlackTree(const RedBlackTree& other)
+            {
+                *this = other;
+            }
+
+            RedBlackTree& operator=(const RedBlackTree& rhs)
+            {
+                if (this != &rhs)
+                {
+                    this->_root = rhs._root;
+                    this->_alloc_node = rhs._alloc_node;
+                }
+                return (*this);
+            }
 
             ~RedBlackTree()
             {
                 _alloc_node.destroy(_root);
                 _alloc_node.deallocate(_root, 1);
             }
+
+            // ! Member functions
+
 
 
 
@@ -99,7 +115,7 @@ namespace ft
 
         private:
             node_pointer            _root;
-            // node_pointer            _last_node; // need it to allocate - construct
+            // node_pointer            _last_node; // ? need it to allocate - construct??
             std::allocator<Node>    _alloc_node;
     };
 
