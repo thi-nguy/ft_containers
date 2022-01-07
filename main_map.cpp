@@ -9,6 +9,7 @@
 #include <string>
 
 #include "./map/map.hpp"
+#include "./map/red_black_tree.hpp"
 
 void        print_test_name(std::string name)
 {
@@ -47,11 +48,61 @@ void        test_pair(std::string test_type)
     if (bar >= foo) std::cout << "bar is greater than or equal to foo\n";
 }
 
+void        test_tree_Node(std::string test_type)
+{
+    print_test_name(test_type);
+
+    // Constructor
+    ft::treeNode< int > node1;
+    ft::treeNode< int > node2 (4);
+    ft::treeNode< std::string > node3 ("hello");
+    ft::treeNode< ft::pair< int, char > > node4;
+
+    ft::pair < int, std::string > a_pair (42, "my school");
+    ft::treeNode< ft::pair< int, std::string > > node5 (a_pair);
+
+    // Copy constructor && operator =
+    ft::treeNode <ft::pair< int, std::string > > node6 = node5;
+    ft::treeNode <ft::pair < int, char > > node7 (node4);
+}
+
+void        test_red_black_tree(std::string test_type)
+{
+    print_test_name(test_type);
+
+    // ft::pair < int, std::string > pair1 (42, "my school");
+    // ft::pair < int, std::string > pair2 (43, "not my school");
+    // ft::pair < int, std::string > pair3 (44, "never my school");
+    // ft::RedBlackTree < ft::pair< int, std::string > > my_tree;
+    // my_tree.insert(pair1);
+    // my_tree.insert(pair2);
+    // my_tree.insert(pair3);
+
+    // my_tree.print2D(); // lam operator << cho ft::pair
+
+    ft::RedBlackTree <int> my_tree;
+    my_tree.insert(35);
+    my_tree.insert(37);
+    my_tree.insert(39);
+    my_tree.insert(43);
+    my_tree.insert(45);
+    my_tree.insert(46);
+    my_tree.insert(47);
+    my_tree.insert(48);
+    my_tree.insert(49);
+    my_tree.print2D(); // lam operator << cho ft::pair
+
+
+
+}
+
 
 void        test_map(std::string test_type)
 {
     print_test_name(test_type);
-    test_pair("pair");
+    // test_pair("pair");
+    test_tree_Node("Tree Node");
+    test_red_black_tree("Red Black Tree");
 }
 
 int main(void)
