@@ -59,6 +59,9 @@
         "typeinfo": "cpp",
         "unordered_map": "cpp",
         "utility": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "deque": "cpp",
+        "map": "cpp",
+        "__functional_03": "cpp"
     }
 }

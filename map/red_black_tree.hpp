@@ -2,7 +2,11 @@
 #define RED_BLACK_TREE_HPP
 
 #include <memory>  //std::allocator
-#include <utility> //std::swap
+#include <utility> //std::
+
+#define red		"\033[91m"
+#define green   "\033[92m"
+#define nocolor	"\033[0m"
 
 enum Color {RED, BLACK};
 
@@ -27,7 +31,7 @@ namespace ft
                 parent(parent),
                 left(left),
                 right(right),
-                color()
+                color(BLACK)
             {
                 // std::cout << "Node Default constructor called\n\n";
             }
@@ -92,7 +96,7 @@ namespace ft
                 // _last_node?
             {
                 // _root = _alloc_node.allocate(1);
-                // _alloc_node.construct(_root, Node(_root, _root, _root)); // construct 03 nodes: parent, left, right of the new node
+                // _alloc_node.construct(_root, Node()); // construct 03 nodes: parent, left, right of the new node
                 std::cout << "Tree constructor called\n";
             }
 
@@ -122,86 +126,7 @@ namespace ft
             }
 
             // ! Member functions
-            void    insert(const value_type &val)
-            {
-                Node    *pt = _alloc_node.allocate(1);
-                _alloc_node.construct(pt, Node(val));
-                
-                // Do a normal BST insert
-                _root = BSTInsert (_root, pt);
-                // Fix Red Black Tree violation
-                fixViolation(_root, pt);
-                std::cout << "Insert function done\n";
-            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-        // Util print the tree
-            void print2DUtil(Node* root, int space)
-            {
-                int COUNT = 10;
-                // Base case
-                if (root == NULL)
-                    return;
-            
-                // Increase distance between levels
-                space += COUNT;
-            
-                // Process right child first
-                print2DUtil(root->right, space);
-            
-                // Print current node after space
-                // count
-                std::cout << std::endl;
-                for (int i = COUNT; i < space; i++)
-                    std::cout << " ";
-                std::cout << root->value<<"\n";
-            
-                // Process left child
-                print2DUtil(root->left, space);
-            }
-            
-            // Wrapper over print2DUtil()
-            void print2D(void)
-            {
-                // Pass initial space count as 0
-                print2DUtil(_root, 0);
-            }
-        protected:
-            Node* BSTInsert(Node* root, Node* pt)
-            {
-                // If the tree is empty, return a new node
-                if (root == NULL)
-                    return (pt);
-
-                // Otherwise, recur down the tree
-                if (pt->value < root->value)
-                {
-                    root->left = BSTInsert(root->left, pt);
-                    root->left->parent = root;
-                }
-                else if (pt->value > root->value)
-                {
-                    root->right = BSTInsert(root->right, pt);
-                    root->right->parent = root;
-                }
-                return root;
-            }
-
-            /* 
-            ! *& change reference to the pointer value
-            pointer's value is changed to point to the other memory.
-            */
             void    rotateLeft(Node *&root, Node *&x)
             {
                 if (x != NULL)
@@ -249,105 +174,150 @@ namespace ft
                 x->parent = y;
             }
 
-            void    fixViolation(Node *&root, Node *&pt)
+            void    insert(const value_type &val)
+            {
+                Node    *pt = _alloc_node.allocate(1);
+                _alloc_node.construct(pt, Node(val));
+                
+                // Do a normal BST insert
+                _root = BSTInsert(_root, pt);
+                // Fix Red Black Tree violation
+               fixViolation(_root, pt);
+                // std::cout << "Insert function done\n";
+            }
+
+            void    fixViolation(Node *&root, Node *&pt) // need to add check violation up until the root.
             {
                 Node *parent_pt = NULL;
                 Node *grand_parent_pt = NULL;
-            
-                while ((pt != root) && (pt->color != BLACK) &&
-                    (pt->parent->color == RED))
+                
+                if (pt->parent == NULL)
                 {
-            
+                    root->color = BLACK;
+                    return ;
+                }
+                while (pt != root && pt->color != BLACK && pt->parent->color == RED)     
+                {
                     parent_pt = pt->parent;
                     grand_parent_pt = pt->parent->parent;
-                    if (grand_parent_pt == NULL)
-                        return ;
-                    /*  Case : A
-                        Parent of pt is left child
-                        of Grand-parent of pt */
                     if (parent_pt == grand_parent_pt->left)
                     {
-            
                         Node *uncle_pt = grand_parent_pt->right;
-            
-                        /* Case : 1
-                        The uncle of pt is also red
-                        Only Recoloring required */
-                        if (uncle_pt != NULL && uncle_pt->color ==
-                                                            RED)
+                        if (uncle_pt != NULL && uncle_pt->color == RED)
                         {
-                            grand_parent_pt->color = RED;
                             parent_pt->color = BLACK;
                             uncle_pt->color = BLACK;
+                            grand_parent_pt->color = RED;
                             pt = grand_parent_pt;
                         }
-            
                         else
                         {
-                            /* Case : 2
-                            pt is right child of its parent
-                            Left-rotation required */
                             if (pt == parent_pt->right)
                             {
                                 rotateLeft(root, parent_pt);
                                 pt = parent_pt;
                                 parent_pt = pt->parent;
                             }
-            
-                            /* Case : 3
-                            pt is left child of its parent
-                            Right-rotation required */
                             rotateRight(root, grand_parent_pt);
-                            std::swap(parent_pt->color,
-                                    grand_parent_pt->color);
+                            std::swap(parent_pt->color, grand_parent_pt->color);
                             pt = parent_pt;
                         }
                     }
-            
-                    /* Case : B
-                    Parent of pt is right child
-                    of Grand-parent of pt */
                     else
                     {
-                        Node *uncle_pt = NULL;
-                        if (grand_parent_pt != NULL)
-                            uncle_pt = grand_parent_pt->left;
-            
-                        /*  Case : 1
-                            The uncle of pt is also red
-                            Only Recoloring required */
-                        if ((uncle_pt != NULL) && (uncle_pt->color == RED))
+                        Node *uncle_pt = grand_parent_pt->left;
+                        if (uncle_pt != NULL && uncle_pt->color == RED)
                         {
-                            grand_parent_pt->color = RED;
                             parent_pt->color = BLACK;
                             uncle_pt->color = BLACK;
+                            grand_parent_pt->color = RED;
                             pt = grand_parent_pt;
                         }
-                        else
+                        else 
                         {
-                            /* Case : 2
-                            pt is left child of its parent
-                            Right-rotation required */
                             if (pt == parent_pt->left)
                             {
                                 rotateRight(root, parent_pt);
                                 pt = parent_pt;
                                 parent_pt = pt->parent;
                             }
-            
-                            /* Case : 3
-                            pt is right child of its parent
-                            Left-rotation required */
                             rotateLeft(root, grand_parent_pt);
-                            std::swap(parent_pt->color,
-                                    grand_parent_pt->color);
+                            std::swap(parent_pt->color, grand_parent_pt->color);
                             pt = parent_pt;
                         }
                     }
                 }
+                root->color = BLACK;
+            }
+        // Util print the tree
+            void print2DUtil(Node* root, int space)
+            {
+                const char* my_color[] = {"RED", "BLACK"};
+
+                int COUNT = 10;
+                // Base case
+                if (root == NULL)
+                    return;
+            
+                // Increase distance between levels
+                space += COUNT;
+            
+                // Process right child first
+                print2DUtil(root->right, space);
+            
+                // Print current node after space
+                // count
+                std::cout << std::endl;
+                for (int i = COUNT; i < space; i++)
+                    std::cout << " ";
+                if (root->color == 0)
+                {
+                    std::cout << root->value << "/";
+                    std::cout << red << my_color[root->color] << nocolor << "\n";
+                }
+                else
+                {
+                    std::cout << root->value << "/";
+                    std::cout << green << my_color[root->color] << nocolor <<"\n";
+                }
+            
+                // Process left child
+                print2DUtil(root->left, space);
+            }
+            
+            // Wrapper over print2DUtil()
+            void print2D(void)
+            {
+                // Pass initial space count as 0
+                print2DUtil(_root, 0);
             }
 
+        protected:
 
+            Node* BSTInsert(Node* root, Node* pt)
+            {
+                // If the tree is empty, return a new node
+                if (root == NULL)
+                    return (pt);
+
+                // Otherwise, recur down the tree
+                if (pt->value < root->value)
+                {
+                    root->left = BSTInsert(root->left, pt);
+                    root->left->parent = root;
+                }
+                else if (pt->value > root->value)
+                {
+                    root->right = BSTInsert(root->right, pt);
+                    root->right->parent = root;
+                }
+                return root;
+            }
+
+            /* 
+            ! *& change reference to the pointer value
+            pointer's value is changed to point to the other memory.
+            */
 
         private:
             Node                    *_root;

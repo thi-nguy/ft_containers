@@ -81,15 +81,9 @@ void        test_red_black_tree(std::string test_type)
     // my_tree.print2D(); // lam operator << cho ft::pair
 
     ft::RedBlackTree <int> my_tree;
-    my_tree.insert(35);
-    my_tree.insert(37);
-    my_tree.insert(39);
-    my_tree.insert(43);
-    my_tree.insert(45);
-    my_tree.insert(46);
-    my_tree.insert(47);
-    my_tree.insert(48);
-    my_tree.insert(49);
+
+    for (int i = 0; i < 10; i++)
+        my_tree.insert(i);
     my_tree.print2D(); // lam operator << cho ft::pair
 
 
