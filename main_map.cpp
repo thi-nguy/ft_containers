@@ -70,21 +70,36 @@ void        test_red_black_tree(std::string test_type)
 {
     print_test_name(test_type);
 
-    // ft::pair < int, std::string > pair1 (42, "my school");
-    // ft::pair < int, std::string > pair2 (43, "not my school");
-    // ft::pair < int, std::string > pair3 (44, "never my school");
-    // ft::RedBlackTree < ft::pair< int, std::string > > my_tree;
-    // my_tree.insert(pair1);
-    // my_tree.insert(pair2);
-    // my_tree.insert(pair3);
+    // ! insertValue, pair
 
-    // my_tree.print2D(); // lam operator << cho ft::pair
+    ft::pair < int, std::string > pair1 (42, "orange");
+    ft::pair < int, std::string > pair2 (43, "apple");
+    ft::pair < int, std::string > pair3 (44, "kiwi");
+    ft::pair < int, std::string > pair4 (45, "banana");
+    ft::pair < int, std::string > pair5 (46, "coconut");
+    ft::pair < int, std::string > pair6 (47, "kiwi");
+    ft::RedBlackTree < ft::pair< int, std::string > > my_tree;
+    my_tree.insertValue(pair1);
+    my_tree.insertValue(pair2);
+    my_tree.insertValue(pair3);
+    my_tree.insertValue(pair4);
+    my_tree.insertValue(pair5);
+    my_tree.insertValue(pair6);
 
-    ft::RedBlackTree <int> my_tree;
+    // ! insertValue, int
 
-    for (int i = 0; i < 10; i++)
-        my_tree.insert(i);
-    my_tree.print2D(); // lam operator << cho ft::pair
+    ft::RedBlackTree <int> my_tree2;
+    for (int i = 0; i < 20; i++)
+        my_tree2.insertValue(i);
+    my_tree2.print2D(); // lam operator << cho ft::pair
+
+    // ! In noi dung cua searchValue bang 2 cach
+    ft::treeNode<ft::pair < int, std::string> > *a_node = my_tree.searchValue(my_tree.getRoot(), pair3);
+    std::cout << a_node->value << "\n";
+
+    std::cout << my_tree.searchValue(my_tree.getRoot(), pair3)->value << "\n";
+
+
 
 
 
