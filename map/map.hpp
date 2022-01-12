@@ -34,13 +34,14 @@ namespace ft
 
             // Todo: Constructor
             
+            
 
 
 
         private:
             allocator_type                              _alloc;
             key_compare                                 _compare;
-            ft::RedBlackTree<value_type, key_compare>       _rbt;
+            ft::RedBlackTree<value_type, key_compare>   _rbt;
 
     }; /* class map */
 

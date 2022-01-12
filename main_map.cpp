@@ -86,22 +86,26 @@ void        test_red_black_tree(std::string test_type)
     my_tree.insertValue(pair5);
     my_tree.insertValue(pair6);
 
-    // ! insertValue, int
-
-    ft::RedBlackTree <int> my_tree2;
-    for (int i = 0; i < 20; i++)
-        my_tree2.insertValue(i);
-    my_tree2.print2D(); // lam operator << cho ft::pair
-
     // ! In noi dung cua searchValue bang 2 cach
     ft::treeNode<ft::pair < int, std::string> > *a_node = my_tree.searchValue(my_tree.getRoot(), pair3);
     std::cout << a_node->value << "\n";
 
     std::cout << my_tree.searchValue(my_tree.getRoot(), pair3)->value << "\n";
 
+    my_tree.print2D();
+    std::cout << " -------------------------------------------------------\n";
+    my_tree.deleteValue(pair2);
+    my_tree.print2D();
 
-
-
+    // ! insertValue, int
+    ft::RedBlackTree <int> my_tree2;
+    for (int i = 0; i < 10; i++)
+        my_tree2.insertValue(i);
+    my_tree2.print2D(); // lam operator << cho ft::pair
+    // ! Delete a node
+    my_tree2.deleteValue(3);
+    std::cout << " -------------------------------------------------------\n";
+    my_tree2.print2D();
 
 }
 

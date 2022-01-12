@@ -66,7 +66,41 @@ namespace ft
             {
                 // std::cout << "Node Deconstructor called\n";
             }
+
+            bool isOnLeft() 
+            { 
+                return (this == parent->left); 
+            }
+
+
+            treeNode *sibling() 
+            {
+                // sibling null if no parent
+                if (parent == NULL)
+                    return NULL;
+            
+                if (isOnLeft())
+                    return (parent->right);
+            
+                return (parent->left);
+            }
+
+            bool hasRedChild() 
+            {
+                return (left != NULL and left->color == RED) || (right != NULL and right->color == RED);
+            }
     }; /* struct treeNode */
+
+    template <typename T>
+    treeNode<T> *successor(treeNode<T> *x) 
+    {
+        treeNode<T> *temp = x;
+
+        while (temp->left != NULL)
+            temp = temp->left;
+
+        return temp;
+    }
 };
 
 #endif /* namespace ft */
