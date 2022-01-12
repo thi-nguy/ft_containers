@@ -89,6 +89,13 @@ namespace ft
             {
                 return (left != NULL and left->color == RED) || (right != NULL and right->color == RED);
             }
+
+            bool operator==(const treeNode& other)
+            {
+                if (value == other.value)
+                    return (true);
+                return (false);
+            }
     }; /* struct treeNode */
 
     template <typename T>

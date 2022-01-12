@@ -36,7 +36,7 @@ namespace ft
             {
                 // _root = _alloc_node.allocate(1);
                 // _alloc_node.construct(_root, Node()); // construct 03 nodes: parent, left, right of the new node
-                std::cout << "Tree constructor called\n";
+                // std::cout << "Tree constructor called\n";
             }
 
             RedBlackTree(const RedBlackTree& other)
@@ -61,7 +61,7 @@ namespace ft
                     _alloc_node.destroy(_root);
                     _alloc_node.deallocate(_root, 1);
                 }
-                std::cout << "Tree deconstructor called\n";
+                // std::cout << "Tree deconstructor called\n";
             }
 
             // ! Member functions

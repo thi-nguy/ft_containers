@@ -20,7 +20,7 @@ namespace ft
         public:
             typedef Key                                         key_type;
             typedef T                                           mapped_type;
-            typedef ft::pair<const key_type, mapped_type>      value_type;
+            typedef ft::pair<const key_type, mapped_type>       value_type;
             typedef Compare                                     key_compare;
             // Todo: value_compare
             typedef Alloc                                       allocator_type;
@@ -33,7 +33,62 @@ namespace ft
             typedef typename allocator_type::size_type          size_type;
 
             // Todo: Constructor
-            
+            explicit map
+            (
+                const key_compare& comp = key_compare(),
+                const allocator_type& alloc = allocator_type()
+            )
+            :
+                _alloc(alloc),
+                _compare(comp),
+                _rbt()
+            {
+                std::cout << "Empty constructor called\n";
+            }
+
+            // template < class InputIterator>
+            // map 
+            // (
+            //     InputIterator first, 
+            //     InputIterator last, 
+            //     const key_compare& comp = key_compare(), 
+            //     const allocator_type& alloc = allocator_type()
+            // )
+            // {
+            //     // ! do something
+            //     std::cout << "Range constructor called\n";
+            // }
+
+            map(const map& x)
+            {
+                *this = x;
+                std::cout << "Copy constructor called\n";
+            }
+
+            map& operator= (const map& x)
+			{
+				if (this != &x)
+                {
+                    _alloc = x._alloc;
+                    _compare = x._compare;
+                    // ! do something
+                    // this->clear();
+                    // this->insert(x.begin(), x.end());
+                }
+				return (*this);
+			}
+
+            ~map(void)
+            {
+                std::cout << "Deconstructor called\n";
+
+            }
+
+            bool empty() const
+            {
+                return (_rbt.getRoot() == NULL);
+            }
+
             
 
 

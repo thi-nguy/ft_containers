@@ -109,13 +109,54 @@ void        test_red_black_tree(std::string test_type)
 
 }
 
+void        test_empty(std::string test_type)
+{
+    print_test_name(test_type);
+
+    ft::map<char, int> map_a;
+    std::cout << map_a.empty() << "\n";
+}
+
+
+void        test_constructor(std::string test_type)
+{
+    print_test_name(test_type);
+
+    // std::cout << "Empty constructor called\n";
+    ft::map<char, int> map_a;
+
+    // std::cout << "Range constructor called\n";
+    // ft::map<std::string> map_b(4, "hello");
+    // std::cout << "First element: " << map_b.front() << std::endl << std::endl;
+
+    // std::cout << "Copy constructor called\n";
+    ft::map<char,int> first;
+
+    // first['a']=10;
+    // first['b']=30;
+    // first['c']=50;
+    // first['d']=70;
+
+    ft::map<char,int> second (first);
+}
+
+void        test_container_map(std::string test_type)
+{
+    print_test_name(test_type);
+
+    test_constructor("constructor");
+    test_empty("Empty");
+
+}
+
 
 void        test_map(std::string test_type)
 {
     print_test_name(test_type);
     // test_pair("pair");
-    test_tree_Node("Tree Node");
-    test_red_black_tree("Red Black Tree");
+    // test_tree_Node("Tree Node");
+    // test_red_black_tree("Red Black Tree");
+    test_container_map("map");
 }
 
 int main(void)
