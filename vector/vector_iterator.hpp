@@ -1,13 +1,15 @@
 #ifndef VECTOR_ITERATOR_HPP
 #define VECTOR_ITERATOR_HPP
 
-#include "../utils/utils.hpp"
+#include "../utils/iterator.hpp"
+#include "../utils/iterator_traits.hpp"
+#include "../utils/random_access_iterator_tag.hpp"
 
 namespace ft
 {
 
 template <typename T>
-class vectorIterator: ft::iterator<ft::random_access_iterator_tag, T>
+class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
 {
     public:
         // typedef T                           value_type;

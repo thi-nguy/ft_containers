@@ -2,6 +2,8 @@
 #define VECTOR_HPP
 
 #include "../utils/utils.hpp"
+#include "../utils/equal.hpp"
+#include "../utils/lexicographical_compare.hpp"
 #include "vector_iterator.hpp"
 #include "vector_reverse_iterator.hpp"
 #include <memory>       // Allocator

@@ -215,68 +215,62 @@ namespace ft
             void deleteNode(Node *v) 
             {
                 Node *u = BSTreplace(v);
-            
-                // True when u and v are both black
-                bool uvBlack = ((u == NULL or u->color == BLACK) and (v->color == BLACK));
+                
+                bool uvBlack = ((u == NULL || u->color == BLACK) && (v->color == BLACK)); // True when u and v are both black
                 Node *parent = v->parent;
             
-                if (u == NULL) {
-                // u is NULL therefore v is leaf
-                if (v == _root) {
-                    // v is root, making root null
-                    _root = NULL;
-                } else {
-                    if (uvBlack) {
-                    // u and v both black
-                    // v is leaf, fix double black at v
-                    fixDoubleBlack(v);
-                    } else {
-                    // u or v is red
-                    if (v->sibling() != NULL)
-                        // sibling is not null, make it red"
-                        v->sibling()->color = RED;
+                if (u == NULL) 
+                {
+                    // u is NULL therefore v is leaf
+                    if (v == _root)
+                    {
+                        // v is root, making root null
+                        _root = NULL;
+                    } 
+                    else
+                    {
+                        if (uvBlack) // u and v both black, v is leaf, fix double black at v
+                            fixDoubleBlack(v);
+                        else // u or v is red
+                            if (v->sibling() != NULL) // sibling is not null, make it red"
+                                v->sibling()->color = RED;
+                        // delete v from the tree
+                        if (v->isOnLeft()) 
+                            parent->left = NULL;
+                        else
+                            parent->right = NULL;
                     }
-            
-                    // delete v from the tree
-                    if (v->isOnLeft()) {
-                    parent->left = NULL;
-                    } else {
-                    parent->right = NULL;
+                    _alloc_node.destroy(v);
+                    _alloc_node.deallocate(v, 1);
+                    return;
+                }
+                if (v->left == NULL || v->right == NULL) // v has 1 child
+                {
+                    
+                    if (v == _root) // v is root, assign the value of u to v, and delete u
+                    {
+                        v->value = u->value;
+                        v->left = v->right = NULL;
+                        _alloc_node.destroy(u);
+                        _alloc_node.deallocate(u, 1);
+                    } 
+                    else 
+                    {
+                        // Detach v from tree and move u up
+                        if (v->isOnLeft()) 
+                            parent->left = u;
+                        else 
+                            parent->right = u;
+                        delete v;
+                        u->parent = parent;
+                        if (uvBlack) 
+                            fixDoubleBlack(u); // u and v both black, fix double black at u
+                        else 
+                            u->color = BLACK; // u or v red, color u black
                     }
+                    return;
                 }
-                delete v;
-                return;
-                }
-            
-                if (v->left == NULL or v->right == NULL) {
-                // v has 1 child
-                if (v == _root) {
-                    // v is root, assign the value of u to v, and delete u
-                    v->value = u->value;
-                    v->left = v->right = NULL;
-                    delete u;
-                } else {
-                    // Detach v from tree and move u up
-                    if (v->isOnLeft()) {
-                    parent->left = u;
-                    } else {
-                    parent->right = u;
-                    }
-                    delete v;
-                    u->parent = parent;
-                    if (uvBlack) {
-                    // u and v both black, fix double black at u
-                    fixDoubleBlack(u);
-                    } else {
-                    // u or v red, color u black
-                    u->color = BLACK;
-                    }
-                }
-                return;
-                }
-            
-                // v has 2 children, swap values with successor and recurse
-                swapValues(u, v);
+                swapValues(u, v); // v has 2 children, swap values with successor and recurse
                 deleteNode(u);
             }
 

@@ -99,11 +99,11 @@ void        test_red_black_tree(std::string test_type)
 
     // ! insertValue, int
     ft::RedBlackTree <int> my_tree2;
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 3; i++)
         my_tree2.insertValue(i);
     my_tree2.print2D(); // lam operator << cho ft::pair
     // ! Delete a node
-    my_tree2.deleteValue(3);
+    my_tree2.deleteValue(0);
     std::cout << " -------------------------------------------------------\n";
     my_tree2.print2D();
 
@@ -155,8 +155,8 @@ void        test_map(std::string test_type)
     print_test_name(test_type);
     // test_pair("pair");
     // test_tree_Node("Tree Node");
-    // test_red_black_tree("Red Black Tree");
-    test_container_map("map");
+    test_red_black_tree("Red Black Tree");
+    // test_container_map("map");
 }
 
 int main(void)
