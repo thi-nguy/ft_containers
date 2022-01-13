@@ -4,9 +4,11 @@
 #include <memory>       // std::allocator
 // #include <utility>      // ft::pair
 #include <cstddef>      // ptrdiff_t
-#include <functional>   //std::less
+#include <functional>   //std::less, std::binary_function
 #include "red_black_tree.hpp"
 #include "pair.hpp"
+#include "map_iterator.hpp"
+#include "map_reverse_iterator.hpp"
 
 namespace ft
 {
@@ -18,19 +20,42 @@ namespace ft
     class map
     {
         public:
-            typedef Key                                         key_type;
-            typedef T                                           mapped_type;
-            typedef ft::pair<const key_type, mapped_type>       value_type;
-            typedef Compare                                     key_compare;
-            // Todo: value_compare
-            typedef Alloc                                       allocator_type;
-            typedef typename allocator_type::reference          reference;
-            typedef typename allocator_type::const_reference    const_reference;
-            typedef typename allocator_type::pointer            pointer;
-            typedef typename allocator_type::const_pointer      const_pointer;
-            // Todo: iterator
-            typedef typename std::ptrdiff_t                     difference_type;
-            typedef typename allocator_type::size_type          size_type;
+
+            // Todo: Member types:
+            typedef Key                                                             key_type;
+            typedef T                                                               mapped_type;
+            typedef ft::pair<const Key, T>                                          value_type;
+            typedef Compare                                                         key_compare;
+            typedef Alloc                                                           allocator_type;
+            typedef typename allocator_type::reference                              reference;
+            typedef typename allocator_type::const_reference                        const_reference;
+            typedef typename allocator_type::pointer                                pointer;
+            typedef typename allocator_type::const_pointer                          const_pointer;
+            typedef typename ft::mapIterator<value_type, Compare>::iterator         iterator;
+            typedef typename ft::mapIterator<value_type, Compare>::const_iterator   const_iterator;
+            typedef typename ft::MapReverseIterator<iterator>                       reverse_iterator;
+            typedef typename ft::MapReverseIterator<const_iterator>                 const_reverse_iterator;
+            typedef typename std::ptrdiff_t                                         difference_type;
+            typedef typename allocator_type::size_type                              size_type;
+            
+            // Todo: Member classes
+            class value_compare: std::binary_function<value_type, value_type, bool>
+            {
+                friend class map<Key, T>;
+                protected:
+                    Compare comp;
+                    value_compare (Compare c): comp(c) {}// constructed with map's comparison object
+                public:
+                    typedef bool    result_type;
+                    typedef value_type  first_argument_type;
+                    typedef value_type  second_argument_type;
+
+
+                    bool operator() (const value_type& x, const value_type& y) const
+                    {
+                        return (comp(x.first, y.first));
+                    }
+            };
 
             // Todo: Constructor
             explicit map
@@ -83,6 +108,7 @@ namespace ft
                 std::cout << "Deconstructor called\n";
 
             }
+            // Todo: Capacity
 
             bool empty() const
             {

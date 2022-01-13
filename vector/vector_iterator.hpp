@@ -12,12 +12,6 @@ template <typename T>
 class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
 {
     public:
-        // typedef T                           value_type;
-        // typedef T&                          reference;
-        // typedef const T&                    const_reference;
-        // typedef T*                          pointer;
-        // typedef const T*                    const_pointer;
-        // typedef typename std::ptrdiff_t     difference_type;
         typedef typename ft::iterator<ft::random_access_iterator_tag, T>::iterator_category     iterator_category;
         typedef typename ft::iterator<ft::random_access_iterator_tag, T>::value_type            value_type;
         typedef typename ft::iterator<ft::random_access_iterator_tag, T>::difference_type       difference_type;

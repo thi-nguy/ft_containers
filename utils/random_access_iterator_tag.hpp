@@ -4,10 +4,7 @@
 namespace ft
 {
     struct random_access_iterator_tag
-    {
-        
-    };
-
+    {};
 }
 
 #endif /* random_access_iterator_tag.hpp */
