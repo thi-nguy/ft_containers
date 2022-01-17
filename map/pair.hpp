@@ -20,8 +20,7 @@ namespace ft
             pair()
             {}
 
-            template<class U, class V>
-            pair(const ft::pair<U, V>& pr)
+            pair(const pair& pr)
             {
                 *this = pr;
             }

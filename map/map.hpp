@@ -32,9 +32,9 @@ namespace ft
             typedef typename allocator_type::pointer                                pointer;
             typedef typename allocator_type::const_pointer                          const_pointer;
             typedef typename ft::mapIterator<value_type, Compare>::iterator         iterator;
-            typedef typename ft::mapIterator<value_type, Compare>::const_iterator   const_iterator;
+            // typedef typename ft::mapIterator<value_type, Compare>::const_iterator   const_iterator;
             typedef typename ft::MapReverseIterator<iterator>                       reverse_iterator;
-            typedef typename ft::MapReverseIterator<const_iterator>                 const_reverse_iterator;
+            // typedef typename ft::MapReverseIterator<const_iterator>                 const_reverse_iterator;
             typedef typename std::ptrdiff_t                                         difference_type;
             typedef typename allocator_type::size_type                              size_type;
             
@@ -105,7 +105,7 @@ namespace ft
 
             ~map(void)
             {
-                std::cout << "Deconstructor called\n";
+                std::cout << "Map Deconstructor called\n";
 
             }
             // Todo: Capacity
@@ -114,15 +114,43 @@ namespace ft
             {
                 return (_rbt.getRoot() == NULL);
             }
+            
+            size_type   size() const
+            {
+                return (_rbt.getSize());
+            }
+
+            // ! insert
+
+            // single element (1)	
+
+            ft::pair<iterator,bool> insert (const value_type& val)
+            {
+            }
+
+            // with hint (2)	
+
+            // iterator insert (iterator position, const value_type& val);
+
+            // // range (3)	
+
+            // template <class InputIterator>
+            // void insert (InputIterator first, InputIterator last);
+
+
+            
+
+
+
 
             
 
 
 
         private:
-            allocator_type                              _alloc;
-            key_compare                                 _compare;
-            ft::RedBlackTree<value_type, key_compare>   _rbt;
+            allocator_type                 _alloc;
+            key_compare                    _compare;
+            ft::RedBlackTree<value_type>   _rbt;
 
     }; /* class map */
 

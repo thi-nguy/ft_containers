@@ -130,22 +130,22 @@ namespace ft
 
             iterator    begin(void)
             {
-                return (_start);
+                return (iterator(_start));
             }
 
             const_iterator begin(void) const
             {
-                return (_start);
+                return (const_iterator(_start));
             }
 
             iterator    end(void)
             {
-                return (_end);
+                return (iterator(_end));
             }
 
             const_iterator end(void) const
             {
-                return (_end);
+                return (const_iterator(_end));
             }
 
             //todo: rbegin, rend

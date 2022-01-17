@@ -62,7 +62,7 @@ namespace ft
                 return (*this);
             }
 
-            virtual ~treeNode() 
+            ~treeNode() 
             {
                 // std::cout << "Node Deconstructor called\n";
             }

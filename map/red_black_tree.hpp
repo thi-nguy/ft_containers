@@ -11,11 +11,9 @@
 
 namespace ft
 {
-    template <  class T,
-                class Node = ft::treeNode<T>,
+    template <  class T, class Node = ft::treeNode<T>,
                 class Type_Alloc = std::allocator<T>,
                 class Node_Alloc = std::allocator<Node>
-                // class Compare = std::less<T> // ! cai nay useful?
             >
     class RedBlackTree
     {
@@ -29,14 +27,14 @@ namespace ft
 
             // Todo: Do not have the form RedBlackTree my_tree(val), instead we use my_tree.insert(val)
 
-            RedBlackTree(const Node_Alloc& node_alloc = Node_Alloc()) // call constructor of allocator
-            :   _root(NULL),
-                _alloc_node(node_alloc)
-                // _last_node?
+            RedBlackTree()
+            :   _tree_size(0),
+                _alloc_node(Node_Alloc()),
+                _root(NULL)
             {
                 // _root = _alloc_node.allocate(1);
-                // _alloc_node.construct(_root, Node()); // construct 03 nodes: parent, left, right of the new node
-                // std::cout << "Tree constructor called\n";
+                // _alloc_node.construct(_root, Node()); // call constructor of treeNode
+                std::cout << "Tree constructor called\n";
             }
 
             RedBlackTree(const RedBlackTree& other)
@@ -50,21 +48,152 @@ namespace ft
                 {
                     this->_root = rhs._root;
                     this->_alloc_node = rhs._alloc_node;
+                    this->_tree_size = rhs._tree_size;
                 }
                 return (*this);
             }
 
             ~RedBlackTree()
             {
-                if (_root != NULL)
-                {
-                    _alloc_node.destroy(_root);
-                    _alloc_node.deallocate(_root, 1);
-                }
-                // std::cout << "Tree deconstructor called\n";
+                deleteTree(_root);
+                std::cout << "Tree Deconstructor called\n";
+
             }
 
-            // ! Member functions
+
+            Node*   searchValue(Node* node, value_type val)
+            {
+                if (node == NULL || node->value == val)
+                    return (node);
+                if (node->value < val)
+                {
+                    node = node->right;
+                    return (searchValue(node, val));
+                }
+                else
+                {
+                    node = node->left;
+                    return (searchValue(node, val));
+                }
+            }
+
+            void    insertValue(const value_type &val)
+            {
+                Node    *pt = _alloc_node.allocate(1);
+
+                _alloc_node.construct(pt, Node(val));
+                _root = BST_Insert(_root, pt);
+                _tree_size++;
+               fixInsertViolation(_root, pt);
+            }
+
+            void    deleteValue(value_type n) 
+            {
+                // Tree is empty
+                if (_root == NULL)
+                    return;
+            
+                Node *v = searchValue(_root, n);
+                if (v == NULL) 
+                {
+                    // std::cout << "No node found to delete with value:" << n << std::endl;
+                    return;
+                }
+                deleteNode(v);
+                _tree_size--;
+            }
+            
+            void    print2D()
+            {
+                print2DUtil(_root, 0);
+            }
+
+            Node*   getRoot() const
+            {
+                return (_root);
+            }
+
+            size_type   getSize() const
+            {
+                return (_tree_size);
+            }
+            /* public */
+
+        private:
+
+            void    deleteTree(Node* node)
+            {
+                if(node == NULL)
+                    return ;
+                deleteTree(node->left);
+                deleteTree(node->right);
+                _alloc_node.destroy(node);
+                _alloc_node.deallocate(node, 1);
+            }
+
+            void    deleteNode(Node *v) 
+            {
+                Node *u = BST_Get_Replaced_Node(v);
+                
+                bool uvBlack = ((u == NULL || u->color == BLACK) && (v->color == BLACK)); // True when u and v are both black
+                Node *parent = v->parent;
+            
+                if (u == NULL) 
+                {
+                    // u is NULL therefore v is leaf
+                    if (v == _root)
+                    {
+                        // v is root, making root null
+                        _root = NULL;
+                    } 
+                    else
+                    {
+                        if (uvBlack) // u and v both black, v is leaf, fix double black at v
+                            fix_Delete_Node_Violation(v);
+                        else // u or v is red
+                            if (v->sibling() != NULL) // sibling is not null, make it red"
+                                v->sibling()->color = RED;
+                        // delete v from the tree
+                        if (v->isOnLeft()) 
+                            parent->left = NULL;
+                        else
+                            parent->right = NULL;
+                    }
+                    _alloc_node.destroy(v);
+                    _alloc_node.deallocate(v, 1);
+                    return;
+                }
+                if (v->left == NULL || v->right == NULL) // v has 1 child
+                {
+                    
+                    if (v == _root) // v is root, assign the value of u to v, and delete u
+                    {
+                        v->value = u->value;
+                        v->left = v->right = NULL;
+                        _alloc_node.destroy(u);
+                        _alloc_node.deallocate(u, 1);
+                    } 
+                    else 
+                    {
+                        // Detach v from tree and move u up
+                        if (v->isOnLeft()) 
+                            parent->left = u;
+                        else 
+                            parent->right = u;
+                        _alloc_node.destroy(v);
+                        _alloc_node.deallocate(v, 1);
+
+                        u->parent = parent;
+                        if (uvBlack) 
+                            fix_Delete_Node_Violation(u); // u and v both black, fix double black at u
+                        else 
+                            u->color = BLACK; // u or v red, color u black
+                    }
+                    return;
+                }
+                swapNodeValues(u, v); // v has 2 children, swap values with successor and recurse
+                deleteNode(u);
+            }
 
             void    rotateLeft(Node *&x)
             {
@@ -113,40 +242,7 @@ namespace ft
                 x->parent = y;
             }
 
-            // ! Todo : Search & Delete
-
-            // searches for given value
-            // if found returns the node (used for delete)
-            // else returns the last node while traversing (used in insert)
-            Node*   searchValue(Node* root, value_type val)
-            {
-                if (root == NULL || root->value == val)
-                    return (root);
-                if (root->value < val)
-                {
-                    root = root->right;
-                    return (searchValue(root, val));
-                }
-                else
-                {
-                    root = root->left;
-                    return (searchValue(root, val));
-                }
-            }
-
-            void    insertValue(const value_type &val)
-            {
-                Node    *pt = _alloc_node.allocate(1);
-                _alloc_node.construct(pt, Node(val));
-                
-                // Do a normal BST insert
-                _root = BSTInsert(_root, pt);
-                // Fix Red Black Tree violation
-               fixViolation(_root, pt);
-                // std::cout << "Insert function done\n";
-            }
-
-            void fixDoubleBlack(Node *x) 
+            void    fix_Delete_Node_Violation(Node *x) 
             {
                 if (x == _root)
                 // Reached root
@@ -155,7 +251,7 @@ namespace ft
                 Node *sibling = x->sibling(), *parent = x->parent;
                 if (sibling == NULL) {
                 // No sibiling, double black pushed up
-                fixDoubleBlack(parent);
+                fix_Delete_Node_Violation(parent);
                 } else {
                 if (sibling->color == RED) {
                     // Sibling red
@@ -168,7 +264,7 @@ namespace ft
                     // right case
                     rotateLeft(parent);
                     }
-                    fixDoubleBlack(x);
+                    fix_Delete_Node_Violation(x);
                 } else {
                     // Sibling black
                     if (sibling->hasRedChild()) {
@@ -203,7 +299,7 @@ namespace ft
                     // 2 black children
                     sibling->color = RED;
                     if (parent->color == BLACK)
-                        fixDoubleBlack(parent);
+                        fix_Delete_Node_Violation(parent);
                     else
                         parent->color = BLACK;
                     }
@@ -212,84 +308,69 @@ namespace ft
             }
 
             // deletes the given node
-            void deleteNode(Node *v) 
+
+            Node*   BST_Delete(Node* root, Node* pt)
             {
-                Node *u = BSTreplace(v);
-                
-                bool uvBlack = ((u == NULL || u->color == BLACK) && (v->color == BLACK)); // True when u and v are both black
-                Node *parent = v->parent;
-            
-                if (u == NULL) 
+                if (root == NULL || pt == NULL)
+                    return (root);
+                if (pt->left == NULL && pt->right == NULL)
                 {
-                    // u is NULL therefore v is leaf
-                    if (v == _root)
-                    {
-                        // v is root, making root null
-                        _root = NULL;
-                    } 
+                    if (pt->parent->left == pt)
+                        pt->parent->left = NULL;
                     else
-                    {
-                        if (uvBlack) // u and v both black, v is leaf, fix double black at v
-                            fixDoubleBlack(v);
-                        else // u or v is red
-                            if (v->sibling() != NULL) // sibling is not null, make it red"
-                                v->sibling()->color = RED;
-                        // delete v from the tree
-                        if (v->isOnLeft()) 
-                            parent->left = NULL;
-                        else
-                            parent->right = NULL;
-                    }
-                    _alloc_node.destroy(v);
-                    _alloc_node.deallocate(v, 1);
-                    return;
+                        pt->parent->right = NULL;
+                    _alloc_node.destroy(pt);
+                    _alloc_node.deallocate(pt, 1);
                 }
-                if (v->left == NULL || v->right == NULL) // v has 1 child
-                {
-                    
-                    if (v == _root) // v is root, assign the value of u to v, and delete u
-                    {
-                        v->value = u->value;
-                        v->left = v->right = NULL;
-                        _alloc_node.destroy(u);
-                        _alloc_node.deallocate(u, 1);
-                    } 
-                    else 
-                    {
-                        // Detach v from tree and move u up
-                        if (v->isOnLeft()) 
-                            parent->left = u;
-                        else 
-                            parent->right = u;
-                        delete v;
-                        u->parent = parent;
-                        if (uvBlack) 
-                            fixDoubleBlack(u); // u and v both black, fix double black at u
-                        else 
-                            u->color = BLACK; // u or v red, color u black
-                    }
-                    return;
-                }
-                swapValues(u, v); // v has 2 children, swap values with successor and recurse
-                deleteNode(u);
+                return (root);
             }
 
-             void deleteValue(value_type n) 
-             {
-                // Tree is empty
-                if (_root == NULL)
-                    return;
-            
-                Node *v = searchValue(_root, n);
-                if (v == NULL) 
+            Node*   BST_Insert(Node* root, Node* pt)
+            {
+                // If the tree is empty, return a new node
+                if (root == NULL)
+                    return (pt);
+
+                // Otherwise, recur down the tree
+                if (pt->value < root->value)
                 {
-                    std::cout << "No node found to delete with value:" << n << std::endl;
-                    return;
+                    root->left = BST_Insert(root->left, pt);
+                    root->left->parent = root;
                 }
-                deleteNode(v);
-             }
- 
-            void    fixViolation(Node *&root, Node *&pt)
+                else if (pt->value > root->value)
+                {
+                    root->right = BST_Insert(root->right, pt);
+                    root->right->parent = root;
+                }
+                return root;
+            }
+
+            // find node that replaces a deleted node in BST
+            Node*   BST_Get_Replaced_Node(Node *x) 
+            {
+                // when node have 2 children
+                if (x->left != NULL and x->right != NULL)
+                    return (successor(x->right));
+            
+                // when leaf
+                if (x->left == NULL and x->right == NULL)
+                    return NULL;
+            
+                // when single child
+                if (x->left != NULL)
+                    return x->left;
+                else
+                    return x->right;
+            }
+
+            void    swapNodeValues(Node *u, Node *v) 
+            {
+                value_type temp;
+                temp = u->value;
+                u->value= v->value;
+                v->value= temp;
+            }
+            void    fixInsertViolation(Node *&root, Node *&pt)
             {
                 Node *parent_pt = NULL;
                 Node *grand_parent_pt = NULL;
@@ -353,7 +434,7 @@ namespace ft
                 root->color = BLACK;
             }
             // Util print the tree
-            void print2DUtil(Node* root, int space)
+            void    print2DUtil(Node* root, int space)
             {
                 const char* my_color[] = {"RED", "BLACK"};
 
@@ -387,95 +468,20 @@ namespace ft
                 // Process left child
                 print2DUtil(root->left, space);
             }
-            
-            // Wrapper over print2DUtil()
-            void print2D(void)
-            {
-                // Pass initial space count as 0
-                print2DUtil(_root, 0);
-            }
 
-            /* public */
+            // void    deleteTree(Node* pt)
+            // {
+            //     if(pt == NULL)
+            //         return ;
+            //     deleteTree(pt->left);
+            //     deleteTree(pt->right);
+            //     _alloc_node.destroy(pt);
+            //     _alloc_node.deallocate(pt, 1);
+            // }
 
-            Node*   getRoot(void) const
-            {
-                return (_root);
-            }
-        protected:
-
-            Node*   BSTDelete(Node* root, Node* pt)
-            {
-                if (root == NULL || pt == NULL)
-                    return (root);
-                if (pt->left == NULL && pt->right == NULL)
-                {
-                    if (pt->parent->left == pt)
-                        pt->parent->left = NULL;
-                    else
-                        pt->parent->right = NULL;
-                    _alloc_node.destroy(pt);
-                    _alloc_node.deallocate(pt, 1);
-                    // pt = NULL;
-                }
-                return (root);
-            }
-
-            Node* BSTInsert(Node* root, Node* pt)
-            {
-                // If the tree is empty, return a new node
-                if (root == NULL)
-                    return (pt);
-
-                // Otherwise, recur down the tree
-                if (pt->value < root->value)
-                {
-                    root->left = BSTInsert(root->left, pt);
-                    root->left->parent = root;
-                }
-                else if (pt->value > root->value)
-                {
-                    root->right = BSTInsert(root->right, pt);
-                    root->right->parent = root;
-                }
-                return root;
-            }
-
-            // find node that replaces a deleted node in BST
-            Node *BSTreplace(Node *x) 
-            {
-                // when node have 2 children
-                if (x->left != NULL and x->right != NULL)
-                    return (successor(x->right));
-            
-                // when leaf
-                if (x->left == NULL and x->right == NULL)
-                    return NULL;
-            
-                // when single child
-                if (x->left != NULL)
-                    return x->left;
-                else
-                    return x->right;
-            }
-
-            void swapValues(Node *u, Node *v) 
-            {
-                value_type temp;
-                temp = u->value;
-                u->value= v->value;
-                v->value= temp;
-            }
-
-
-            /* 
-            ! *& change reference to the pointer value
-            pointer's value is changed to point to the other memory.
-            */
-
-        private:
-            Node                    *_root;
-            // node_pointer            _last_node; // ? need it to allocate - construct??
+            size_type               _tree_size;
             std::allocator<Node>    _alloc_node;
+            Node*                   _root;
     }; /* class Red Black Tree */
 
 }; /* namespace ft */

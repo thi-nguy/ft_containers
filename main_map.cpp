@@ -10,6 +10,8 @@
 
 #include "./map/map.hpp"
 #include "./map/red_black_tree.hpp"
+#include "./map/pair.hpp"
+#include "./map/treeNode.hpp"
 
 void        print_test_name(std::string name)
 {
@@ -72,40 +74,45 @@ void        test_red_black_tree(std::string test_type)
 
     // ! insertValue, pair
 
-    ft::pair < int, std::string > pair1 (42, "orange");
-    ft::pair < int, std::string > pair2 (43, "apple");
-    ft::pair < int, std::string > pair3 (44, "kiwi");
-    ft::pair < int, std::string > pair4 (45, "banana");
-    ft::pair < int, std::string > pair5 (46, "coconut");
-    ft::pair < int, std::string > pair6 (47, "kiwi");
-    ft::RedBlackTree < ft::pair< int, std::string > > my_tree;
-    my_tree.insertValue(pair1);
-    my_tree.insertValue(pair2);
-    my_tree.insertValue(pair3);
-    my_tree.insertValue(pair4);
-    my_tree.insertValue(pair5);
-    my_tree.insertValue(pair6);
+    // ft::pair < int, std::string > pair1 (42, "orange");
+    // ft::pair < int, std::string > pair2 (43, "apple");
+    // ft::pair < int, std::string > pair3 (44, "kiwi");
+    // ft::pair < int, std::string > pair4 (45, "banana");
+    // ft::pair < int, std::string > pair5 (46, "coconut");
+    // ft::pair < int, std::string > pair6 (47, "kiwi");
+    // ft::RedBlackTree < ft::pair< int, std::string > > my_tree;
+    // my_tree.insertValue(pair1);
+    // my_tree.insertValue(pair2);
+    // my_tree.insertValue(pair3);
+    // my_tree.insertValue(pair4);
+    // my_tree.insertValue(pair5);
+    // my_tree.insertValue(pair6);
 
-    // ! In noi dung cua searchValue bang 2 cach
-    ft::treeNode<ft::pair < int, std::string> > *a_node = my_tree.searchValue(my_tree.getRoot(), pair3);
-    std::cout << a_node->value << "\n";
+    // // ! In noi dung cua searchValue bang 2 cach
+    // ft::treeNode<ft::pair < int, std::string> > *a_node = my_tree.searchValue(my_tree.getRoot(), pair3);
+    // std::cout << a_node->value << "\n";
 
-    std::cout << my_tree.searchValue(my_tree.getRoot(), pair3)->value << "\n";
+    // std::cout << my_tree.searchValue(my_tree.getRoot(), pair3)->value << "\n";
 
-    my_tree.print2D();
-    std::cout << " -------------------------------------------------------\n";
-    my_tree.deleteValue(pair2);
-    my_tree.print2D();
+    // my_tree.print2D();
+    // std::cout << " -------------------------------------------------------\n";
+    // my_tree.deleteValue(pair2);
+    // my_tree.print2D();
 
     // ! insertValue, int
-    ft::RedBlackTree <int> my_tree2;
-    for (int i = 0; i < 3; i++)
+    ft::RedBlackTree <int, ft::treeNode<int> > my_tree2;
+    for (int i = 0; i < 10; i++)
         my_tree2.insertValue(i);
     my_tree2.print2D(); // lam operator << cho ft::pair
+
+    
+
+    // if (my_tree2.getRoot() != NULL)
+    //     std::cout << my_tree2.getRoot()->value << "\n";
     // ! Delete a node
-    my_tree2.deleteValue(0);
-    std::cout << " -------------------------------------------------------\n";
-    my_tree2.print2D();
+    // my_tree2.deleteValue(0);
+    // std::cout << " -------------------------------------------------------\n";
+    // my_tree2.print2D();
 
 }
 
@@ -140,13 +147,28 @@ void        test_constructor(std::string test_type)
     ft::map<char,int> second (first);
 }
 
-void        test_container_map(std::string test_type)
+void        test_mapIterator(std::string test_type)
 {
     print_test_name(test_type);
 
-    test_constructor("constructor");
-    test_empty("Empty");
+    ft::map<char, int> my_map;
+    // ft::map<std::string, int>::iterator my_iterator;
 
+    // my_iterator = my_map.begin();
+
+    ft::pair<char,int> pair1('a',100);
+    std::cout << pair1.first << " " << pair1.second << "\n";
+
+
+
+}
+
+void        test_size(std::string test_type)
+{
+    print_test_name(test_type);
+
+    ft::map<char, int> my_map;
+    std::cout << "mymap.size() is " << my_map.size() << '\n';
 }
 
 
@@ -156,7 +178,10 @@ void        test_map(std::string test_type)
     // test_pair("pair");
     // test_tree_Node("Tree Node");
     test_red_black_tree("Red Black Tree");
-    // test_container_map("map");
+    // test_empty("Empty");
+    // test_mapIterator("map iterator");
+    // test_size("size");
+    // test_constructor("constructor");
 }
 
 int main(void)

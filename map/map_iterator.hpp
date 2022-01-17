@@ -17,22 +17,70 @@ namespace ft
             typedef T*               pointer;
             typedef T&             reference;
 
-// X a;
-// X b(a);
-// b = a;
-// a == b
-// a != b
-// *a
-// a->m
-// *a = t
-// ++a
-// a++
-// *a++
-// --a
-// a--
-// *a--
+            // Todo: Constructor, Destructor
+            mapIterator(const Compare& comp = Compare())
+            :
+                _node(),
+                _last_node(),
+                _comp(comp)
+            {
+                std::cout << "Empty mapIterator called\n";
+            }
+
+            mapIterator(T* node, const Compare& comp = Compare())
+            :
+                _node(node),
+                _last_node(),
+                _comp(comp)
+            {}
+
+            virtual ~mapIterator()
+            {}
+            // Todo: X a; X b(a); b = a;
+
+            mapIterator(const mapIterator& other)
+            {
+                *this = other;
+            }
+
+            mapIterator&    operator=(const mapIterator& rhs)
+            {
+                if (this != &rhs)
+                {
+                    _node = rhs._node;
+                    _last_node = rhs._last_node;
+                    _comp = rhs._comp;
+                }
+                return (*this);
+            }
+
+            // Todo: a == b, a != b
+            bool operator==(const mapIterator& rhs) // overload at treeNode
+            {
+                return (_node == rhs._node);
+            }
+
+            bool operator!=(const mapIterator& rhs)
+            {
+                return (!(this == rhs));
+            }
+
+
+
+
+            // *a
+            // a->m
+            // *a = t
+            // ++a
+            // a++
+            // *a++
+            // --a
+            // a--
+            // *a--
         private:
-            pointer     _ptr;
+           T*       _node;
+           T*       _last_node;
+           Compare  _comp;
 
     };
 

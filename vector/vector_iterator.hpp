@@ -33,7 +33,8 @@ class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
             }
             return (*this);
         }
-        ~vectorIterator(void) {} // todo: destructor
+        
+        virtual ~vectorIterator(void) {} // todo: destructor
 
         // ! Operator Overload
         bool operator !=(vectorIterator const& rhs) const // todo: a != b
