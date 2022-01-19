@@ -7,7 +7,7 @@
 
 namespace ft
 {
-    template <typename T, class Compare>
+    template <typename T>
     class mapIterator: public ft::iterator<ft::bidirectional_iterator_tag, T>
     {
         public:        
@@ -18,24 +18,22 @@ namespace ft
             typedef T&             reference;
 
             // Todo: Constructor, Destructor
-            mapIterator(const Compare& comp = Compare())
-            :
-                _node(),
-                _last_node(),
-                _comp(comp)
+            mapIterator()
             {
-                std::cout << "Empty mapIterator called\n";
+                std::cout << "Empty mapIterator constructor called\n";
             }
 
-            mapIterator(T* node, const Compare& comp = Compare())
-            :
-                _node(node),
-                _last_node(),
-                _comp(comp)
-            {}
+            mapIterator(T* node)
+            : _node(node)
+            {
+                std::cout << "Node mapIterator constructor called\n";
+            }
 
             virtual ~mapIterator()
-            {}
+            {
+                std::cout << "mapIterator Destructor called\n";
+            }
+
             // Todo: X a; X b(a); b = a;
 
             mapIterator(const mapIterator& other)
@@ -46,11 +44,7 @@ namespace ft
             mapIterator&    operator=(const mapIterator& rhs)
             {
                 if (this != &rhs)
-                {
                     _node = rhs._node;
-                    _last_node = rhs._last_node;
-                    _comp = rhs._comp;
-                }
                 return (*this);
             }
 
@@ -65,11 +59,17 @@ namespace ft
                 return (!(this == rhs));
             }
 
+            // Todo: *a, a->m
+            reference operator*() const
+            {
+                return (_node->value);
+            }
 
+            pointer     operator->()
+            {
+                return (&this->_node->value);
+            }
 
-
-            // *a
-            // a->m
             // *a = t
             // ++a
             // a++
@@ -79,9 +79,6 @@ namespace ft
             // *a--
         private:
            T*       _node;
-           T*       _last_node;
-           Compare  _comp;
-
     };
 
 } /* namespace ft */

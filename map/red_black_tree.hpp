@@ -117,6 +117,18 @@ namespace ft
             {
                 return (_tree_size);
             }
+            
+            Node*   getFirstNode() const
+            {
+                if (_root == NULL)
+                    return (NULL);
+                Node* tmp = _root;
+                while (tmp->left != NULL)
+                {
+                    tmp = tmp->left;
+                }
+                return (tmp);
+            }
             /* public */
 
         private:

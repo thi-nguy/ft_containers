@@ -31,8 +31,8 @@ namespace ft
             typedef typename allocator_type::const_reference                        const_reference;
             typedef typename allocator_type::pointer                                pointer;
             typedef typename allocator_type::const_pointer                          const_pointer;
-            typedef typename ft::mapIterator<value_type, Compare>::iterator         iterator;
-            // typedef typename ft::mapIterator<value_type, Compare>::const_iterator   const_iterator;
+            typedef typename ft::mapIterator<value_type>::iterator         iterator;
+            // typedef typename ft::mapIterator<value_type>::const_iterator   const_iterator;
             typedef typename ft::MapReverseIterator<iterator>                       reverse_iterator;
             // typedef typename ft::MapReverseIterator<const_iterator>                 const_reverse_iterator;
             typedef typename std::ptrdiff_t                                         difference_type;
@@ -119,21 +119,19 @@ namespace ft
             {
                 return (_rbt.getSize());
             }
-
-            // ! insert
-
-            // single element (1)	
-
-            ft::pair<iterator,bool> insert (const value_type& val)
+            
+            iterator    begin()
             {
+                return (iterator(_rbt.getFirstNode()));
             }
-
+            // ! insert
+            // single element (1)	
+            // ft::pair<iterator,bool> insert (const value_type& val)
+            // {
+            // }
             // with hint (2)	
-
             // iterator insert (iterator position, const value_type& val);
-
-            // // range (3)	
-
+            // range (3)	
             // template <class InputIterator>
             // void insert (InputIterator first, InputIterator last);
 
