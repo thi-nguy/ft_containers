@@ -4,6 +4,8 @@
 #include <memory>  //std::allocator
 #include <utility> //std::
 #include "treeNode.hpp"
+#include "map_iterator.hpp"
+#include "pair.hpp"
 
 #define red		"\033[91m"
 #define green   "\033[92m"
@@ -18,8 +20,9 @@ namespace ft
     class RedBlackTree
     {
         public:
-            typedef T       value_type;
-            typedef size_t  size_type;
+            typedef T                       value_type;
+            typedef size_t                  size_type;
+            typedef ft::mapIterator<Node>   iterator;
 
             // Todo: iterator and other typedef
 
@@ -61,10 +64,10 @@ namespace ft
             }
 
 
-            Node*   searchValue(Node* node, value_type val)
+            iterator   searchValue(Node* node, value_type val)
             {
                 if (node == NULL || node->value == val)
-                    return (node);
+                    return (iterator(node));
                 if (node->value < val)
                 {
                     node = node->right;
@@ -77,7 +80,7 @@ namespace ft
                 }
             }
 
-            void    insertValue(const value_type &val)
+            ft::pair<iterator, bool>    insertValue(const value_type &val)
             {
                 Node    *pt = _alloc_node.allocate(1);
 
@@ -85,6 +88,7 @@ namespace ft
                 _root = BST_Insert(_root, pt);
                 _tree_size++;
                fixInsertViolation(_root, pt);
+               return (ft::make_pair((iterator(pt)), true));
             }
 
             void    deleteValue(value_type n) 

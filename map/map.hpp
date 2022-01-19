@@ -129,9 +129,7 @@ namespace ft
             // single element (1)	
             ft::pair<iterator, bool> insert (const value_type& val)
             {
-                _rbt.insertValue(val);
-                
-
+                return (_rbt.insertValue(val));
             }
             // with hint (2)	
             // iterator insert (iterator position, const value_type& val);

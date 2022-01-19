@@ -84,20 +84,22 @@ void        test_constructor(std::string test_type)
 
     // std::cout << "Empty constructor called\n";
     ft::map<char, int> map_a;
+    ft::pair < int, std::string > pair1 ('a', 42);
+    map_a.insert(pair1);
 
     // std::cout << "Range constructor called\n";
     // ft::map<std::string> map_b(4, "hello");
     // std::cout << "First element: " << map_b.front() << std::endl << std::endl;
 
     // std::cout << "Copy constructor called\n";
-    ft::map<char,int> first;
+    // ft::map<char,int> first;
 
     // first['a']=10;
     // first['b']=30;
     // first['c']=50;
     // first['d']=70;
 
-    ft::map<char,int> second (first);
+    // ft::map<char,int> second (first);
 }
 
 
@@ -144,16 +146,16 @@ void        test_red_black_tree(std::string test_type)
     // std::cout << "Last node is: " << my_tree.getLastNode()->value << "\n";
 
     // ! insertValue, int
-    ft::RedBlackTree <int, ft::treeNode<int> > my_tree2;
-    for (int i = 0; i < 15; i++)
-        my_tree2.insertValue(i);
-    my_tree2.print2D(); // lam operator << cho ft::pair
+    // ft::RedBlackTree <int, ft::treeNode<int> > my_tree2;
+    // for (int i = 0; i < 15; i++)
+    //     my_tree2.insertValue(i);
+    // my_tree2.print2D(); // lam operator << cho ft::pair
 
-    std::cout << "first node is: " << my_tree2.getFirstNode()->value << "\n";
-    my_tree2.deleteValue(3);
-    std::cout << " -------------------------------------------------------\n";
-    my_tree2.print2D();
-    std::cout << "first node is: " << my_tree2.getFirstNode()->value << "\n";
+    // std::cout << "first node is: " << my_tree2.getFirstNode()->value << "\n";
+    // my_tree2.deleteValue(3);
+    // std::cout << " -------------------------------------------------------\n";
+    // my_tree2.print2D();
+    // std::cout << "first node is: " << my_tree2.getFirstNode()->value << "\n";
 
 }
 void        test_mapIterator(std::string test_type)
@@ -179,8 +181,8 @@ void        test_map(std::string test_type)
     // test_tree_Node("Tree Node");
     // test_empty("Empty");
     // test_size("size");
-    // test_constructor("constructor");
-    test_red_black_tree("Red Black Tree");
+    test_constructor("constructor");
+    // test_red_black_tree("Red Black Tree");
     // test_mapIterator("map iterator");
 }
 
