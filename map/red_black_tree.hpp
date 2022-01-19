@@ -129,6 +129,16 @@ namespace ft
                 }
                 return (tmp);
             }
+
+            Node*   getLastNode() const
+            {
+                if (_root == NULL)
+                    return (NULL);
+                Node* tmp = _root;
+                while (tmp->right != NULL)
+                    tmp = tmp->right;
+                return (tmp);
+            }
             /* public */
 
         private:

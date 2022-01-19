@@ -67,16 +67,73 @@ namespace ft
 
             pointer     operator->()
             {
-                return (&this->_node->value);
+                return (&_node->value);
             }
 
-            // *a = t
             // ++a
+            mapIterator&    operator++()
+            {
+                if (_node->right != NULL)
+                {
+                    _node = _node->right;
+                    while (_node->left != NULL)
+                        _node = _node->left;
+                }
+                else
+                {
+                    Node* tmp = _node->parent;
+                    while (_node == tmp->right)
+                    {
+                        _node = tmp;
+                        tmp = tmp->parent;
+                    }
+                    if (_node->right != tmp)
+                        _node = tmp;
+                }
+                return (*this);
+            }
             // a++
-            // *a++
+            mapIterator     operator++(int)
+            {
+                mapIterator tmp(*this);
+                operator++();
+                return (tmp);
+            }
+
             // --a
+            mapIterator&    operator--()
+            {
+                if (_node->left != NULL)
+                {
+                    _node = _node->left;
+                    while (_node->right != NULL)
+                        _node = _node->right;
+                }
+                else
+                {
+                    Node*   tmp = _node->parent;
+                    while (_node == tmp->left)
+                    {
+                        _node = tmp;
+                        tmp = tmp->parent;
+                    }
+                    if (_node->left != tmp)
+                        _node = tmp;
+                }
+                return (*this);
+            }
+
             // a--
-            // *a--
+            mapIterator     operator--(int)
+            {
+                mapIterator tmp(*this);
+                operator--();
+                return (tmp);
+            }
+            // todo: *a = t
+
+            // *a++ same as *(a++) --> no need to do? --> need to test!! 
+            // *a-- same as *(a--)
         private:
            T*       _node;
     };

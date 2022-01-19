@@ -138,7 +138,7 @@ class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
             return (*(_ptr + n));
         }
 
-        pointer     getPointer(void) const
+        pointer     getPointer(void) const // ! protected here?
         {
             return (_ptr);
         }
