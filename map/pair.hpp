@@ -16,11 +16,18 @@ namespace ft
             typedef T1  first_type;
             typedef T2  second_type;
 
+            first_type      first;
+            second_type     second;
+
             // Constructor
             pair()
             {}
 
+            // template<class U, class V>
             pair(const pair& pr)
+            // :
+            //     first(pr.first),
+            //     second(pr.second)
             {
                 *this = pr;
             }
@@ -43,8 +50,6 @@ namespace ft
             ~pair()
             {}
 
-            first_type      first;
-            second_type     second;
     }; /* struct pair */
 
     template <class T1, class T2>

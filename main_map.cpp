@@ -84,8 +84,8 @@ void        test_constructor(std::string test_type)
 
     // std::cout << "Empty constructor called\n";
     ft::map<char, int> map_a;
-    ft::pair < int, std::string > pair1 ('a', 42);
-    map_a.insert(pair1);
+    ft::pair<char, int> pair1('a', 42);
+    map_a.insert ( pair1 );
 
     // std::cout << "Range constructor called\n";
     // ft::map<std::string> map_b(4, "hello");
@@ -93,6 +93,7 @@ void        test_constructor(std::string test_type)
 
     // std::cout << "Copy constructor called\n";
     // ft::map<char,int> first;
+    // first.find('a');
 
     // first['a']=10;
     // first['b']=30;
@@ -117,31 +118,31 @@ void        test_red_black_tree(std::string test_type)
 
     // ! insertValue, pair
 
-    // ft::pair < int, std::string > pair1 (42, "orange");
-    // ft::pair < int, std::string > pair2 (43, "apple");
-    // ft::pair < int, std::string > pair3 (44, "kiwi");
-    // ft::pair < int, std::string > pair4 (45, "banana");
-    // ft::pair < int, std::string > pair5 (46, "coconut");
-    // ft::pair < int, std::string > pair6 (47, "kiwi");
-    // ft::RedBlackTree < ft::pair< int, std::string > > my_tree;
-    // my_tree.insertValue(pair1);
-    // my_tree.insertValue(pair2);
-    // my_tree.insertValue(pair3);
-    // my_tree.insertValue(pair4);
-    // my_tree.insertValue(pair5);
-    // my_tree.insertValue(pair6);
+    ft::pair < int, std::string > pair1 (42, "orange");
+    ft::pair < int, std::string > pair2 (43, "apple");
+    ft::pair < int, std::string > pair3 (44, "kiwi");
+    ft::pair < int, std::string > pair4 (45, "banana");
+    ft::pair < int, std::string > pair5 (46, "coconut");
+    ft::pair < int, std::string > pair6 (47, "kiwi");
+    ft::RedBlackTree < ft::pair< int, std::string > > my_tree;
+    my_tree.insertValue(pair1);
+    my_tree.insertValue(pair2);
+    my_tree.insertValue(pair3);
+    my_tree.insertValue(pair4);
+    my_tree.insertValue(pair5);
+    my_tree.insertValue(pair6);
 
     // // ! In noi dung cua searchValue bang 2 cach
-    // ft::treeNode<ft::pair < int, std::string> > *a_node = my_tree.searchValue(my_tree.getRoot(), pair3);
-    // std::cout << a_node->value << "\n";
-    // my_tree.print2D();
+    ft::mapIterator<ft::treeNode<ft::pair <int, std::string> > > it = my_tree.searchValue(my_tree.getRoot(), pair3);
+    std::cout << it.getValue()->value << "\n";
+    my_tree.print2D();
     // std::cout << "first node is: " << my_tree.getFirstNode()->value << "\n";
     // std::cout << "Last node is: " << my_tree.getLastNode()->value << "\n";
 
-    // std::cout << " -------------------------------------------------------\n";
-    // my_tree.deleteValue(pair6);
-    // my_tree.deleteValue(pair1);
-    // my_tree.print2D();
+    std::cout << " -------------------------------------------------------\n";
+    my_tree.deleteValue(pair6);
+    my_tree.deleteValue(pair1);
+    my_tree.print2D();
     // std::cout << "first node is: " << my_tree.getFirstNode()->value << "\n";
     // std::cout << "Last node is: " << my_tree.getLastNode()->value << "\n";
 

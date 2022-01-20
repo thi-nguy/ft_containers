@@ -19,6 +19,7 @@ namespace ft
 
             // Todo: Constructor, Destructor
             mapIterator()
+            : _node()
             {
                 std::cout << "Empty mapIterator constructor called\n";
             }
@@ -37,8 +38,8 @@ namespace ft
             // Todo: X a; X b(a); b = a;
 
             mapIterator(const mapIterator& other)
+            :   _node(other._node)
             {
-                *this = other;
             }
 
             mapIterator&    operator=(const mapIterator& rhs)
@@ -81,7 +82,7 @@ namespace ft
                 }
                 else
                 {
-                    Node* tmp = _node->parent;
+                    T* tmp = _node->parent;
                     while (_node == tmp->right)
                     {
                         _node = tmp;
@@ -111,7 +112,7 @@ namespace ft
                 }
                 else
                 {
-                    Node*   tmp = _node->parent;
+                    T*   tmp = _node->parent;
                     while (_node == tmp->left)
                     {
                         _node = tmp;
@@ -134,6 +135,11 @@ namespace ft
 
             // *a++ same as *(a++) --> no need to do? --> need to test!! 
             // *a-- same as *(a--)
+
+            T*      getValue() const
+            {
+                return (_node);
+            }
         private:
            T*       _node;
     };

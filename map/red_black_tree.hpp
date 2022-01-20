@@ -20,7 +20,7 @@ namespace ft
     class RedBlackTree
     {
         public:
-            typedef T                       value_type;
+            typedef T                       value_type; //o day la ft::pair
             typedef size_t                  size_type;
             typedef ft::mapIterator<Node>   iterator;
 
@@ -80,15 +80,15 @@ namespace ft
                 }
             }
 
-            ft::pair<iterator, bool>    insertValue(const value_type &val)
+            Node*    insertValue(const value_type &val)
             {
                 Node    *pt = _alloc_node.allocate(1);
 
                 _alloc_node.construct(pt, Node(val));
                 _root = BST_Insert(_root, pt);
                 _tree_size++;
-               fixInsertViolation(_root, pt);
-               return (ft::make_pair((iterator(pt)), true));
+                fixInsertViolation(_root, pt);
+                return (pt);
             }
 
             void    deleteValue(value_type n) 
@@ -97,7 +97,8 @@ namespace ft
                 if (_root == NULL)
                     return;
             
-                Node *v = searchValue(_root, n);
+                iterator it = searchValue(_root, n);
+                Node* v = it.getValue();
                 if (v == NULL) 
                 {
                     // std::cout << "No node found to delete with value:" << n << std::endl;
@@ -144,8 +145,6 @@ namespace ft
                 return (tmp);
             }
             /* public */
-
-        private:
 
             void    deleteTree(Node* node)
             {

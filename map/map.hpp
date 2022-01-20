@@ -24,14 +24,14 @@ namespace ft
             // Todo: Member types:
             typedef Key                                                             key_type;
             typedef T                                                               mapped_type;
-            typedef ft::pair<const Key, T>                                          value_type;
+            typedef ft::pair<Key, T>                                          value_type;
             typedef Compare                                                         key_compare;
             typedef Alloc                                                           allocator_type;
             typedef typename allocator_type::reference                              reference;
             typedef typename allocator_type::const_reference                        const_reference;
             typedef typename allocator_type::pointer                                pointer;
             typedef typename allocator_type::const_pointer                          const_pointer;
-            typedef typename ft::mapIterator<value_type>::iterator                  iterator;
+            typedef typename ft::mapIterator<value_type>                          iterator;
             // typedef typename ft::mapIterator<value_type>::const_iterator            const_iterator;
             typedef typename ft::MapReverseIterator<iterator>                       reverse_iterator;
             // typedef typename ft::MapReverseIterator<const_iterator>                 const_reverse_iterator;
@@ -68,7 +68,7 @@ namespace ft
                 _compare(comp),
                 _rbt()
             {
-                std::cout << "Empty constructor called\n";
+                std::cout << "Map Empty constructor called\n";
             }
 
             // template < class InputIterator>
@@ -96,6 +96,7 @@ namespace ft
                 {
                     _alloc = x._alloc;
                     _compare = x._compare;
+                    _rbt = x._rbt;
                     // ! do something
                     // this->clear();
                     // this->insert(x.begin(), x.end());
@@ -129,13 +130,30 @@ namespace ft
             // single element (1)	
             ft::pair<iterator, bool> insert (const value_type& val)
             {
-                return (_rbt.insertValue(val));
+                ft::treeNode<value_type> *tmp = _rbt.insertValue(val);
+                if (tmp != NULL)
+                    iterator it(tmp);
+                return (ft::make_pair(it, true));
             }
             // with hint (2)	
             // iterator insert (iterator position, const value_type& val);
             // range (3)	
             // template <class InputIterator>
             // void insert (InputIterator first, InputIterator last);
+
+            // ! find
+            // iterator    find(const key_type& k)
+            // {
+            //     return(_rbt.searchValue(_rbt.getRoot(), ft::make_pair(k, mapped_type())));
+            // }
+
+            // ! []
+            // mapped_type&    operator[] (const key_type& k)
+            // {
+            //     iterator tmp = this->find(k);
+
+            //     return ((*tmp).second);
+            // }
 
 
             
