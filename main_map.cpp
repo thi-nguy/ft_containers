@@ -83,10 +83,27 @@ void        test_constructor(std::string test_type)
     print_test_name(test_type);
 
     // std::cout << "Empty constructor called\n";
-    ft::map<char, int> map_a;
-    ft::pair<char, int> pair1('a', 42);
-    map_a.insert ( pair1 );
+    // ft::map<char, int> map_a;
+    // ft::pair<char, int> pair1('a', 142);
+    // map_a.insert(pair1);
+    // map_a.insert ( ft::pair<char, int> ('b', 43 ));
+    // map_a.insert ( ft::pair<char, int> ('d', 32 ));
+    // map_a.insert ( ft::pair<char, int> ('c', 33 ));
+    // map_a.insert ( ft::pair<char, int> ('a', 35 ));
+    // map_a.insert ( ft::pair<char, int> ('a', 100 ));
+    // std::cout << map_a.find('a')->second; // ! bug at operator -> of iterator
+    // map_a.get_tree().print2D();
 
+    // std::map<char, int> map_b;
+    // std::pair<char, int> pair2('a', 142);
+    // map_b.insert ( pair2 );
+    // map_b.insert ( std::pair<char, int> ('b', 43 ));
+    // map_b.insert ( std::pair<char, int> ('d', 32 ));
+    // map_b.insert ( std::pair<char, int> ('c', 33 ));
+    // map_b.insert ( std::pair<char, int> ('a', 35 ));
+    // map_b.insert ( std::pair<char, int> ('a', 135 ));
+
+    // std::cout << map_b.find('a')->second; 
     // std::cout << "Range constructor called\n";
     // ft::map<std::string> map_b(4, "hello");
     // std::cout << "First element: " << map_b.front() << std::endl << std::endl;
@@ -101,6 +118,39 @@ void        test_constructor(std::string test_type)
     // first['d']=70;
 
     // ft::map<char,int> second (first);
+
+     ft::map<char,int> mymap;
+
+  // first insert function version (single parameter):
+  mymap.insert ( ft::pair<char,int>('a',100) );
+  mymap.insert ( ft::pair<char,int>('z',200) );
+
+  ft::pair<ft::map<char,int>::iterator,bool> ret;
+  ret = mymap.insert ( ft::pair<char,int>('z',500) );
+  if (ret.second==false) {
+    std::cout << "element 'z' already existed";
+    std::cout << " with a value of " << ret.first->second << '\n';
+  }
+
+  // second insert function version (with hint position):
+  ft::map<char,int>::iterator it = mymap.begin();
+  mymap.insert (it, ft::pair<char,int>('b',300));  // max efficiency inserting
+  mymap.insert (it, ft::pair<char,int>('c',400));  // no max efficiency inserting
+
+  // third insert function version (range insertion):
+  ft::map<char,int> anothermap;
+  anothermap.insert(mymap.begin(),mymap.find('c'));
+
+  // showing contents:
+  std::cout << "mymap contains:\n";
+  for (it=mymap.begin(); it!=mymap.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
+
+  std::cout << "anothermap contains:\n";
+  for (it=anothermap.begin(); it!=anothermap.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
+
+  return 0;
 }
 
 
@@ -133,8 +183,6 @@ void        test_red_black_tree(std::string test_type)
     my_tree.insertValue(pair6);
 
     // // ! In noi dung cua searchValue bang 2 cach
-    ft::mapIterator<ft::treeNode<ft::pair <int, std::string> > > it = my_tree.searchValue(my_tree.getRoot(), pair3);
-    std::cout << it.getValue()->value << "\n";
     my_tree.print2D();
     // std::cout << "first node is: " << my_tree.getFirstNode()->value << "\n";
     // std::cout << "Last node is: " << my_tree.getLastNode()->value << "\n";

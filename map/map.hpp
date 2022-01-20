@@ -7,7 +7,7 @@
 #include <functional>   //std::less, std::binary_function
 #include "red_black_tree.hpp"
 #include "pair.hpp"
-#include "map_iterator.hpp"
+#include "tree_iterator.hpp"
 #include "map_reverse_iterator.hpp"
 
 namespace ft
@@ -31,9 +31,9 @@ namespace ft
             typedef typename allocator_type::const_reference                        const_reference;
             typedef typename allocator_type::pointer                                pointer;
             typedef typename allocator_type::const_pointer                          const_pointer;
-            typedef typename ft::mapIterator<value_type>                          iterator;
+            typedef typename ft::RedBlackTree<value_type>::iterator                 iterator;
             // typedef typename ft::mapIterator<value_type>::const_iterator            const_iterator;
-            typedef typename ft::MapReverseIterator<iterator>                       reverse_iterator;
+            // typedef typename ft::MapReverseIterator<iterator>                       reverse_iterator;
             // typedef typename ft::MapReverseIterator<const_iterator>                 const_reverse_iterator;
             typedef typename std::ptrdiff_t                                         difference_type;
             typedef typename allocator_type::size_type                              size_type;
@@ -68,7 +68,7 @@ namespace ft
                 _compare(comp),
                 _rbt()
             {
-                std::cout << "Map Empty constructor called\n";
+                // std::cout << "Map Empty constructor called\n";
             }
 
             // template < class InputIterator>
@@ -87,7 +87,7 @@ namespace ft
             map(const map& x)
             {
                 *this = x;
-                std::cout << "Copy constructor called\n";
+                // std::cout << "Copy constructor called\n";
             }
 
             map& operator= (const map& x)
@@ -106,7 +106,7 @@ namespace ft
 
             ~map(void)
             {
-                std::cout << "Map Deconstructor called\n";
+                // std::cout << "Map Deconstructor called\n";
 
             }
             // Todo: Capacity
@@ -130,22 +130,31 @@ namespace ft
             // single element (1)	
             ft::pair<iterator, bool> insert (const value_type& val)
             {
-                ft::treeNode<value_type> *tmp = _rbt.insertValue(val);
-                if (tmp != NULL)
-                    iterator it(tmp);
-                return (ft::make_pair(it, true));
+                return (_rbt.insertValue(val));
             }
             // with hint (2)	
-            // iterator insert (iterator position, const value_type& val);
+            iterator insert (iterator position, const value_type& val)
+            {
+                void(position);
+                return (_rbt.insertValue(val).first);
+            }
             // range (3)	
-            // template <class InputIterator>
-            // void insert (InputIterator first, InputIterator last);
+            template <class InputIterator>
+            void insert (InputIterator first, InputIterator last)
+            {
+                // difference_type d = ft:distance(first, last);
+                while (first != last)
+                {
+                    this->insert(*first); // operator * cua treeIterator
+                    first++; // operator ++ cuar treeIterator
+                }
+            }
 
             // ! find
-            // iterator    find(const key_type& k)
-            // {
-            //     return(_rbt.searchValue(_rbt.getRoot(), ft::make_pair(k, mapped_type())));
-            // }
+            iterator    find(const key_type& k)
+            {
+                return(iterator(_rbt.searchValue(_rbt.getRoot(), ft::make_pair(k, mapped_type()))));
+            }
 
             // ! []
             // mapped_type&    operator[] (const key_type& k)
@@ -163,7 +172,10 @@ namespace ft
 
             
 
-
+            ft::RedBlackTree<value_type> get_tree() const
+            {
+                return (_rbt);
+            }
 
         private:
             allocator_type                 _alloc;

@@ -4,7 +4,7 @@
 #include <memory>  //std::allocator
 #include <utility> //std::
 #include "treeNode.hpp"
-#include "map_iterator.hpp"
+#include "tree_iterator.hpp"
 #include "pair.hpp"
 
 #define red		"\033[91m"
@@ -22,7 +22,7 @@ namespace ft
         public:
             typedef T                       value_type; //o day la ft::pair
             typedef size_t                  size_type;
-            typedef ft::mapIterator<Node>   iterator;
+            typedef ft::treeIterator<Node>   iterator;
 
             // Todo: iterator and other typedef
 
@@ -37,7 +37,7 @@ namespace ft
             {
                 // _root = _alloc_node.allocate(1);
                 // _alloc_node.construct(_root, Node()); // call constructor of treeNode
-                std::cout << "Tree constructor called\n";
+                // std::cout << "Tree constructor called\n";
             }
 
             RedBlackTree(const RedBlackTree& other)
@@ -59,36 +59,42 @@ namespace ft
             ~RedBlackTree()
             {
                 deleteTree(_root);
-                std::cout << "Tree Deconstructor called\n";
+                // std::cout << "Tree Deconstructor called\n";
 
             }
 
 
-            iterator   searchValue(Node* node, value_type val)
+            Node*   searchByKey(value_type val)
             {
-                if (node == NULL || node->value == val)
-                    return (iterator(node));
-                if (node->value < val)
+                Node*   node = _root;
+
+                if (node == NULL || node->value.first == val.first)
+                    return (node);
+                while (node != NULL)
                 {
-                    node = node->right;
-                    return (searchValue(node, val));
+                    if (node->value.first < val.first)
+                        node = node->right;
+                    else if (node->value.first > val.first)
+                        node = node->left;
+                    else if (node->value.first == val.first)
+                        return (node);
                 }
-                else
-                {
-                    node = node->left;
-                    return (searchValue(node, val));
-                }
+                return (NULL);
             }
 
-            Node*    insertValue(const value_type &val)
+            ft::pair<iterator, bool>    insertValue(const value_type &val)
             {
-                Node    *pt = _alloc_node.allocate(1);
-
-                _alloc_node.construct(pt, Node(val));
-                _root = BST_Insert(_root, pt);
-                _tree_size++;
-                fixInsertViolation(_root, pt);
-                return (pt);
+                Node    *tmp = searchByKey(val);
+                if (tmp == NULL)
+                {
+                    Node    *pt = _alloc_node.allocate(1);
+                    _alloc_node.construct(pt, Node(val));
+                    _root = BST_Insert(_root, pt);
+                    _tree_size++;
+                    fixInsertViolation(_root, pt);
+                    return (ft::make_pair(iterator(pt), true));
+                }
+                return (ft::make_pair(iterator(tmp), false));
             }
 
             void    deleteValue(value_type n) 
@@ -97,8 +103,7 @@ namespace ft
                 if (_root == NULL)
                     return;
             
-                iterator it = searchValue(_root, n);
-                Node* v = it.getValue();
+                Node* v = searchByKey(n);
                 if (v == NULL) 
                 {
                     // std::cout << "No node found to delete with value:" << n << std::endl;

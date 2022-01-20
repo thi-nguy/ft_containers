@@ -1,5 +1,5 @@
-#ifndef MAP_ITERATOR_HPP
-#define MAP_ITERATOR_HPP
+#ifndef TREE_ITERATOR_HPP
+#define TREE_ITERATOR_HPP
 
 #include "../utils/iterator.hpp"
 #include "../utils/iterator_traits.hpp"
@@ -8,7 +8,7 @@
 namespace ft
 {
     template <typename T>
-    class mapIterator: public ft::iterator<ft::bidirectional_iterator_tag, T>
+    class treeIterator: public ft::iterator<ft::bidirectional_iterator_tag, T>
     {
         public:        
             typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::iterator_category     iterator_category;
@@ -18,31 +18,31 @@ namespace ft
             typedef T&             reference;
 
             // Todo: Constructor, Destructor
-            mapIterator()
+            treeIterator()
             : _node()
             {
-                std::cout << "Empty mapIterator constructor called\n";
+                // std::cout << "Empty treeIterator constructor called\n";
             }
 
-            mapIterator(T* node)
+            treeIterator(T* node)
             : _node(node)
             {
-                std::cout << "Node mapIterator constructor called\n";
+                // std::cout << "Node treeIterator constructor called\n";
             }
 
-            virtual ~mapIterator()
+            virtual ~treeIterator()
             {
-                std::cout << "mapIterator Destructor called\n";
+                // std::cout << "treeIterator Destructor called\n";
             }
 
             // Todo: X a; X b(a); b = a;
 
-            mapIterator(const mapIterator& other)
+            treeIterator(const treeIterator& other)
             :   _node(other._node)
             {
             }
 
-            mapIterator&    operator=(const mapIterator& rhs)
+            treeIterator&    operator=(const treeIterator& rhs)
             {
                 if (this != &rhs)
                     _node = rhs._node;
@@ -50,12 +50,12 @@ namespace ft
             }
 
             // Todo: a == b, a != b
-            bool operator==(const mapIterator& rhs) // overload at treeNode
+            bool operator==(const treeIterator& rhs) // overload at treeNode
             {
                 return (_node == rhs._node);
             }
 
-            bool operator!=(const mapIterator& rhs)
+            bool operator!=(const treeIterator& rhs)
             {
                 return (!(this == rhs));
             }
@@ -66,13 +66,13 @@ namespace ft
                 return (_node->value);
             }
 
-            pointer     operator->()
+            pointer     operator->() const
             {
                 return (&_node->value);
             }
 
             // ++a
-            mapIterator&    operator++()
+            treeIterator&    operator++()
             {
                 if (_node->right != NULL)
                 {
@@ -94,15 +94,15 @@ namespace ft
                 return (*this);
             }
             // a++
-            mapIterator     operator++(int)
+            treeIterator     operator++(int)
             {
-                mapIterator tmp(*this);
+                treeIterator tmp(*this);
                 operator++();
                 return (tmp);
             }
 
             // --a
-            mapIterator&    operator--()
+            treeIterator&    operator--()
             {
                 if (_node->left != NULL)
                 {
@@ -125,9 +125,9 @@ namespace ft
             }
 
             // a--
-            mapIterator     operator--(int)
+            treeIterator     operator--(int)
             {
-                mapIterator tmp(*this);
+                treeIterator tmp(*this);
                 operator--();
                 return (tmp);
             }
