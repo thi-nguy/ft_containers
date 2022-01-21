@@ -13,6 +13,8 @@ namespace ft
     {
         public:
             typedef T   value_type;
+            typedef T&  reference;
+            typedef T*  pointer;
 
             value_type  value;
             treeNode*   parent;
@@ -96,6 +98,7 @@ namespace ft
                     return (true);
                 return (false);
             }
+
     }; /* struct treeNode */
 
     template <typename T>

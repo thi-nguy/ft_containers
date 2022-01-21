@@ -8,14 +8,15 @@
 namespace ft
 {
     template <typename T>
-    class treeIterator: public ft::iterator<ft::bidirectional_iterator_tag, T>
+    class treeIterator: ft::iterator<ft::bidirectional_iterator_tag, T>
     {
-        public:        
-            typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::iterator_category     iterator_category;
-            typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::value_type            value_type;
-            typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::difference_type       difference_type;
-            typedef T*               pointer;
-            typedef T&             reference;
+        public:
+        // T is a treeNode. T::value_type is ft::pair        
+            typedef typename T::value_type                                                                   value_type; 
+            typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::iterator_category     iterator_category;
+            typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::difference_type       difference_type;
+            typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::pointer               pointer;
+            typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::reference             reference;
 
             // Todo: Constructor, Destructor
             treeIterator()
@@ -52,23 +53,23 @@ namespace ft
             // Todo: a == b, a != b
             bool operator==(const treeIterator& rhs) // overload at treeNode
             {
-                return (_node == rhs._node);
+                return (this->_node == rhs._node);
             }
 
             bool operator!=(const treeIterator& rhs)
             {
-                return (!(this == rhs));
+                return (this->_node != rhs._node);
             }
 
             // Todo: *a, a->m
             reference operator*() const
             {
-                return (_node->value);
+                return (this->_node->value);
             }
 
             pointer     operator->() const
             {
-                return (&_node->value);
+                return (&this->_node->value);
             }
 
             // ++a

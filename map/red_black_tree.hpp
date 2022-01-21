@@ -486,12 +486,12 @@ namespace ft
                     std::cout << " ";
                 if (root->color == 0)
                 {
-                    std::cout << root->value << "/";
+                    std::cout << root->value.second << "/";
                     std::cout << red << my_color[root->color] << nocolor << "\n";
                 }
                 else
                 {
-                    std::cout << root->value << "/";
+                    std::cout << root->value.second << "/";
                     std::cout << green << my_color[root->color] << nocolor <<"\n";
                 }
             

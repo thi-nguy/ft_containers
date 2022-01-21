@@ -88,12 +88,12 @@ namespace ft
         return !(lhs<rhs); 
     }    /* relational operators (pair) */
 
-    template <class T1, class T2>
-    std::ostream    &operator<<(std::ostream &COUT, const pair<T1, T2> &a_pair)
-    {
-        COUT << a_pair.first << ":" << a_pair.second;
-        return (COUT);
-    }
+    // template <class T1, class T2>
+    // std::ostream    &operator<<(std::ostream &COUT, const pair<T1, T2> &a_pair)
+    // {
+    //     COUT << a_pair.second;
+    //     return (COUT);
+    // }
 
     template <class T1, class T2>
     ft::pair<T1, T2> make_pair(T1 x, T2 y)

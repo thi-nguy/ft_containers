@@ -24,7 +24,7 @@ namespace ft
             // Todo: Member types:
             typedef Key                                                             key_type;
             typedef T                                                               mapped_type;
-            typedef ft::pair<Key, T>                                          value_type;
+            typedef ft::pair<Key, T>                                                value_type;
             typedef Compare                                                         key_compare;
             typedef Alloc                                                           allocator_type;
             typedef typename allocator_type::reference                              reference;
@@ -135,20 +135,25 @@ namespace ft
             // with hint (2)	
             iterator insert (iterator position, const value_type& val)
             {
-                void(position);
+                (void)position;
                 return (_rbt.insertValue(val).first);
             }
+
             // range (3)	
-            template <class InputIterator>
-            void insert (InputIterator first, InputIterator last)
-            {
-                // difference_type d = ft:distance(first, last);
-                while (first != last)
-                {
-                    this->insert(*first); // operator * cua treeIterator
-                    first++; // operator ++ cuar treeIterator
-                }
-            }
+            // template <class InputIterator>
+            // void insert (
+                // InputIterator first, 
+                // InputIterator last,
+                // typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL
+                // )
+            // {
+            //     // difference_type d = ft:distance(first, last);
+            //     while (first != last)
+            //     {
+            //         this->insert(*first); // operator * cua treeIterator
+            //         first++; // operator ++ cuar treeIterator
+            //     }
+            // }
 
             // ! find
             iterator    find(const key_type& k)
