@@ -121,34 +121,34 @@ void        test_empty(std::string test_type)
     std::cout << map_a.empty() << "\n";
 }
 
-bool fncomp (char lhs, char rhs) {return lhs<rhs;}
+// bool fncomp (char lhs, char rhs) {return lhs<rhs;}
 
-struct classcomp {
-  bool operator() (const char& lhs, const char& rhs) const
-  {return lhs<rhs;}
-};
+// struct classcomp {
+//   bool operator() (const char& lhs, const char& rhs) const
+//   {return lhs<rhs;}
+// };
 
-void        test_constructor(std::string test_type)
-{
-    print_test_name(test_type);
+// void        test_constructor(std::string test_type)
+// {
+//     print_test_name(test_type);
 
-  ft::map<char,int> first;
+//     ft::map<char,int> first;
 
-  first['a']=10;
-  first['b']=30;
-  first['c']=50;
-  first['d']=70;
+//     first['a']=10;
+//     first['b']=30;
+//     first['c']=50;
+//     first['d']=70;
 
-  ft::map<char,int> second (first.begin(),first.end());
+//     ft::map<char,int> second (first.begin(),first.end());
 
-  ft::map<char,int> third (second);
+//     ft::map<char,int> third (second);
 
-  ft::map<char,int, classcomp> fourth;                 // class as Compare
+//     ft::map<char,int, classcomp> fourth;                 // class as Compare
 
-  bool(*fn_pt)(char,char) = fncomp;
-  ft::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
+//     bool(*fn_pt)(char,char) = fncomp;
+//     ft::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
 
-}
+// }
 
 void        test_insert(std::string test_type)
 {
@@ -264,6 +264,70 @@ void        test_erase(std::string test_type)
         std::cout << it->first << " => " << it->second << '\n';
 
 }
+
+void        test_clear(std::string test_type)
+{
+    print_test_name(test_type);
+
+    ft::map<char,int> mymap;
+
+    mymap['x']=100;
+    mymap['y']=200;
+    mymap['z']=300;
+
+    std::cout << "mymap contains:\n";
+    for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+    std::cout << "mymap sizes: " << mymap.size() << "\n";
+
+    mymap.clear();
+    std::cout << "mymap sizes: " << mymap.size() << "\n";
+}
+
+void        test_count(std::string test_type)
+{
+    print_test_name(test_type);
+    ft::map<char,int> mymap;
+    char c;
+
+    mymap ['a']=101;
+    mymap ['c']=202;
+    mymap ['f']=303;
+
+    for (c='a'; c<'h'; c++)
+    {
+        std::cout << c;
+        if (mymap.count(c)>0)
+            std::cout << " is an element of mymap.\n";
+        else 
+            std::cout << " is not an element of mymap.\n";
+    }
+}
+
+void        test_swap(std::string test_type)
+{
+    print_test_name(test_type);
+
+    ft::map<char,int> foo,bar;
+
+    foo['x']=100;
+    foo['y']=200;
+
+    bar['a']=11;
+    bar['b']=22;
+    bar['c']=33;
+
+    foo.swap(bar);
+
+    std::cout << "foo contains:\n";
+    for (ft::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+
+    std::cout << "bar contains:\n";
+    for (ft::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+}
+
 void        test_map(std::string test_type)
 {
     print_test_name(test_type);
@@ -278,6 +342,9 @@ void        test_map(std::string test_type)
     test_insert("insert");
     test_operator_access("[ ]");
     test_erase("erase");
+    test_clear("clear");
+    test_count("count");
+    test_swap("swap");
 }
 
 int main(void)

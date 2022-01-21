@@ -139,7 +139,8 @@ namespace ft
             iterator    end()
             {
                 iterator    last_it = iterator(_rbt.getLastNode());
-                return (++last_it);
+                ++last_it;
+                return (last_it);
             }
 
             // const_iterator  end() const
@@ -202,7 +203,7 @@ namespace ft
                 return (_rbt.getMaxSize());
             }
 
-            // ! erase
+            // ! erase - bug
             void    erase(iterator position)
             {
                 _rbt.deleteValue(*position);
@@ -225,6 +226,46 @@ namespace ft
                     first++;
                 }
             }
+
+            // ! clear - bug
+            void        clear()
+            {
+                this->erase(this->begin(), this->end());
+            }
+
+            // ! count
+            size_type count (const key_type& k) const
+            {
+                ft::treeNode<value_type> *myNode = _rbt.searchByKey(ft::make_pair(k, mapped_type()));
+                if (myNode == NULL)
+                    return (0);
+                return (1);
+            }
+
+            // ! lower_bound
+            // iterator    lower_bound(const key_type& k)
+            // {
+
+
+            // }
+
+            // ! swap-- bug,need to add a swap function into RedBlackTree
+            void    swap(map& x)
+            {
+                map tmp;
+                tmp._alloc = this->_alloc;
+                tmp._compare = this->_compare;
+                tmp._rbt = this->_rbt;
+
+                this->_alloc = x._alloc;
+                this->_compare = x._compare;
+                this->_rbt = x._rbt;
+
+                x._alloc = tmp._alloc;
+                x._compare = tmp._compare;
+                x._rbt = tmp._rbt;
+            }
+
 
 
             

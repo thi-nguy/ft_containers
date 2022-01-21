@@ -66,7 +66,7 @@ namespace ft
             }
 
 
-            Node*   searchByKey(value_type val)//value_type = ft::pair
+            Node*   searchByKey(value_type val) const //value_type = ft::pair
             {
                 Node*   node = _root;
 
