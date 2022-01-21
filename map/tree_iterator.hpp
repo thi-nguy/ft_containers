@@ -84,13 +84,15 @@ namespace ft
                 else
                 {
                     T* tmp = _node->parent;
-                    while (_node == tmp->right)
+                    while (tmp != NULL && _node == tmp->right)
                     {
                         _node = tmp;
                         tmp = tmp->parent;
                     }
                     if (_node->right != tmp)
                         _node = tmp;
+                    else if (tmp == NULL)
+                        _node = NULL;
                 }
                 return (*this);
             }

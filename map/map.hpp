@@ -9,6 +9,7 @@
 #include "pair.hpp"
 #include "tree_iterator.hpp"
 #include "map_reverse_iterator.hpp"
+#include "../utils/utils.hpp"
 
 namespace ft
 {
@@ -22,6 +23,7 @@ namespace ft
         public:
 
             // Todo: Member types:
+            // value_type = ft::pair<key, T>
             typedef Key                                                             key_type;
             typedef T                                                               mapped_type;
             typedef ft::pair<Key, T>                                                value_type;
@@ -58,8 +60,7 @@ namespace ft
             };
 
             // Todo: Constructor
-            explicit map
-            (
+            explicit map (
                 const key_compare& comp = key_compare(),
                 const allocator_type& alloc = allocator_type()
             )
@@ -71,18 +72,22 @@ namespace ft
                 // std::cout << "Map Empty constructor called\n";
             }
 
-            // template < class InputIterator>
-            // map 
-            // (
-            //     InputIterator first, 
-            //     InputIterator last, 
-            //     const key_compare& comp = key_compare(), 
-            //     const allocator_type& alloc = allocator_type()
-            // )
-            // {
-            //     // ! do something
-            //     std::cout << "Range constructor called\n";
-            // }
+            template < class InputIterator>
+            map (
+                InputIterator first,
+                InputIterator last,
+                const key_compare& comp = key_compare(),
+                const allocator_type& alloc = allocator_type(),
+                typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL
+            )
+            :
+                _alloc(alloc),
+                _compare(comp),
+                _rbt()
+            {
+                this->insert(first, last);
+                // std::cout << "Range constructor called\n";
+            }
 
             map(const map& x)
             {
@@ -125,6 +130,24 @@ namespace ft
             {
                 return (iterator(_rbt.getFirstNode()));
             }
+
+            // const_iterator begin() const
+            // {
+            //     return (const_iterator(_rbt.getFirstNode()));
+            // }
+
+            iterator    end()
+            {
+                iterator    last_it = iterator(_rbt.getLastNode());
+                return (++last_it);
+            }
+
+            // const_iterator  end() const
+            // {
+            //     const_iterator    last_it = const_iterator(_rbt.getLastNode());
+            //     return (++last_it);
+
+            // }
             
             // ! insert
             // single element (1)	
@@ -140,34 +163,68 @@ namespace ft
             }
 
             // range (3)	
-            // template <class InputIterator>
-            // void insert (
-                // InputIterator first, 
-                // InputIterator last,
-                // typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL
-                // )
-            // {
-            //     // difference_type d = ft:distance(first, last);
-            //     while (first != last)
-            //     {
-            //         this->insert(*first); // operator * cua treeIterator
-            //         first++; // operator ++ cuar treeIterator
-            //     }
-            // }
-
+            template <class InputIterator>
+            void insert (
+                InputIterator first, 
+                InputIterator last,
+                typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL
+                )
+            {
+                // difference_type d = ft:distance(first, last);
+                while (first != last)
+                {
+                    this->insert(*first); // operator * cua treeIterator
+                    first++; // operator ++ cuar treeIterator
+                }
+            }
+            
             // ! find
             iterator    find(const key_type& k)
             {
-                return(iterator(_rbt.searchValue(_rbt.getRoot(), ft::make_pair(k, mapped_type()))));
+                return(iterator(_rbt.searchByKey(ft::make_pair(k, mapped_type()))));
             }
 
             // ! []
-            // mapped_type&    operator[] (const key_type& k)
-            // {
-            //     iterator tmp = this->find(k);
+            mapped_type&    operator[] (const key_type& k)
+            {
+                iterator tmp = this->find(k);
+                if (tmp == NULL)
+                {
+                    this->insert(ft::make_pair(k, mapped_type()));
+                    tmp = this->find(k);
+                }
+                return ((*tmp).second);
+            }
 
-            //     return ((*tmp).second);
-            // }
+            // ! max_size
+            size_type   max_size() const
+            {
+                return (_rbt.getMaxSize());
+            }
+
+            // ! erase
+            void    erase(iterator position)
+            {
+                _rbt.deleteValue(*position);
+            }
+
+            size_type   erase(const key_type& k)
+            {
+                if (this->find(k) == this->end())
+                    return (0);
+                ft::pair<key_type,mapped_type> my_pair = ft::make_pair(k, mapped_type());
+                _rbt.deleteValue(my_pair);
+                return (1);
+            }
+
+            void        erase(iterator first, iterator last)
+            {
+                while (first != last)
+                {
+                    this->erase(first); // ! bug here, cannot delete the last element
+                    first++;
+                }
+            }
 
 
             

@@ -5,12 +5,17 @@ yellow=`tput setaf 3`
 reset=`tput sgr0`
 
 # Change ft::map to std::map and create a new main
-sed 's/ft::map/std::map/g' main_map.cpp > main_map_tmp.cpp
+sed 's/ft::map/std::map/g' main_map.cpp > main_map_tmp2.cpp
+# Change ft::pair to std::pair and create a new main
+sed 's/ft::pair/std::pair/g' main_map_tmp2.cpp > main_map_tmp3.cpp
+# Change ft::make_pair to std::make_pair and create a new main
+sed 's/ft::make_pair/std::make_pair/g' main_map_tmp3.cpp > main_map_tmp.cpp
+
 # Change ft::mapReverseIterator to std::reverse_iterator and create a new main
 sed 's/ft::mapReverseIterator/std::reverse_iterator/g' main_map_tmp.cpp > main_map_real.cpp
 
 # Compile with new main and put result into out1
-c++ -Wall -Wextra -Werror -std=c++98 -fsanitize=address main_map_real.cpp
+c++ -Wall -Wextra -Werror -std=c++98 main_map_real.cpp
 ./a.out > real_out
 
 # Compile our main and put result into out2
@@ -29,7 +34,9 @@ fi
 
 rm a.out
 make fclean
-rm real_out
-rm my_out
+# rm real_out
+# rm my_out
 rm main_map_tmp.cpp
+rm main_map_tmp2.cpp
+rm main_map_tmp3.cpp
 rm main_map_real.cpp

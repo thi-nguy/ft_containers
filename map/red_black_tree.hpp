@@ -20,7 +20,9 @@ namespace ft
     class RedBlackTree
     {
         public:
-            typedef T                       value_type; //o day la ft::pair
+            //value_type o day la ft::pair
+            //Node la ft::treeNode< ft::pair >
+            typedef T                       value_type;
             typedef size_t                  size_type;
             typedef ft::treeIterator<Node>   iterator;
 
@@ -64,7 +66,7 @@ namespace ft
             }
 
 
-            Node*   searchByKey(value_type val)
+            Node*   searchByKey(value_type val)//value_type = ft::pair
             {
                 Node*   node = _root;
 
@@ -149,7 +151,14 @@ namespace ft
                     tmp = tmp->right;
                 return (tmp);
             }
+
+            size_type   getMaxSize() const
+            {
+                return (Node_Alloc().max_size());
+            }
             /* public */
+
+        private:
 
             void    deleteTree(Node* node)
             {
@@ -161,7 +170,7 @@ namespace ft
                 _alloc_node.deallocate(node, 1);
             }
 
-            void    deleteNode(Node *v) 
+            void    deleteNode(Node *v) // ! bug here, in map.erase, cannot delete last element
             {
                 Node *u = BST_Get_Replaced_Node(v);
                 
@@ -498,16 +507,6 @@ namespace ft
                 // Process left child
                 print2DUtil(root->left, space);
             }
-
-            // void    deleteTree(Node* pt)
-            // {
-            //     if(pt == NULL)
-            //         return ;
-            //     deleteTree(pt->left);
-            //     deleteTree(pt->right);
-            //     _alloc_node.destroy(pt);
-            //     _alloc_node.deallocate(pt, 1);
-            // }
 
             size_type               _tree_size;
             std::allocator<Node>    _alloc_node;
