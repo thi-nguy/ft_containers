@@ -65,6 +65,27 @@ namespace ft
 
             }
 
+            void    swap(RedBlackTree& x)
+            {
+                if (&x == this)
+                    return ;
+                
+                size_type               tree_size_tmp;
+                std::allocator<Node>    alloc_tmp;
+                Node*                   root_tmp;
+
+                tree_size_tmp = this->_tree_size;
+                alloc_tmp = this->_alloc_node;
+                root_tmp = this->_root;
+
+                this->_tree_size = x._tree_size;
+                this->_alloc_node = x._alloc_node;
+                this->_root = x._root;
+
+                x._tree_size = tree_size_tmp;
+                x._alloc_node = alloc_tmp;
+                x._root = root_tmp;
+            }
 
             Node*   searchByKey(value_type val) const //value_type = ft::pair
             {

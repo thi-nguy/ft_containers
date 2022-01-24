@@ -249,21 +249,10 @@ namespace ft
 
             // }
 
-            // ! swap-- bug,need to add a swap function into RedBlackTree
-            void    swap(map& x) // ! start to do here or at erase
+            // ! swap
+            void    swap(map& x)
             {
-                map tmp;
-                tmp._alloc = this->_alloc;
-                tmp._compare = this->_compare;
-                tmp._rbt = this->_rbt;
-
-                this->_alloc = x._alloc;
-                this->_compare = x._compare;
-                this->_rbt = x._rbt;
-
-                x._alloc = tmp._alloc;
-                x._compare = tmp._compare;
-                x._rbt = tmp._rbt;
+                _rbt.swap(x._rbt);
             }
 
 
