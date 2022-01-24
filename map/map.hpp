@@ -179,17 +179,19 @@ namespace ft
                 }
             }
             
-            // ! find
+            // ! find -- bug in here, van de o cho mapped_type()?
             iterator    find(const key_type& k)
             {
-                return(iterator(_rbt.searchByKey(ft::make_pair(k, mapped_type()))));
+                
+                iterator ret = iterator(_rbt.searchByKey(ft::make_pair(k, mapped_type())));
+                return(ret);
             }
 
-            // ! []
+            // ! [] -- bug here, 
             mapped_type&    operator[] (const key_type& k)
             {
                 iterator tmp = this->find(k);
-                if (tmp == NULL)
+                if (tmp == this->end())
                 {
                     this->insert(ft::make_pair(k, mapped_type()));
                     tmp = this->find(k);

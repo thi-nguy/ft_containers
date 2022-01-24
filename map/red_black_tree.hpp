@@ -20,7 +20,7 @@ namespace ft
     class RedBlackTree
     {
         public:
-            //value_type o day la ft::pair
+            //value_type / T o day la ft::pair
             //Node la ft::treeNode< ft::pair >
             typedef T                       value_type;
             typedef size_t                  size_type;
@@ -89,21 +89,24 @@ namespace ft
 
             Node*   searchByKey(value_type val) const //value_type = ft::pair
             {
-                Node*   node = _root;
+                Node*   node = _root; // ! bug here, why didn't copy root?
+                Node*   last_node = this->getLastNode();
 
-                if (node == NULL || node->value.first == val.first)
+                if (last_node == NULL)
                     return (node);
-                while (node != NULL)
+                while (node != ++last_node)
                 {
+                    if (node->value.first == val.first)
+                        return (node);
                     if (node->value.first < val.first)
                         node = node->right;
-                    else if (node->value.first > val.first)
+                    else
                         node = node->left;
-                    else if (node->value.first == val.first)
-                        return (node);
                 }
-                return (NULL);
+                return (node);
             }
+
+
 
             ft::pair<iterator, bool>    insertValue(const value_type &val)
             {
@@ -516,12 +519,12 @@ namespace ft
                     std::cout << " ";
                 if (root->color == 0)
                 {
-                    std::cout << root->value.second << "/";
+                    std::cout << root->value.first << "=>" << root->value.second << " /";
                     std::cout << red << my_color[root->color] << nocolor << "\n";
                 }
                 else
                 {
-                    std::cout << root->value.second << "/";
+                    std::cout << root->value.first << "=>" << root->value.second << " /";
                     std::cout << green << my_color[root->color] << nocolor <<"\n";
                 }
             

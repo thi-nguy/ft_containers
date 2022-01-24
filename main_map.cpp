@@ -234,36 +234,6 @@ void        test_operator_access(std::string test_type)
     std::cout << "mymap now contains " << mymap.size() << " elements.\n";
 }
 
-void        test_erase(std::string test_type)
-{
-    print_test_name(test_type);
-    ft::map<char,int> mymap;
-    ft::map<char,int>::iterator it;
-
-    // insert some values:
-    mymap['a']=10;
-    mymap['b']=20;
-    mymap['c']=30;
-    mymap['d']=40;
-    mymap['e']=50;
-    mymap['f']=60;
-
-    it=mymap.find('b');
-    mymap.erase (it);                   // erasing by iterator
-
-    size_t ret = mymap.erase ('c');                  // erasing by key
-    ret = mymap.erase ('d');                  // erasing by key
-    std::cout << "return value of key erase: " << ret << "\n";
-
-    it=mymap.find ('e');
-    mymap.erase ( it, mymap.end() );    // erasing by range
-
-    // show content:
-    std::cout << "Map size is: " << mymap.size() << "\n";
-    for (it=mymap.begin(); it!=mymap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
-
-}
 
 void        test_clear(std::string test_type)
 {
@@ -328,6 +298,41 @@ void        test_swap(std::string test_type)
         std::cout << it->first << " => " << it->second << '\n';
 }
 
+void        test_erase(std::string test_type)
+{
+    print_test_name(test_type);
+    ft::map<char,int> mymap;
+    ft::map<char,int>::iterator it;
+
+    // insert some values:
+    mymap['a']=10;
+    mymap['b']=20;
+    mymap['c']=30;
+    mymap['d']=40;
+    mymap['e']=50;
+    mymap['f']=60;
+
+    mymap.get_tree().print2D();
+    int val = mymap['b'];
+    std::cout << val << "\n";
+    // it=mymap.find('b');
+    // mymap.erase (it);                   // erasing by iterator
+
+    // size_t ret = mymap.erase ('c');                  // erasing by key
+    // ret = mymap.erase ('d');                  // erasing by key
+    // std::cout << "return value of key erase: " << ret << "\n";
+
+    // mymap.get_tree().print2D();
+    // it=mymap.find ('c');
+    // mymap.erase ( it, mymap.end() );    // erasing by range
+
+    // show content:
+    // std::cout << "Map size is: " << mymap.size() << "\n";
+    // for (it=mymap.begin(); it!=mymap.end(); ++it)
+    //     std::cout << it->first << " => " << it->second << '\n';
+
+}
+
 void        test_map(std::string test_type)
 {
     print_test_name(test_type);
@@ -335,16 +340,16 @@ void        test_map(std::string test_type)
     // test_red_black_tree("Red Black Tree");
     // test_mapIterator("map iterator");
     // test_constructor("constructor");
-    test_pair("pair");
-    test_empty("empty");
-    test_size("size");
-    test_max_size("max_size");
-    test_insert("insert");
-    test_operator_access("[ ]");
+    // test_pair("pair");
+    // test_empty("empty");
+    // test_size("size");
+    // test_max_size("max_size");
+    // test_insert("insert");
+    // test_operator_access("[ ]");
+    // test_clear("clear");
+    // test_count("count");
+    // test_swap("swap");
     test_erase("erase");
-    test_clear("clear");
-    test_count("count");
-    test_swap("swap");
 }
 
 int main(void)

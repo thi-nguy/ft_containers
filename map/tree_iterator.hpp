@@ -75,6 +75,8 @@ namespace ft
             // ++a
             treeIterator&    operator++()
             {
+                if (_node == NULL)
+                    return (*this);
                 if (_node->right != NULL)
                 {
                     _node = _node->right;
