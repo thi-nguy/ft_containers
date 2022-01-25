@@ -158,24 +158,31 @@ void        test_insert(std::string test_type)
 
     // first insert function version (single parameter):
     mymap.insert ( ft::pair<char,int>('a',100) );
-    mymap.insert ( ft::pair<char,int>('z',200) );
+    mymap.insert ( ft::pair<char,int>('b',200) );
+    mymap.insert ( ft::pair<char,int>('c',100) );
+    mymap.insert ( ft::pair<char,int>('d',200) );
+    
+    mymap.get_tree().print2D();
+    std::cout << "Root = " << mymap.get_tree().getRoot() << "\n";
+    std::cout << "Root's value = " << mymap.get_tree().getRoot()->value.first << "\n";
 
-    ft::pair<ft::map<char,int>::iterator,bool> ret;
-    ret = mymap.insert ( ft::pair<char,int>('z',500) );
-    if (ret.second==false) {
-        std::cout << "element 'z' already existed";
-        std::cout << " with a value of " << ret.first->second << '\n';
-    }
+    // ft::pair<ft::map<char,int>::iterator,bool> ret;
+    // ret = mymap.insert ( ft::pair<char,int>('z',500) ); // ! Tao them mot tree nua la sao?
+    // if (ret.second==false) {
+    //     std::cout << "element 'z' already existed";
+    //     std::cout << " with a value of " << ret.first->second << '\n';
+    // }
 
     // second insert function version (with hint position):
     ft::map<char,int>::iterator it = mymap.begin();
-    mymap.insert (it, ft::pair<char,int>('b',300));  // max efficiency inserting
-    mymap.insert (it, ft::pair<char,int>('c',400));  // no max efficiency inserting
-
-    // third insert function version (range insertion):
-    ft::map<char,int> anothermap;
-    anothermap.insert(mymap.begin(),mymap.find('c'));
-
+    mymap.insert ( ft::pair<char,int>('h',100) );
+    mymap.insert ( ft::pair<char,int>('x',200) );
+    mymap.insert ( ft::pair<char,int>('z',200) );
+    mymap.insert ( ft::pair<char,int>('f',100) );
+    mymap.insert ( ft::pair<char,int>('g',200) );
+    mymap.insert (it, ft::pair<char,int>('e',300));  // max efficiency inserting
+    mymap.insert (it, ft::pair<char,int>('i',400));  // no max efficiency inserting
+    
     // showing contents:
     std::cout << "mymap contains:\n";
     it = mymap.begin();
@@ -186,12 +193,24 @@ void        test_insert(std::string test_type)
         ++it;
     }
 
+    // Print tree of map
+    mymap.get_tree().print2D();
+    std::cout << "Root = " << mymap.get_tree().getRoot() << "\n";
+    std::cout << "Root's value = " << mymap.get_tree().getRoot()->value.first << "\n";
+
+    // third insert function version (range insertion):
+    ft::map<char,int> anothermap;
+    anothermap.insert(mymap.begin(),mymap.find('c'));
+
+    // showing contents:
     std::cout << "anothermap contains:\n";
     for (it=anothermap.begin(); it!=anothermap.end(); ++it)
         std::cout << it->first << " => " << it->second << '\n';
 
-}
+    // Print tree of map
+    anothermap.get_tree().print2D();
 
+}
 
 void        test_size(std::string test_type)
 {
@@ -234,36 +253,6 @@ void        test_operator_access(std::string test_type)
     std::cout << "mymap now contains " << mymap.size() << " elements.\n";
 }
 
-void        test_erase(std::string test_type)
-{
-    print_test_name(test_type);
-    ft::map<char,int> mymap;
-    ft::map<char,int>::iterator it;
-
-    // insert some values:
-    mymap['a']=10;
-    mymap['b']=20;
-    mymap['c']=30;
-    mymap['d']=40;
-    mymap['e']=50;
-    mymap['f']=60;
-
-    it=mymap.find('b');
-    mymap.erase (it);                   // erasing by iterator
-
-    size_t ret = mymap.erase ('c');                  // erasing by key
-    ret = mymap.erase ('d');                  // erasing by key
-    std::cout << "return value of key erase: " << ret << "\n";
-
-    it=mymap.find ('e');
-    mymap.erase ( it, mymap.end() );    // erasing by range
-
-    // show content:
-    std::cout << "Map size is: " << mymap.size() << "\n";
-    for (it=mymap.begin(); it!=mymap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
-
-}
 
 void        test_clear(std::string test_type)
 {
@@ -296,11 +285,13 @@ void        test_count(std::string test_type)
 
     for (c='a'; c<'h'; c++)
     {
+        //std::cout << c << " -> " << mymap[c] << "   " << mymap.count(c);
+        /* [] will add element if it doest not find it */
         std::cout << c;
         if (mymap.count(c)>0)
             std::cout << " is an element of mymap.\n";
         else 
-            std::cout << " is not an element of mymap.\n";
+            std::cout << " is NOT an element of mymap.\n";
     }
 }
 
@@ -328,6 +319,43 @@ void        test_swap(std::string test_type)
         std::cout << it->first << " => " << it->second << '\n';
 }
 
+void        test_erase(std::string test_type)
+{
+    print_test_name(test_type);
+    ft::map<char,int> mymap;
+    ft::map<char,int>::iterator it, it_end;
+
+    // insert some values:
+    mymap['a']=10;
+    mymap['b']=20;
+    mymap['c']=30;
+    mymap['d']=40;
+    mymap['e']=50;
+    mymap['f']=60;
+    mymap.get_tree().print2D();
+
+    // it=mymap.find('b');
+    // std::cout << "\n------ erase 1 element by iterator---------\n";
+    // mymap.erase (it);                   // erasing by iterator
+
+    // std::cout << "\n------ erase 1 element by key ---------\n";
+    // size_t ret = mymap.erase ('c');                  // erasing by key
+    // std::cout << "return value of key erase: " << ret << "\n";
+
+    it=mymap.find ('b');
+    // it_end=mymap.find ('d');
+    std::cout << "\n------ erase from 'b' to the end ---------\n";
+    mymap.erase ( it, mymap.end() );    // erasing by range
+    mymap.get_tree().print2D();
+    // mymap.erase ( it, it_end );    // erasing by range
+
+    // show content:
+    // std::cout << "Map size is: " << mymap.size() << "\n";
+    // for (it=mymap.begin(); it!=mymap.end(); ++it)
+    //     std::cout << it->first << " => " << it->second << '\n';
+
+}
+
 void        test_map(std::string test_type)
 {
     print_test_name(test_type);
@@ -335,16 +363,16 @@ void        test_map(std::string test_type)
     // test_red_black_tree("Red Black Tree");
     // test_mapIterator("map iterator");
     // test_constructor("constructor");
-    test_pair("pair");
-    test_empty("empty");
-    test_size("size");
-    test_max_size("max_size");
-    test_insert("insert");
-    test_operator_access("[ ]");
+    // test_pair("pair");
+    // test_empty("empty");
+    // test_size("size");
+    // test_max_size("max_size");
+    // test_insert("insert");
+    // test_operator_access("[ ]");
+    // test_swap("swap");
+    // test_count("count");
     test_erase("erase");
-    test_clear("clear");
-    test_count("count");
-    test_swap("swap");
+    // test_clear("clear");
 }
 
 int main(void)

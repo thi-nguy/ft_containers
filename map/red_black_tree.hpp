@@ -60,7 +60,7 @@ namespace ft
 
             ~RedBlackTree()
             {
-                deleteTree(_root);
+                // deleteTree(_root); // Tam xoa di de dung mymap.get_tree.print2D
                 // std::cout << "Tree Deconstructor called\n";
 
             }
@@ -87,6 +87,7 @@ namespace ft
                 x._root = root_tmp;
             }
 
+            // * work ok
             Node*   searchByKey(value_type val) const //value_type = ft::pair
             {
                 Node*   node = _root;
@@ -105,6 +106,7 @@ namespace ft
                 return (NULL);
             }
 
+            // ! Work well
             ft::pair<iterator, bool>    insertValue(const value_type &val)
             {
                 Node    *tmp = searchByKey(val);
@@ -516,12 +518,12 @@ namespace ft
                     std::cout << " ";
                 if (root->color == 0)
                 {
-                    std::cout << root->value.second << "/";
+                    std::cout << root->value.first << "=>" << root->value.second << "/";
                     std::cout << red << my_color[root->color] << nocolor << "\n";
                 }
                 else
                 {
-                    std::cout << root->value.second << "/";
+                    std::cout << root->value.first << "=>" << root->value.second << "/";
                     std::cout << green << my_color[root->color] << nocolor <<"\n";
                 }
             
