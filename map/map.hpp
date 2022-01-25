@@ -191,7 +191,7 @@ namespace ft
             mapped_type&    operator[] (const key_type& k)
             {
                 iterator tmp = this->find(k);
-                if (tmp == this->end())
+                if (tmp == NULL)
                 {
                     this->insert(ft::make_pair(k, mapped_type()));
                     tmp = this->find(k);

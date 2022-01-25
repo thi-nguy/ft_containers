@@ -312,6 +312,8 @@ void        test_erase(std::string test_type)
     mymap['e']=50;
     mymap['f']=60;
 
+    ft::RedBlackTree< ft::pair<char, int> > mytree = mymap.get_tree();
+    ft::treeNode< ft::pair<char, int> > myroot = mytree.getRoot();
     mymap.get_tree().print2D();
     int val = mymap['b'];
     std::cout << val << "\n";
@@ -322,9 +324,9 @@ void        test_erase(std::string test_type)
     // ret = mymap.erase ('d');                  // erasing by key
     // std::cout << "return value of key erase: " << ret << "\n";
 
-    // mymap.get_tree().print2D();
     // it=mymap.find ('c');
     // mymap.erase ( it, mymap.end() );    // erasing by range
+    // mymap.get_tree().print2D();
 
     // show content:
     // std::cout << "Map size is: " << mymap.size() << "\n";
@@ -347,9 +349,9 @@ void        test_map(std::string test_type)
     // test_insert("insert");
     // test_operator_access("[ ]");
     // test_clear("clear");
-    // test_count("count");
+    test_count("count");
     // test_swap("swap");
-    test_erase("erase");
+    // test_erase("erase");
 }
 
 int main(void)

@@ -89,12 +89,12 @@ namespace ft
 
             Node*   searchByKey(value_type val) const //value_type = ft::pair
             {
-                Node*   node = _root; // ! bug here, why didn't copy root?
+                Node*   node = _root; // ! bug here, _root is weird
                 Node*   last_node = this->getLastNode();
 
                 if (last_node == NULL)
                     return (node);
-                while (node != ++last_node)
+                while (node != last_node)
                 {
                     if (node->value.first == val.first)
                         return (node);
@@ -103,7 +103,9 @@ namespace ft
                     else
                         node = node->left;
                 }
-                return (node);
+                if (node->value.first == val.first)
+                    return (node);
+                return (NULL);
             }
 
 

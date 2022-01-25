@@ -8,7 +8,7 @@ enum Color {RED, BLACK};
 
 namespace ft
 {
-    template <typename T>
+    template <typename T> // T o day la ft::pair
     struct treeNode
     {
         public:
