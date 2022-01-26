@@ -193,6 +193,7 @@ namespace ft
                 _alloc_node.deallocate(node, 1);
             }
 
+            ! Xoa node b, truoc khi xoa thi point node b vao node c
             void    deleteNode(Node *v) // ! bug here, in map.erase, cannot delete last element
             {
                 Node *u = BST_Get_Replaced_Node(v);
@@ -223,7 +224,6 @@ namespace ft
                     }
                     _alloc_node.destroy(v);
                     _alloc_node.deallocate(v, 1);
-                    // v = NULL;
                     return;
                 }
                 if (v->left == NULL || v->right == NULL) // v has 1 child
@@ -245,7 +245,6 @@ namespace ft
                             parent->right = u;
                         _alloc_node.destroy(v);
                         _alloc_node.deallocate(v, 1);
-
                         u->parent = parent;
                         if (uvBlack) 
                             fix_Delete_Node_Violation(u); // u and v both black, fix double black at u
