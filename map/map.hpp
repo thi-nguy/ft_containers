@@ -222,21 +222,30 @@ namespace ft
                 return (1);
             }
 
+                // typename ft::iterator_traits<iterator>::difference_type n = ft::distance(first, last);
+                // while (n--)
+                // {
+                //     this->erase(first);
+                // }
+                
             void        erase(iterator first, iterator last)
             {
-                typename ft::iterator_traits<iterator>::difference_type n = ft::distance(first, last);
-                while (n--)
+                iterator it, next;
+                it = first;
+                next = it;
+                next++;
+                while (it != last)
                 {
-                    this->erase(first);
+                    this->erase(it);
+                    it = next;
+                    next++;
                 }
             }
 
             // ! clear - bug
             void        clear()
             {
-                iterator first = this->begin();
-                iterator end = this->end();
-                this->erase(first, end);
+                this->erase(this->begin(), this->end());
             }
 
             // * count Ok
