@@ -2,14 +2,16 @@
 #define MAP_HPP
 
 #include <memory>       // std::allocator
-// #include <utility>      // ft::pair
+// #include <utility>   // ft::pair
 #include <cstddef>      // ptrdiff_t
 #include <functional>   //std::less, std::binary_function
+// #include <iterator>     //std::distance
 #include "red_black_tree.hpp"
 #include "pair.hpp"
 #include "tree_iterator.hpp"
 #include "map_reverse_iterator.hpp"
 #include "../utils/utils.hpp"
+#include "../utils/distance_iterator.hpp"
 
 namespace ft
 {
@@ -222,12 +224,23 @@ namespace ft
                 return (1);
             }
 
+                // typename ft::iterator_traits<iterator>::difference_type n = ft::distance(first, last);
+                // while (n--)
+                // {
+                //     this->erase(first);
+                // }
+                
             void        erase(iterator first, iterator last)
             {
-                while (first != last)
+                iterator it, next;
+                it = first;
+                next = it;
+                next++;
+                while (it != last)
                 {
-                    this->erase(first); // ! bug here, cannot delete the last element
-                    first++;
+                    this->erase(it);
+                    it = next;
+                    next++;
                 }
             }
 

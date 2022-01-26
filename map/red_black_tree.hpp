@@ -137,7 +137,7 @@ namespace ft
                     // std::cout << "No node found to delete with value:" << n << std::endl;
                     return;
                 }
-                deleteNode(v);
+                deleteNode(v); // bug in here, v van o cho cu, nhung noi dung da bi xoa
                 _tree_size--;
             }
             
@@ -196,6 +196,7 @@ namespace ft
                 _alloc_node.deallocate(node, 1);
             }
 
+            ! Xoa node b, truoc khi xoa thi point node b vao node c
             void    deleteNode(Node *v) // ! bug here, in map.erase, cannot delete last element
             {
                 Node *u = BST_Get_Replaced_Node(v);
@@ -247,7 +248,6 @@ namespace ft
                             parent->right = u;
                         _alloc_node.destroy(v);
                         _alloc_node.deallocate(v, 1);
-
                         u->parent = parent;
                         if (uvBlack) 
                             fix_Delete_Node_Violation(u); // u and v both black, fix double black at u

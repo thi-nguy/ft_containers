@@ -19,7 +19,6 @@ namespace ft
         }
         return (distance);
     }
-
 }
 
 #endif
