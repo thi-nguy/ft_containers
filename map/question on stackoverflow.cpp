@@ -77,6 +77,8 @@ namespace ft
             {
                 return (this->_node != rhs._node);
             }
+        private:
+           T*       _node;
     };
 
     template <typename T>
