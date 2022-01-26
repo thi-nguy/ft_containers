@@ -134,7 +134,7 @@ namespace ft
                     // std::cout << "No node found to delete with value:" << n << std::endl;
                     return;
                 }
-                deleteNode(v);
+                deleteNode(v); // bug in here, v van o cho cu, nhung noi dung da bi xoa
                 _tree_size--;
             }
             
@@ -223,6 +223,7 @@ namespace ft
                     }
                     _alloc_node.destroy(v);
                     _alloc_node.deallocate(v, 1);
+                    // v = NULL;
                     return;
                 }
                 if (v->left == NULL || v->right == NULL) // v has 1 child

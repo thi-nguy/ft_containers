@@ -162,9 +162,9 @@ void        test_insert(std::string test_type)
     mymap.insert ( ft::pair<char,int>('c',100) );
     mymap.insert ( ft::pair<char,int>('d',200) );
     
-    mymap.get_tree().print2D();
-    std::cout << "Root = " << mymap.get_tree().getRoot() << "\n";
-    std::cout << "Root's value = " << mymap.get_tree().getRoot()->value.first << "\n";
+    // mymap.get_tree().print2D();
+    // std::cout << "Root = " << mymap.get_tree().getRoot() << "\n";
+    // std::cout << "Root's value = " << mymap.get_tree().getRoot()->value.first << "\n";
 
     // ft::pair<ft::map<char,int>::iterator,bool> ret;
     // ret = mymap.insert ( ft::pair<char,int>('z',500) ); // ! Tao them mot tree nua la sao?
@@ -194,9 +194,9 @@ void        test_insert(std::string test_type)
     }
 
     // Print tree of map
-    mymap.get_tree().print2D();
-    std::cout << "Root = " << mymap.get_tree().getRoot() << "\n";
-    std::cout << "Root's value = " << mymap.get_tree().getRoot()->value.first << "\n";
+    // mymap.get_tree().print2D();
+    // std::cout << "Root = " << mymap.get_tree().getRoot() << "\n";
+    // std::cout << "Root's value = " << mymap.get_tree().getRoot()->value.first << "\n";
 
     // third insert function version (range insertion):
     ft::map<char,int> anothermap;
@@ -208,7 +208,7 @@ void        test_insert(std::string test_type)
         std::cout << it->first << " => " << it->second << '\n';
 
     // Print tree of map
-    anothermap.get_tree().print2D();
+    // anothermap.get_tree().print2D();
 
 }
 
@@ -253,25 +253,6 @@ void        test_operator_access(std::string test_type)
     std::cout << "mymap now contains " << mymap.size() << " elements.\n";
 }
 
-
-void        test_clear(std::string test_type)
-{
-    print_test_name(test_type);
-
-    ft::map<char,int> mymap;
-
-    mymap['x']=100;
-    mymap['y']=200;
-    mymap['z']=300;
-
-    std::cout << "mymap contains:\n";
-    for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
-    std::cout << "mymap sizes: " << mymap.size() << "\n";
-
-    mymap.clear();
-    std::cout << "mymap sizes: " << mymap.size() << "\n";
-}
 
 void        test_count(std::string test_type)
 {
@@ -332,6 +313,10 @@ void        test_erase(std::string test_type)
     mymap['d']=40;
     mymap['e']=50;
     mymap['f']=60;
+    mymap['g']=70;
+    mymap['h']=80;
+    mymap['i']=90;
+    mymap['j']=100;
     mymap.get_tree().print2D();
 
     // it=mymap.find('b');
@@ -342,18 +327,48 @@ void        test_erase(std::string test_type)
     // size_t ret = mymap.erase ('c');                  // erasing by key
     // std::cout << "return value of key erase: " << ret << "\n";
 
-    it=mymap.find ('b');
-    // it_end=mymap.find ('d');
-    std::cout << "\n------ erase from 'b' to the end ---------\n";
-    mymap.erase ( it, mymap.end() );    // erasing by range
+    it=mymap.find ('c');
+    it_end=mymap.find ('g');
+    
+    // std::cout << "\n------ erase from 'c' to the end ---------\n";
+    // mymap.erase ( it, mymap.end() );    // erasing by range
+    
+    std::cout << "\n------ erase from 'c' to 'g' ---------\n";
+    mymap.erase ( it, it_end );    // erasing by range
+    
     mymap.get_tree().print2D();
-    // mymap.erase ( it, it_end );    // erasing by range
 
     // show content:
-    // std::cout << "Map size is: " << mymap.size() << "\n";
-    // for (it=mymap.begin(); it!=mymap.end(); ++it)
-    //     std::cout << it->first << " => " << it->second << '\n';
+    std::cout << "Map size is: " << mymap.size() << "\n";
+    for (it=mymap.begin(); it!=mymap.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
 
+}
+
+
+void        test_clear(std::string test_type)
+{
+    print_test_name(test_type);
+
+    ft::map<char,int> mymap;
+
+    mymap['a']=10;
+    mymap['b']=20;
+    mymap['c']=30;
+    mymap['d']=40;
+    mymap['e']=50;
+    mymap['f']=60;
+
+    std::cout << "mymap contains:\n";
+    for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+    std::cout << "mymap sizes: " << mymap.size() << "\n";
+    mymap.get_tree().print2D();
+
+    std::cout << "\n-------------- clear --------------\n";
+    mymap.clear();
+    std::cout << "mymap sizes: " << mymap.size() << "\n";
+    mymap.get_tree().print2D();
 }
 
 void        test_map(std::string test_type)

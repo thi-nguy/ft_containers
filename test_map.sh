@@ -34,8 +34,8 @@ fi
 
 rm a.out
 make fclean
-rm real_out
-rm my_out
+# rm real_out
+# rm my_out
 rm main_map_tmp.cpp
 rm main_map_tmp2.cpp
 rm main_map_tmp3.cpp
