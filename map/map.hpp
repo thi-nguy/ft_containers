@@ -187,7 +187,7 @@ namespace ft
                 return(ret);
             }
 
-            // ! [] -- bug here, 
+            // * [] Ok
             mapped_type&    operator[] (const key_type& k)
             {
                 iterator tmp = this->find(k);
@@ -209,6 +209,7 @@ namespace ft
             void    erase(iterator position)
             {
                 _rbt.deleteValue(*position);
+                // _rbt.print2D();
             }
 
             size_type   erase(const key_type& k)
@@ -217,6 +218,7 @@ namespace ft
                     return (0);
                 ft::pair<key_type,mapped_type> my_pair = ft::make_pair(k, mapped_type());
                 _rbt.deleteValue(my_pair);
+                // _rbt.print2D();
                 return (1);
             }
 
@@ -235,7 +237,7 @@ namespace ft
                 this->erase(this->begin(), this->end());
             }
 
-            // ! count
+            // * count Ok
             size_type count (const key_type& k) const
             {
                 ft::treeNode<value_type> *myNode = _rbt.searchByKey(ft::make_pair(k, mapped_type()));
