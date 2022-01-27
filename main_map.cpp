@@ -327,27 +327,44 @@ void        test_erase(std::string test_type)
     // size_t ret = mymap.erase ('c');                  // erasing by key
     // std::cout << "return value of key erase: " << ret << "\n";
 
-    it_end=mymap.find ('h');
     
-    // std::cout << "\n------ erase from 'c' to the end ---------\n";
-    // mymap.erase ( it, mymap.end() );    // erasing by range
-    
-    // std::cout << "\n------ erase from 'd' to 'h' ---------\n";
-    // mymap.erase ( it, it_end );    // erasing by range
+    std::cout << "\n------ erase from 'c' to 'h' ---------\n";
     it=mymap.find ('c');
-    mymap.erase(it);
+    it_end=mymap.find ('h');
+    mymap.erase ( it, it_end );    // erasing by range
     mymap.get_tree().print2D();
-    it = mymap.find('d');
-    mymap.erase(it);
-    mymap.get_tree().print2D();
-    it = mymap.find('e');
-    mymap.erase(it);
-    mymap.get_tree().print2D();
+    
+
+    // ! Erase by key
+    // std::cout << "\n------ erase c -----------------------\n";
+    // it=mymap.find ('c');
+    // mymap.erase(it);
+    // mymap.get_tree().print2D();
+    // std::cout << "\n------ erase d -----------------------\n";
+    // it = mymap.find('d');
+    // mymap.erase(it);
+    // mymap.get_tree().print2D();
+    // std::cout << "\n------ erase e -----------------------\n";
+    // it = mymap.find('e');
+    // mymap.erase(it);
+    // mymap.get_tree().print2D();
+    // std::cout << "\n------ erase f -----------------------\n";
+    // it = mymap.find('f');
+    // mymap.erase(it);
+    // mymap.get_tree().print2D();
+    // std::cout << "\n------ erase g -----------------------\n";
+    // it = mymap.find('g');
+    // mymap.erase(it);
+    // mymap.get_tree().print2D();
+    // std::cout << "\n------ erase h -----------------------\n";
+    // it = mymap.find('h');
+    // mymap.erase(it);
+    // mymap.get_tree().print2D();
 
     // show content:
-    std::cout << "Map size is: " << mymap.size() << "\n";
-    for (it=mymap.begin(); it!=mymap.end(); ++it)
-        std::cout << it->first << " => " << it->second << '\n';
+    // std::cout << "Map size is: " << mymap.size() << "\n";
+    // for (it=mymap.begin(); it!=mymap.end(); ++it)
+    //     std::cout << it->first << " => " << it->second << '\n';
 
 }
 

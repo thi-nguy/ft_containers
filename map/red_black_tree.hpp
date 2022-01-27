@@ -412,7 +412,7 @@ namespace ft
             // find node that replaces a deleted node in BST
             Node*   BST_Get_Replaced_Node(Node *x) 
             {
-                // when node have 2 children
+                // when node have 2 children. set to replacement's right child before it is cut
                 if (x->left != NULL && x->right != NULL)
                     return (successor(x->right));
             
@@ -430,30 +430,30 @@ namespace ft
             void    swapNodeValues(Node *u, Node *v) 
             {
                 value_type value_temp;
-                Node* parent_tmp;
-                Node* left_tmp;
-                Node* right_tmp;
-                bool color_tmp;
+                // Node* parent_tmp;
+                // Node* left_tmp;
+                // Node* right_tmp;
+                // bool color_tmp;
 
                 value_temp = u->value;
                 u->value= v->value;
                 v->value= value_temp;
 
-                parent_tmp = u->parent;
-                u->parent = v->parent;
-                v->parent = parent_tmp;
+                // parent_tmp = u->parent;
+                // u->parent = v->parent;
+                // v->parent = parent_tmp;
 
-                left_tmp = u->left;
-                u->left = v->left;
-                v->left = left_tmp;
+                // left_tmp = u->left;
+                // u->left = v->left;
+                // v->left = left_tmp;
 
-                right_tmp = u->right;
-                u->right = v->right;
-                v->right = right_tmp;
+                // right_tmp = u->right;
+                // u->right = v->right;
+                // v->right = right_tmp;
 
-                color_tmp = u->color;
-                u->color = v->color;
-                v->color = color_tmp;
+                // color_tmp = u->color;
+                // u->color = v->color;
+                // v->color = color_tmp;
             }
 
             void    fixInsertViolation(Node *&root, Node *&pt)
