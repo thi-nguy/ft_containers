@@ -196,7 +196,7 @@ namespace ft
                 _alloc_node.deallocate(node, 1);
             }
 
-            ! Xoa node b, truoc khi xoa thi point node b vao node c
+            // ! Xoa node b, truoc khi xoa thi point node b vao node c
             void    deleteNode(Node *v) // ! bug here, in map.erase, cannot delete last element
             {
                 Node *u = BST_Get_Replaced_Node(v);
@@ -204,9 +204,8 @@ namespace ft
                 bool uvBlack = ((u == NULL || u->color == BLACK) && (v->color == BLACK)); // True when u and v are both black
                 Node *parent = v->parent;
             
-                if (u == NULL) 
+                if (u == NULL) // v is leaf
                 {
-                    // u is NULL therefore v is leaf
                     if (v == _root)
                     {
                         // v is root, making root null
@@ -414,11 +413,11 @@ namespace ft
             Node*   BST_Get_Replaced_Node(Node *x) 
             {
                 // when node have 2 children
-                if (x->left != NULL and x->right != NULL)
+                if (x->left != NULL && x->right != NULL)
                     return (successor(x->right));
             
                 // when leaf
-                if (x->left == NULL and x->right == NULL)
+                if (x->left == NULL && x->right == NULL)
                     return NULL;
             
                 // when single child
@@ -430,11 +429,33 @@ namespace ft
 
             void    swapNodeValues(Node *u, Node *v) 
             {
-                value_type temp;
-                temp = u->value;
+                value_type value_temp;
+                Node* parent_tmp;
+                Node* left_tmp;
+                Node* right_tmp;
+                bool color_tmp;
+
+                value_temp = u->value;
                 u->value= v->value;
-                v->value= temp;
+                v->value= value_temp;
+
+                parent_tmp = u->parent;
+                u->parent = v->parent;
+                v->parent = parent_tmp;
+
+                left_tmp = u->left;
+                u->left = v->left;
+                v->left = left_tmp;
+
+                right_tmp = u->right;
+                u->right = v->right;
+                v->right = right_tmp;
+
+                color_tmp = u->color;
+                u->color = v->color;
+                v->color = color_tmp;
             }
+
             void    fixInsertViolation(Node *&root, Node *&pt)
             {
                 Node *parent_pt = NULL;

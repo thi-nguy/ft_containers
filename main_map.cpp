@@ -327,15 +327,21 @@ void        test_erase(std::string test_type)
     // size_t ret = mymap.erase ('c');                  // erasing by key
     // std::cout << "return value of key erase: " << ret << "\n";
 
-    it=mymap.find ('c');
     it_end=mymap.find ('h');
     
     // std::cout << "\n------ erase from 'c' to the end ---------\n";
     // mymap.erase ( it, mymap.end() );    // erasing by range
     
-    std::cout << "\n------ erase from 'd' to 'h' ---------\n";
-    mymap.erase ( it, it_end );    // erasing by range
-    
+    // std::cout << "\n------ erase from 'd' to 'h' ---------\n";
+    // mymap.erase ( it, it_end );    // erasing by range
+    it=mymap.find ('c');
+    mymap.erase(it);
+    mymap.get_tree().print2D();
+    it = mymap.find('d');
+    mymap.erase(it);
+    mymap.get_tree().print2D();
+    it = mymap.find('e');
+    mymap.erase(it);
     mymap.get_tree().print2D();
 
     // show content:
