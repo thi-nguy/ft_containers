@@ -540,30 +540,30 @@ namespace ft
             void    swapNodeValues(Node *u, Node *v) 
             {
                 value_type value_temp;
-                Node* parent_tmp;
-                Node* left_tmp;
-                Node* right_tmp;
-                bool color_tmp;
+                // Node* parent_tmp;
+                // Node* left_tmp;
+                // Node* right_tmp;
+                // bool color_tmp;
 
                 value_temp = u->value;
                 u->value= v->value;
                 v->value= value_temp;
 
-                parent_tmp = u->parent;
-                u->parent = v->parent;
-                v->parent = parent_tmp;
+                // parent_tmp = u->parent;
+                // u->parent = v->parent;
+                // v->parent = parent_tmp;
 
-                left_tmp = u->left;
-                u->left = v->left;
-                v->left = left_tmp;
+                // left_tmp = u->left;
+                // u->left = v->left;
+                // v->left = left_tmp;
 
-                right_tmp = u->right;
-                u->right = v->right;
-                v->right = right_tmp;
+                // right_tmp = u->right;
+                // u->right = v->right;
+                // v->right = right_tmp;
 
-                color_tmp = u->color;
-                u->color = v->color;
-                v->color = color_tmp;
+                // color_tmp = u->color;
+                // u->color = v->color;
+                // v->color = color_tmp;
             }
 
             void    fixInsertViolation(Node *&root, Node *&pt)

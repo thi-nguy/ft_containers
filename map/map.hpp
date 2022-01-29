@@ -236,6 +236,7 @@ namespace ft
                 next++;
                 while (it != last)
                 {
+                    std::cout << it->first << "\n";
                     this->erase(it);
                     it = next;
                     next++;
