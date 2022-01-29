@@ -197,16 +197,45 @@ namespace ft
             }
 
             // ! Xoa node b, truoc khi xoa thi point node b vao node c
+            void    changePointer(Node* node_to_delete, Node* replacement)
+            {
+                // Change parent of v
+                Node* parent = node_to_delete->parent;
+                if (node_to_delete == parent->left)
+                    parent->left = replacement;
+                else if (node_to_delete == parent->right)
+                    parent->right = replacement;
+                replacement->parent = parent;
+                node_to_delete->parent = NULL;
+                
+
+
+
+
+            }
+
             void    deleteNode(Node *v) // ! bug here, in map.erase, cannot delete last element
             {
+                // Initial 1: Get Node replacement
                 Node *u = BST_Get_Replaced_Node(v);
+
+                // // Initial 2a: If the node we deleted is red and its replacement is red or NIL, we are done.
+                // if (v->color == RED && (u->color == RED || u == NULL)
+                // {
+                //     changePointer(v, u);
+                //     _alloc_node.destroy(v);
+                //     _alloc_node.deallocate(v, 1);
+                //     return ;
+                // }
+                // if (v->color == BLACK && u->color == RED)
                 
                 bool uvBlack = ((u == NULL || u->color == BLACK) && (v->color == BLACK)); // True when u and v are both black
                 Node *parent = v->parent;
             
-                if (u == NULL) // v is leaf
+                // v has 0 child
+                if (u == NULL)
                 {
-                    if (v == _root)
+                    if (v->parent == NULL && v->left == NULL && v->right == NULL)
                     {
                         // v is root, making root null
                         _root = NULL;
@@ -224,30 +253,54 @@ namespace ft
                         else
                             parent->right = NULL;
                     }
+                    Node * new_root = v;
+                    while (new_root->parent != NULL)
+                    {
+                        new_root = new_root->parent;
+                    }
+                    _root = new_root;
                     _alloc_node.destroy(v);
                     _alloc_node.deallocate(v, 1);
                     return;
                 }
-                if (v->left == NULL || v->right == NULL) // v has 1 child
+                // v has 1 child
+                if (v->left == NULL || v->right == NULL)
                 {
+                    Node * new_root = v;
+                    while (new_root->parent != NULL)
+                    {
+                        new_root = new_root->parent;
+                    }
+                    _root = new_root;
                     
                     if (v == _root) // v is root, assign the value of u to v, and delete u
                     {
-                        v->value = u->value;
-                        v->left = v->right = NULL;
-                        _alloc_node.destroy(u);
-                        _alloc_node.deallocate(u, 1);
+                        // v->value = u->value;
+                        // v->left = v->right = NULL;
+                        _root = u;
+                        u->parent = NULL;
+                        if (v->left == NULL)
+                            v->right = NULL;
+                        else if (v->right == NULL)
+                            v->left = NULL;
+                        _alloc_node.destroy(v);
+                        _alloc_node.deallocate(v, 1);
                     } 
                     else 
                     {
                         // Detach v from tree and move u up
-                        if (v->isOnLeft()) 
+                        if (v->isOnLeft())
                             parent->left = u;
                         else 
                             parent->right = u;
+                        u->parent = parent;
+                        v->parent = NULL;
+                        if (v->left == NULL)
+                            v->right = NULL;
+                        else if (v->right == NULL)
+                            v->left = NULL;
                         _alloc_node.destroy(v);
                         _alloc_node.deallocate(v, 1);
-                        u->parent = parent;
                         if (uvBlack) 
                             fix_Delete_Node_Violation(u); // u and v both black, fix double black at u
                         else 
@@ -255,9 +308,65 @@ namespace ft
                     }
                     return;
                 }
-                swapNodeValues(u, v); // v has 2 children, swap values with successor and recurse
-                deleteNode(u);
+                // v has 2 children.
+                swapNode(u, v);
+                // _root.print2D();
+                // swapNodeValues(u, v); // v has 2 children, swap values with successor and recurse
+                deleteNode(v);
             }
+
+            void swapNode (Node * a, Node * b)
+            {
+                if (a->left != b && a->left != NULL)
+                    a->left->parent = b;
+                if (a->right != b && a->right != NULL)
+                    a->right->parent = b;
+                if (a->parent != b && a->parent != NULL)
+                {
+                    if (a->parent->left == a)
+                        a->parent->left = b;
+                    else
+                        a->parent->right = b;
+                }
+
+                if (b->left != a && b->left != NULL)
+                    b->left->parent = a;
+                if (b->right != a && b->right != NULL)
+                    b->right->parent = a;
+
+                if (b->parent != a && b->parent != NULL)
+                {
+                    if (b->parent->left == b)
+                        b->parent->left = a;
+                    else
+                        b->parent->right = a;
+                }
+
+                if (a->parent == b)
+                    a->parent = a;
+                if (a->left == b)
+                    a->left = a;
+                if (a->right == b)
+                    a->right = a;
+                if (b->parent == a)
+                    b->parent = b;
+                if (b->left == a)
+                    b->left = b;
+                if (b->right == a)
+                    b->right = b;
+
+                std::swap(a->parent, b->parent);
+                std::swap(a->left, b->left);
+                std::swap(a->right, b->right);
+                std::swap(a->color, b->color);
+
+                if (_root->right == a)
+                    _root->right = b;
+                else if (_root->right == b)
+                    _root->right = a;
+            }
+
+
 
             void    rotateLeft(Node *&x)
             {
@@ -412,13 +521,14 @@ namespace ft
             // find node that replaces a deleted node in BST
             Node*   BST_Get_Replaced_Node(Node *x) 
             {
+                // If the node we deleted has 2 NIL children, its replacement x is NIL, by convention, we set the replacement at right child.
+                if (x->left == NULL && x->right == NULL)
+                    return (x->right);
+
                 // when node have 2 children
                 if (x->left != NULL && x->right != NULL)
                     return (successor(x->right));
             
-                // when leaf
-                if (x->left == NULL && x->right == NULL)
-                    return NULL;
             
                 // when single child
                 if (x->left != NULL)

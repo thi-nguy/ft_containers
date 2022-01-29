@@ -218,9 +218,7 @@ namespace ft
             {
                 if (this->find(k) == this->end())
                     return (0);
-                ft::pair<key_type,mapped_type> my_pair = ft::make_pair(k, mapped_type());
-                _rbt.deleteValue(my_pair);
-                // _rbt.print2D();
+                this->erase(this->find(k));
                 return (1);
             }
 
