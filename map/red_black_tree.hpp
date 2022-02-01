@@ -25,6 +25,7 @@ namespace ft
             typedef T                       value_type;
             typedef size_t                  size_type;
             typedef ft::treeIterator<Node>   iterator;
+            typedef ft::treeIterator<const Node>   const_iterator;
 
             // Todo: iterator and other typedef
 
@@ -95,7 +96,7 @@ namespace ft
 
                 if (last_node == NULL)
                     return (node);
-                while (node != last_node)
+                while (node != last_node && node != NULL)
                 {
                     if (node->value.first == val.first)
                         return (node);
@@ -104,7 +105,7 @@ namespace ft
                     else
                         node = node->left;
                 }
-                if (node->value.first == val.first)
+                if (node != NULL && node->value.first == val.first)
                     return (node);
                 return (NULL);
             }

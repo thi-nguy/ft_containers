@@ -109,6 +109,8 @@ namespace ft
             // --a
             treeIterator&    operator--()
             {
+                if (_node == NULL)
+                    return (*this);
                 if (_node->left != NULL)
                 {
                     _node = _node->left;

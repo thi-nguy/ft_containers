@@ -3,6 +3,7 @@
 
 #include <memory>  //std::allocator
 #include <utility> //std::
+#include "../utils/bidirectional_iterator_tag.hpp"
 
 enum Color {RED, BLACK};
 

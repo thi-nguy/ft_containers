@@ -9,7 +9,7 @@
 #include "red_black_tree.hpp"
 #include "pair.hpp"
 #include "tree_iterator.hpp"
-#include "map_reverse_iterator.hpp"
+#include "../vector/vector_reverse_iterator.hpp"
 #include "../utils/utils.hpp"
 #include "../utils/distance_iterator.hpp"
 
@@ -36,9 +36,9 @@ namespace ft
             typedef typename allocator_type::pointer                                pointer;
             typedef typename allocator_type::const_pointer                          const_pointer;
             typedef typename ft::RedBlackTree<value_type>::iterator                 iterator;
-            // typedef typename ft::mapIterator<value_type>::const_iterator            const_iterator;
-            // typedef typename ft::MapReverseIterator<iterator>                       reverse_iterator;
-            // typedef typename ft::MapReverseIterator<const_iterator>                 const_reverse_iterator;
+            typedef typename ft::RedBlackTree<value_type>::const_iterator           const_iterator;
+            typedef typename ft::VectorReverseIterator<iterator>         reverse_iterator;
+            typedef typename ft::VectorReverseIterator<const_iterator>   const_reverse_iterator;
             typedef typename std::ptrdiff_t                                         difference_type;
             typedef typename allocator_type::size_type                              size_type;
             
@@ -133,10 +133,10 @@ namespace ft
                 return (iterator(_rbt.getFirstNode()));
             }
 
-            // const_iterator begin() const
-            // {
-            //     return (const_iterator(_rbt.getFirstNode()));
-            // }
+            const_iterator begin() const
+            {
+                return (const_iterator(_rbt.getFirstNode()));
+            }
 
             iterator    end()
             {
@@ -145,12 +145,41 @@ namespace ft
                 return (last_it);
             }
 
-            // const_iterator  end() const
-            // {
-            //     const_iterator    last_it = const_iterator(_rbt.getLastNode());
-            //     return (++last_it);
+            const_iterator  end() const
+            {
+                const_iterator    last_it = const_iterator(_rbt.getLastNode());
+                return (++last_it);
 
-            // }
+            }
+
+            reverse_iterator rbegin()
+			{ 
+                iterator it_last = this->end();
+                it_last++;
+                return (reverse_iterator(it_last)); 
+            }
+
+            const_reverse_iterator rbegin() const
+			{ 
+                const_iterator it_last = this->end();
+                it_last++;
+                return (const_reverse_iterator(it_last)); 
+            }
+
+            reverse_iterator rend()
+			{ 
+                iterator it_begin = this->begin();
+                it_begin--;
+                return (reverse_iterator(it_begin)); 
+            }
+
+            const_reverse_iterator rend() const
+			{ 
+                
+                const_iterator it_begin = this->begin();
+                it_begin--;
+                return (const_reverse_iterator(it_begin)); 
+            }
             
             // ! insert
             // single element (1)	
@@ -174,20 +203,41 @@ namespace ft
                 )
             {
                 // difference_type d = ft:distance(first, last);
-                while (first != last)
+                iterator it, next;
+                it = first;
+                next = it;
+                next++;
+                while (it != last)
                 {
-                    this->insert(*first); // operator * cua treeIterator
-                    first++; // operator ++ cuar treeIterator
+                    this->insert(*it); // operator * cua treeIterator
+                    it =next; // operator ++ cuar treeIterator
+                    next++;
                 }
             }
             
-            // ! find -- bug in here, van de o cho mapped_type()?
             iterator    find(const key_type& k)
             {
                 
                 iterator ret = iterator(_rbt.searchByKey(ft::make_pair(k, mapped_type())));
                 return(ret);
             }
+
+            const_iterator  find(const key_type& k) const
+            {
+                const_iterator ret = const_iterator(_rbt.searchByKey(ft::make_pair(k, mapped_type())));
+                return(ret);
+            }
+
+            key_compare     key_comp() const
+            {
+                return (key_compare());
+            }
+
+            value_compare   value_comp() const
+            {
+                return (value_compare(key_compare()));
+            }
+
 
             // * [] Ok
             mapped_type&    operator[] (const key_type& k)
@@ -211,7 +261,6 @@ namespace ft
             void    erase(iterator position)
             {
                 _rbt.deleteValue(*position);
-                // _rbt.print2D();
             }
 
             size_type   erase(const key_type& k)
@@ -222,12 +271,6 @@ namespace ft
                 return (1);
             }
 
-                // typename ft::iterator_traits<iterator>::difference_type n = ft::distance(first, last);
-                // while (n--)
-                // {
-                //     this->erase(first);
-                // }
-                
             void        erase(iterator first, iterator last)
             {
                 iterator it, next;
@@ -236,7 +279,6 @@ namespace ft
                 next++;
                 while (it != last)
                 {
-                    std::cout << it->first << "\n";
                     this->erase(it);
                     it = next;
                     next++;
