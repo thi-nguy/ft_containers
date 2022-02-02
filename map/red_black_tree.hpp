@@ -96,7 +96,7 @@ namespace ft
 
                 if (last_node == NULL)
                     return (node);
-                while (node != last_node && node != NULL)
+                while (node != NULL)
                 {
                     if (node->value.first == val.first)
                         return (node);

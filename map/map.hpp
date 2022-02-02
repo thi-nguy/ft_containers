@@ -215,6 +215,17 @@ namespace ft
                 }
             }
             
+
+            key_compare     key_comp() const
+            {
+                return (key_compare());
+            }
+
+            value_compare   value_comp() const
+            {
+                return (value_compare(key_compare()));
+            }
+
             iterator    find(const key_type& k)
             {
                 
@@ -227,17 +238,6 @@ namespace ft
                 const_iterator ret = const_iterator(_rbt.searchByKey(ft::make_pair(k, mapped_type())));
                 return(ret);
             }
-
-            key_compare     key_comp() const
-            {
-                return (key_compare());
-            }
-
-            value_compare   value_comp() const
-            {
-                return (value_compare(key_compare()));
-            }
-
 
             // * [] Ok
             mapped_type&    operator[] (const key_type& k)

@@ -312,59 +312,25 @@ void        test_erase(std::string test_type)
     // mymap.get_tree().print2D();
 
     it=mymap.find('b');
-    std::cout << "\n------ erase 1 element by iterator---------\n";
+    std::cout << "\n------ erase element 'b' by iterator---------\n";
     mymap.erase (it);                   // erasing by iterator
+    std::cout << "Map size is: " << mymap.size() << "\n";
+    for (it=mymap.begin(); it!=mymap.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
 
-    std::cout << "\n------ erase 1 element by key ---------\n";
+    std::cout << "\n------ erase element 'c' by key ---------\n";
     size_t ret = mymap.erase ('c');                  // erasing by key
     std::cout << "return value of key erase: " << ret << "\n";
 
+    std::cout << "Map size is: " << mymap.size() << "\n";
+    for (it=mymap.begin(); it!=mymap.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+    
+    
+    std::cout << "\n------ erase range from 'd' to 'h' ---------\n";
     it=mymap.find('d');
     it_end=mymap.find ('h');
-    
-    
-    std::cout << "\n------ erase from 'd' to 'h' ---------\n";
     mymap.erase ( it, it_end );    // erasing by range
-    // mymap.get_tree().print2D();
-    
-
-    // ! Erase by key
-    // std::cout << "\n------ erase c -----------------------\n";
-    // it=mymap.find ('c');
-    // mymap.erase(it);
-    // mymap.get_tree().print2D();
-    // std::cout << "\n------ erase d -----------------------\n";
-    // it = mymap.find('d');
-    // mymap.erase(it);
-    // mymap.get_tree().print2D();
-    // std::cout << "\n------ erase e -----------------------\n";
-    // it = mymap.find('e');
-    // mymap.erase(it);
-    // mymap.get_tree().print2D();
-    // std::cout << "\n------ erase f -----------------------\n";
-    // it = mymap.find('f');
-    // mymap.erase(it);
-    // mymap.get_tree().print2D();
-    // std::cout << "\n------ erase g -----------------------\n";
-    // it = mymap.find('g');
-    // mymap.erase(it);
-    // mymap.get_tree().print2D();
-    // std::cout << "\n------ erase h -----------------------\n";
-    // it = mymap.find('h');
-    // mymap.erase(it);
-    // mymap.get_tree().print2D();
-
-    // std::cout << "\n----------------- erase c ----------------\n";
-    // it=mymap.find ('c');
-    // mymap.erase(it);
-    // mymap.get_tree().print2D();
-    // std::cout << "\n----------------- erase d ----------------\n";
-    // it = mymap.find('d');
-    // mymap.erase(it);
-    // mymap.get_tree().print2D();
-    // std::cout << "\n----------------- erase e ----------------\n";
-    // it = mymap.find('e');
-    // mymap.erase(it);
     // mymap.get_tree().print2D();
 
     // show content:
@@ -504,6 +470,70 @@ void        test_rend(std::string test_type)
 
 }
 
+void    test_begin(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<char,int> mymap;
+
+    mymap['b'] = 100;
+    mymap['a'] = 200;
+    mymap['c'] = 300;
+
+    // show content:
+    for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+}
+
+void    test_end(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<char,int> mymap;
+
+    mymap['b'] = 100;
+    mymap['a'] = 200;
+    mymap['c'] = 300;
+
+    // show content:
+    for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+}
+
+void        test_make_pair(std::string test)
+{
+    print_test_name(test);
+    
+    ft::pair <int,int> foo;
+    ft::pair <int,int> bar;
+
+    foo = ft::make_pair (10,20);
+    bar = ft::make_pair (11 , 22); // ok: implicit conversion from pair<double,char>
+
+    std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
+    std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
+}
+
+
+void        test_operator_equal(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<char,int> first;
+    ft::map<char,int> second;
+
+    first['x']=8;
+    first['y']=16;
+    first['z']=32;
+
+    second=first;                // second now contains 3 ints
+    first=ft::map<char,int>();  // and first is now empty
+
+    std::cout << "Size of first: " << first.size() << '\n';
+    std::cout << "Size of second: " << second.size() << '\n';
+}
+
+
 void        test_map(std::string test_type)
 {
     print_test_name(test_type);
@@ -512,7 +542,8 @@ void        test_map(std::string test_type)
     // test_G("map iterator");
 
     test_pair("pair");
-    test_make_pare("make pair");
+    test_make_pair("make pair");
+
     test_constructor("constructor");
     test_operator_equal(" operator = ");
     
@@ -535,8 +566,11 @@ void        test_map(std::string test_type)
     test_key_comp("key compare");
     test_value_comp("Value_compare");
 
-    test_count("count");
     test_find("find");
+    test_count("count"); 
+
+    // Todo: lower bound...operator, swap of non member
+
 }
 
 int main(void)
