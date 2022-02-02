@@ -67,8 +67,7 @@ class VectorReverseIterator
             reference operator *(void) // todo: *a
             {
                 
-                iterator_type tmp = _ptr;
-                return (*(--tmp));
+                return (*_ptr);
             }
             // ! operator +
             VectorReverseIterator operator+(difference_type n) const

@@ -75,59 +75,21 @@ namespace ft
             // ++a
             treeIterator&    operator++()
             {
-                if (_node == NULL)
-                    return (*this);
-                if (_node->right != NULL)
-                {
-                    _node = _node->right;
-                    while (_node->left != NULL)
-                        _node = _node->left;
-                }
-                else
-                {
-                    T* tmp = _node->parent;
-                    while (tmp != NULL && _node == tmp->right)
-                    {
-                        _node = tmp;
-                        tmp = tmp->parent;
-                    }
-                    if (_node->right != tmp)
-                        _node = tmp;
-                    else if (tmp == NULL)
-                        _node = NULL;
-                }
+                this->nextNode();
                 return (*this);
             }
             // a++
             treeIterator     operator++(int)
             {
                 treeIterator tmp(*this);
-                operator++();
+                this->nextNode();
                 return (tmp);
             }
 
             // --a
             treeIterator&    operator--()
             {
-                if (_node == NULL)
-                    return (*this);
-                if (_node->left != NULL)
-                {
-                    _node = _node->left;
-                    while (_node->right != NULL)
-                        _node = _node->right;
-                }
-                else
-                {
-                    T*   tmp = _node->parent;
-                    while (_node == tmp->left)
-                    {
-                        _node = tmp;
-                        tmp = tmp->parent;
-                    }
-                    if (_node->left != tmp)
-                        _node = tmp;
-                }
+                this->prevNode();
                 return (*this);
             }
 
@@ -135,7 +97,7 @@ namespace ft
             treeIterator     operator--(int)
             {
                 treeIterator tmp(*this);
-                operator--();
+                this->prevNode();
                 return (tmp);
             }
             // todo: *a = t
@@ -149,6 +111,68 @@ namespace ft
             }
         private:
            T*       _node;
+
+            void nextNode (void)
+            {
+                if (_node->right != NULL)
+                {
+                    _node = _node->right;
+                    while (_node->left != NULL)
+                        _node = _node->left;
+                }
+                else if (_node->right == NULL)
+                {
+                    T* parent = _node->parent;
+                    if (parent == NULL)
+                    {
+                        _node = parent;
+                        return ;
+                    }
+                    while (_node == parent->right)
+                    {
+                        _node = parent;
+                        parent = parent->parent;
+                        if (parent == NULL)
+                        {
+                            _node = parent;
+                            return ;
+                        }
+                    }
+                    _node = parent;
+                }
+                // do something
+
+            }
+
+            void prevNode (void)
+            {
+                if (_node->left != NULL)
+                {
+                    _node = _node->left;
+                    while (_node->right != NULL)
+                        _node = _node->right;
+                }
+                else if (_node->left == NULL)
+                {
+                    T*   parent = _node->parent;
+                    if (parent == NULL)
+                    {
+                        _node = parent;
+                        return ;
+                    }
+                    while (_node == parent->left)
+                    {
+                        _node = parent;
+                        parent = parent->parent;
+                        if (parent == NULL)
+                        {
+                            _node = parent;
+                            return ;
+                        }
+                    }
+                    _node = parent;
+                }
+            }
     };
 
 } /* namespace ft */

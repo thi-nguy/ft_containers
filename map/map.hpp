@@ -141,44 +141,38 @@ namespace ft
             iterator    end()
             {
                 iterator    last_it = iterator(_rbt.getLastNode());
-                ++last_it;
-                return (last_it);
+                return (++last_it);
             }
 
             const_iterator  end() const
             {
                 const_iterator    last_it = const_iterator(_rbt.getLastNode());
                 return (++last_it);
-
             }
 
             reverse_iterator rbegin()
 			{ 
-                iterator it_last = this->end();
-                it_last++;
+                iterator it_last = this->_rbt.getLastNode();
                 return (reverse_iterator(it_last)); 
             }
 
             const_reverse_iterator rbegin() const
 			{ 
-                const_iterator it_last = this->end();
-                it_last++;
+                const_iterator it_last = this->_rbt.getLastNode();
                 return (const_reverse_iterator(it_last)); 
             }
 
             reverse_iterator rend()
 			{ 
-                iterator it_begin = this->begin();
-                it_begin--;
-                return (reverse_iterator(it_begin)); 
+                iterator rit_begin = this->_rbt.getFirstNode();
+                return (reverse_iterator(--rit_begin)); 
             }
 
             const_reverse_iterator rend() const
 			{ 
                 
-                const_iterator it_begin = this->begin();
-                it_begin--;
-                return (const_reverse_iterator(it_begin)); 
+                const_iterator rit_begin = this->_rbt.getFirstNode();
+                return (const_reverse_iterator(--rit_begin)); 
             }
             
             // ! insert
@@ -202,16 +196,22 @@ namespace ft
                 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL
                 )
             {
-                // difference_type d = ft:distance(first, last);
-                iterator it, next;
-                it = first;
-                next = it;
-                next++;
-                while (it != last)
+                // difference_type d = ft::distance(first, last);
+                // while (d--)
+                //     this->insert(*(first++));
+                // iterator it, next;
+                // it = first;
+                // next = it;
+                // next++;
+                // while (it != last)
+                // {
+                //     this->insert(*it); // operator * cua treeIterator
+                //     it = next; // operator ++ cuar treeIterator
+                //     next++;
+                // }
+                while (first != last)
                 {
-                    this->insert(*it); // operator * cua treeIterator
-                    it =next; // operator ++ cuar treeIterator
-                    next++;
+                    this->insert(*(first++));
                 }
             }
             
@@ -273,16 +273,18 @@ namespace ft
 
             void        erase(iterator first, iterator last)
             {
-                iterator it, next;
-                it = first;
-                next = it;
-                next++;
-                while (it != last)
-                {
-                    this->erase(it);
-                    it = next;
-                    next++;
-                }
+                // iterator it, next;
+                // it = first;
+                // next = it;
+                // next++;
+                // while (it != last)
+                // {
+                //     this->erase(it);
+                //     it = next;
+                //     next++;
+                // }
+                while (first != last)
+                    this->erase(first++);
             }
 
             // ! clear - bug

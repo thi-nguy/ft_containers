@@ -13,51 +13,57 @@
 #include "./map/pair.hpp"
 #include "./map/treeNode.hpp"
 
-// void        test_red_black_tree(std::string test_type)
-// {
-//     print_test_name(test_type);
+void        print_test_name(std::string name)
+{
+    std::cout << "\n------- TEST ";
+    std::cout << name << " ------------------\n";
+}
 
-//     // ! insertValue, pair
+void        test_red_black_tree(std::string test_type)
+{
+    print_test_name(test_type);
 
-//     ft::pair < int, std::string > pair1 (42, "orange");
-//     ft::pair < int, std::string > pair2 (43, "apple");
-//     ft::pair < int, std::string > pair3 (44, "kiwi");
-//     ft::pair < int, std::string > pair4 (45, "banana");
-//     ft::pair < int, std::string > pair5 (46, "coconut");
-//     ft::pair < int, std::string > pair6 (47, "kiwi");
-//     ft::RedBlackTree < ft::pair< int, std::string > > my_tree;
-//     my_tree.insertValue(pair1);
-//     my_tree.insertValue(pair2);
-//     my_tree.insertValue(pair3);
-//     my_tree.insertValue(pair4);
-//     my_tree.insertValue(pair5);
-//     my_tree.insertValue(pair6);
+    // ! insertValue, pair
 
-//     // // ! In noi dung cua searchValue bang 2 cach
-//     my_tree.print2D();
-//     // std::cout << "first node is: " << my_tree.getFirstNode()->value << "\n";
-//     // std::cout << "Last node is: " << my_tree.getLastNode()->value << "\n";
+    // ft::pair < int, std::string > pair1 (42, "orange");
+    // ft::pair < int, std::string > pair2 (43, "apple");
+    // ft::pair < int, std::string > pair3 (44, "kiwi");
+    // ft::pair < int, std::string > pair4 (45, "banana");
+    // ft::pair < int, std::string > pair5 (46, "coconut");
+    // ft::pair < int, std::string > pair6 (47, "kiwi");
+    // ft::RedBlackTree < ft::pair< int, std::string > > my_tree;
+    // my_tree.insertValue(pair1);
+    // my_tree.insertValue(pair2);
+    // my_tree.insertValue(pair3);
+    // my_tree.insertValue(pair4);
+    // my_tree.insertValue(pair5);
+    // my_tree.insertValue(pair6);
 
-//     std::cout << " -------------------------------------------------------\n";
-//     my_tree.deleteValue(pair6);
-//     my_tree.deleteValue(pair1);
-//     my_tree.print2D();
-//     // std::cout << "first node is: " << my_tree.getFirstNode()->value << "\n";
-//     // std::cout << "Last node is: " << my_tree.getLastNode()->value << "\n";
+    // // // ! In noi dung cua searchValue bang 2 cach
+    // my_tree.print2D();
+    // // std::cout << "first node is: " << my_tree.getFirstNode()->value << "\n";
+    // // std::cout << "Last node is: " << my_tree.getLastNode()->value << "\n";
 
-//     // ! insertValue, int
-//     // ft::RedBlackTree <int, ft::treeNode<int> > my_tree2;
-//     // for (int i = 0; i < 15; i++)
-//     //     my_tree2.insertValue(i);
-//     // my_tree2.print2D(); // lam operator << cho ft::pair
+    // std::cout << " -------------------------------------------------------\n";
+    // my_tree.deleteValue(pair6);
+    // my_tree.deleteValue(pair1);
+    // my_tree.print2D();
+    // std::cout << "first node is: " << my_tree.getFirstNode()->value << "\n";
+    // std::cout << "Last node is: " << my_tree.getLastNode()->value << "\n";
 
-//     // std::cout << "first node is: " << my_tree2.getFirstNode()->value << "\n";
-//     // my_tree2.deleteValue(3);
-//     // std::cout << " -------------------------------------------------------\n";
-//     // my_tree2.print2D();
-//     // std::cout << "first node is: " << my_tree2.getFirstNode()->value << "\n";
+    // ! insertValue, int
+    ft::RedBlackTree < ft::pair<int, char> > my_tree2;
+    for (int i = 0; i < 15; i++)
+        my_tree2.insertValue( ft::pair<int, char>(i, 'x') );
+    my_tree2.print2D(); // lam operator << cho ft::pair
 
-// }
+    // std::cout << "first node is: " << my_tree2.getFirstNode()->value << "\n";
+    // my_tree2.deleteValue(3);
+    // std::cout << " -------------------------------------------------------\n";
+    // my_tree2.print2D();
+    // std::cout << "first node is: " << my_tree2.getFirstNode()->value << "\n";
+
+}
 
 // void        test_tree_Node(std::string test_type)
 // {
@@ -76,11 +82,6 @@
 //     ft::treeNode <ft::pair< int, std::string > > node6 = node5;
 //     ft::treeNode <ft::pair < int, char > > node7 (node4);
 // }
-void        print_test_name(std::string name)
-{
-    std::cout << "\n------- TEST ";
-    std::cout << name << " ------------------\n";
-}
 
 void        test_pair(std::string test_type)
 {
@@ -437,7 +438,8 @@ void        test_key_comp(std::string test_type)
 
     std::cout << "mymap contains:\n";
 
-    char highest = mymap.rbegin()->first;     // key value of last element
+    ft::map<char, int>::reverse_iterator rev_it = mymap.rbegin();
+    char highest = rev_it->first;     // key value of last element
     std::cout << "highest value: " << highest << '\n';
     ft::map<char,int>::iterator it = mymap.begin();
     do {
@@ -485,6 +487,23 @@ void        test_rbegin(std::string test_type)
 
 }
 
+void        test_rend(std::string test_type)
+{
+    print_test_name(test_type);
+
+    ft::map<char,int> mymap;
+
+    mymap['x'] = 100;
+    mymap['y'] = 200;
+    mymap['z'] = 300;
+
+    // show content:
+    ft::map<char,int>::reverse_iterator rit;
+    for (rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
+        std::cout << rit->first << " => " << rit->second << '\n';
+
+}
+
 void        test_map(std::string test_type)
 {
     print_test_name(test_type);
@@ -492,8 +511,16 @@ void        test_map(std::string test_type)
     // test_red_black_tree("Red Black Tree");
     // test_G("map iterator");
 
-    test_constructor("constructor");
     test_pair("pair");
+    test_make_pare("make pair");
+    test_constructor("constructor");
+    test_operator_equal(" operator = ");
+    
+    test_begin("begin");
+    test_end("end");
+    test_rbegin("rbegin");
+    test_rend("rend");
+
     test_empty("empty");
     test_size("size");
     test_max_size("max_size");
@@ -505,11 +532,11 @@ void        test_map(std::string test_type)
     test_swap("swap");
     test_clear("clear");
 
+    test_key_comp("key compare");
+    test_value_comp("Value_compare");
+
     test_count("count");
     test_find("find");
-    test_key_comp("key compare");
-
-    test_rbegin("rbegin");
 }
 
 int main(void)
