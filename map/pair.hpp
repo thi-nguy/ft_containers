@@ -21,6 +21,9 @@ namespace ft
 
             // Constructor
             pair()
+            :
+                first(T1()),
+                second(T2())
             {}
 
             // template<class U, class V>
@@ -37,13 +40,11 @@ namespace ft
                 second(b)
             {}
 
-            pair&   operator=(const pair& rhs)
+            template <typename U, typename V>
+            pair&   operator=(const pair<U, V>& rhs)
             {
-                if (this != &rhs)
-                {
-                    this->first = rhs.first;
-                    this->second = rhs.second;
-                }
+                this->first = rhs.first;
+                this->second = rhs.second;
                 return (*this);
             }
 

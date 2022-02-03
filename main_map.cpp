@@ -630,16 +630,16 @@ void    test_relational_operator(std::string test)
     foo['b']=200;
     foo2['a']=100;
     foo2['b']=200;
-    bar['a']=100;
+    bar['a']=10;
     bar['z']=1000;
 
     // foo ({{a,100},{b,200}}) vs bar ({a,10},{z,1000}}):
-    if (foo==foo2) std::cout << "foo and foo2 are equal\n";
-    if (foo!=bar) std::cout << "foo and bar are not equal\n";
+    if (foo == foo2) std::cout << "foo and foo2 are equal\n";
+    if (foo != bar) std::cout << "foo and bar are not equal\n";
     if (bar < foo) std::cout << "bar is less than foo\n";
-    if (foo> bar) std::cout << "foo is greater than bar\n";
+    if (foo > bar) std::cout << "foo is greater than bar\n";
     if (bar <= foo) std::cout << "bar is less than or equal to foo\n";
-    if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+    if (foo >= bar) std::cout << "foo is greater than or equal to bar\n";
 }
 
 void    test_swap_non_member(std::string test)
@@ -710,8 +710,6 @@ void        test_map(std::string test_type)
     test_relational_operator("Relational operators");
 
     // Todo: non member: operator overload and swap
-
-
 
 }
 

@@ -4,6 +4,7 @@
 #include "../utils/iterator.hpp"
 #include "../utils/iterator_traits.hpp"
 #include "../utils/bidirectional_iterator_tag.hpp"
+#include "treeNode.hpp"
 
 namespace ft
 {
@@ -15,10 +16,14 @@ namespace ft
             typedef typename T::value_type                                                                   value_type; 
             typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::iterator_category     iterator_category;
             typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::difference_type       difference_type;
-            typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::pointer               pointer;
-            typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::const_pointer               const_pointer;
-            typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::reference             reference;
-            typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::const_reference             const_reference;
+            // typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::pointer               pointer;
+            // typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::const_pointer               const_pointer;
+            // typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::reference             reference;
+            // typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::const_reference             const_reference;
+            typedef value_type&    reference;
+            typedef const value_type&    const_reference;
+            typedef value_type*    pointer;
+            typedef const value_type*    const_pointer;
 
             // Todo: Constructor, Destructor
             treeIterator()
@@ -53,12 +58,12 @@ namespace ft
             }
 
             // Todo: a == b, a != b
-            bool operator==(const treeIterator& rhs) const// overload at treeNode
+            bool operator==(treeIterator const& rhs) const// ! overload at treeNode is not Loaded
             {
                 return (_node == rhs._node);
             }
 
-            bool operator!=(const treeIterator& rhs) const
+            bool operator!=(treeIterator const& rhs) const
             {
                 return (_node != rhs._node);
             }

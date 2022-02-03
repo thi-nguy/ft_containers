@@ -93,7 +93,7 @@ namespace ft
                 return (left != NULL and left->color == RED) || (right != NULL and right->color == RED);
             }
 
-            bool operator==(const treeNode& other)
+            bool operator==(const treeNode& other) // ! overload here is not loaded
             {
                 if (value == other.value)
                     return (true);

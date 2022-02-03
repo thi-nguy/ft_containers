@@ -25,7 +25,7 @@ namespace ft
             typedef T                       value_type;
             typedef size_t                  size_type;
             typedef ft::treeIterator<Node>   iterator;
-            typedef ft::treeIterator<const Node>   const_iterator;
+            typedef ft::treeIterator<Node>   const_iterator;
 
             // Todo: iterator and other typedef
 

@@ -1,0 +1,77 @@
+In file included from ../map_tests/operator >=.cpp:2:
+../map_tests/__service.ipp:44:48: error: no matching member function for call to 'insert'
+                m5.insert(std::make_pair("123", "123")); mp5.insert(ft::make_pair("123", "123"));
+                                                         ~~~~^~~~~~
+../map_tests/../../../map/map.hpp:182:38: note: candidate function not viable: no known conversion from 'pair<const char *, const char *>' to 'const pair<std::__1::basic_string<char>, std::__1::basic_string<char>>' for 1st argument
+            ft::pair<iterator, bool> insert (const value_type& val)
+                                     ^
+../map_tests/../../../map/map.hpp:195:18: note: candidate function template not viable: requires at least 2 arguments, but 1 was provided
+            void insert (
+                 ^
+../map_tests/../../../map/map.hpp:187:22: note: candidate function not viable: requires 2 arguments, but 1 was provided
+            iterator insert (iterator position, const value_type& val)
+                     ^
+In file included from ../map_tests/operator >=.cpp:2:
+../map_tests/__service.ipp:45:48: error: no matching member function for call to 'insert'
+                m6.insert(std::make_pair("123", "124")); mp6.insert(ft::make_pair("123", "124"));
+                                                         ~~~~^~~~~~
+../map_tests/../../../map/map.hpp:182:38: note: candidate function not viable: no known conversion from 'pair<const char *, const char *>' to 'const pair<std::__1::basic_string<char>, std::__1::basic_string<char>>' for 1st argument
+            ft::pair<iterator, bool> insert (const value_type& val)
+                                     ^
+../map_tests/../../../map/map.hpp:195:18: note: candidate function template not viable: requires at least 2 arguments, but 1 was provided
+            void insert (
+                 ^
+../map_tests/../../../map/map.hpp:187:22: note: candidate function not viable: requires 2 arguments, but 1 was provided
+            iterator insert (iterator position, const value_type& val)
+                     ^
+In file included from ../map_tests/operator >=.cpp:2:
+../map_tests/__service.ipp:46:48: error: no matching member function for call to 'insert'
+                m7.insert(std::make_pair("124", "123")); mp7.insert(ft::make_pair("124", "123"));
+                                                         ~~~~^~~~~~
+../map_tests/../../../map/map.hpp:182:38: note: candidate function not viable: no known conversion from 'pair<const char *, const char *>' to 'const pair<std::__1::basic_string<char>, std::__1::basic_string<char>>' for 1st argument
+            ft::pair<iterator, bool> insert (const value_type& val)
+                                     ^
+../map_tests/../../../map/map.hpp:195:18: note: candidate function template not viable: requires at least 2 arguments, but 1 was provided
+            void insert (
+                 ^
+../map_tests/../../../map/map.hpp:187:22: note: candidate function not viable: requires 2 arguments, but 1 was provided
+            iterator insert (iterator position, const value_type& val)
+                     ^
+In file included from ../map_tests/operator >=.cpp:2:
+../map_tests/__service.ipp:47:47: error: no matching member function for call to 'insert'
+                m8.insert(std::make_pair("12", "123")); mp8.insert(ft::make_pair("12", "123"));
+                                                        ~~~~^~~~~~
+../map_tests/../../../map/map.hpp:182:38: note: candidate function not viable: no known conversion from 'pair<const char *, const char *>' to 'const pair<std::__1::basic_string<char>, std::__1::basic_string<char>>' for 1st argument
+            ft::pair<iterator, bool> insert (const value_type& val)
+                                     ^
+../map_tests/../../../map/map.hpp:195:18: note: candidate function template not viable: requires at least 2 arguments, but 1 was provided
+            void insert (
+                 ^
+../map_tests/../../../map/map.hpp:187:22: note: candidate function not viable: requires 2 arguments, but 1 was provided
+            iterator insert (iterator position, const value_type& val)
+                     ^
+In file included from ../map_tests/operator >=.cpp:2:
+../map_tests/__service.ipp:48:47: error: no matching member function for call to 'insert'
+                m9.insert(std::make_pair("123", "12")); mp9.insert(ft::make_pair("123", "12"));
+                                                        ~~~~^~~~~~
+../map_tests/../../../map/map.hpp:182:38: note: candidate function not viable: no known conversion from 'pair<const char *, const char *>' to 'const pair<std::__1::basic_string<char>, std::__1::basic_string<char>>' for 1st argument
+            ft::pair<iterator, bool> insert (const value_type& val)
+                                     ^
+../map_tests/../../../map/map.hpp:195:18: note: candidate function template not viable: requires at least 2 arguments, but 1 was provided
+            void insert (
+                 ^
+../map_tests/../../../map/map.hpp:187:22: note: candidate function not viable: requires 2 arguments, but 1 was provided
+            iterator insert (iterator position, const value_type& val)
+                     ^
+5 errors generated.
+5 errors generated.
+nt, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >'
+        v.push_back(mp.at(40 * _ratio));
+                    ~~ ^
+../map_tests/at().cpp:38:55: note: in instantiation of function template specialization 'at_test<int, int>' requested here
+    exit(run_map_unit_test<int, int>("at()", at_test, at_test));
+                                                      ^
+../map_tests/at().cpp:28:24: error: no member named 'at' in 'ft::map<int, int, std::__1::less<int>, std::__1::allocator<ft::pair<const int, int> > >'
+        v.push_back(mp.at(40 * _ratio + 1));
+                    ~~ ^
+7 errors generated.
