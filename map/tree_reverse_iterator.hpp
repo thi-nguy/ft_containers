@@ -1,12 +1,12 @@
-#ifndef VECTOR_REVERSE_ITERATOR_HPP
-#define VECTOR_REVERSE_ITERATOR_HPP
+#ifndef TREE_REVERSE_ITERATOR_HPP
+#define TREE_REVERSE_ITERATOR_HPP
 
 #include "../utils/utils.hpp"
 
 namespace ft
 {
 template <class Iter>
-class VectorReverseIterator
+class treeReverseIterator
 {
     public:
 
@@ -19,36 +19,36 @@ class VectorReverseIterator
 
 
             // todo: Construction
-            VectorReverseIterator(void)
+            treeReverseIterator(void)
             :
                 _ptr()
             {}
 
-            explicit VectorReverseIterator(iterator_type it)
+            explicit treeReverseIterator(iterator_type it)
             :
                 _ptr(it)
             {}
 
             template <class Iterator>
-            VectorReverseIterator (const VectorReverseIterator<Iterator>& rev_it)
+            treeReverseIterator (const treeReverseIterator<Iterator>& rev_it)
             :
                 _ptr(rev_it.base())
             {}
 
             // todo: destructor
-            virtual ~VectorReverseIterator(void) {}
+            virtual ~treeReverseIterator(void) {}
 
-            // VectorReverseIterator(pointer ptr): _ptr(ptr) {} // todo: X(ptr) - typecast?
-            // VectorReverseIterator(vectorIterator<value_type> const &src) 
+            // treeReverseIterator(pointer ptr): _ptr(ptr) {} // todo: X(ptr) - typecast?
+            // treeReverseIterator(vectorIterator<value_type> const &src) 
             // { 
             //     _ptr = src.operator->(); 
             // } 
 
-            VectorReverseIterator(const VectorReverseIterator&    other) // todo: X b(a)
+            treeReverseIterator(const treeReverseIterator&    other) // todo: X b(a)
             {
                 *this = other;
             }
-            VectorReverseIterator&     operator=(const VectorReverseIterator& rhs) // todo: b = a
+            treeReverseIterator&     operator=(const treeReverseIterator& rhs) // todo: b = a
             {
                 if (this != &rhs)
                 {
@@ -67,54 +67,53 @@ class VectorReverseIterator
             reference operator *(void) // todo: *a
             {
                 
-                iterator_type tmp = _ptr;
-                return (*(--tmp));
+                return (*_ptr);
             }
             // ! operator +
-            VectorReverseIterator operator+(difference_type n) const
+            treeReverseIterator operator+(difference_type n) const
             {
-                return (VectorReverseIterator(_ptr - n));
+                return (treeReverseIterator(_ptr - n));
             }
 
             // ! operator ++
-            VectorReverseIterator& operator ++(void) // todo: ++a
+            treeReverseIterator& operator ++(void) // todo: ++a
             {
                 --_ptr;
                 return (*this);
             }
 
-            VectorReverseIterator operator ++(int) // todo: a++
+            treeReverseIterator operator ++(int) // todo: a++
             {
-                VectorReverseIterator tmp = *this;
+                treeReverseIterator tmp = *this;
                 ++(*this);
                 return (tmp);
             }
             // ! operator +=
-            VectorReverseIterator& operator+=(difference_type n)
+            treeReverseIterator& operator+=(difference_type n)
             {
                 _ptr -= n;
                 return (*this);
             }
             // ! operator -
-            VectorReverseIterator operator-(difference_type n) const
+            treeReverseIterator operator-(difference_type n) const
             {
-                return (VectorReverseIterator(_ptr + n));
+                return (treeReverseIterator(_ptr + n));
             }
             // ! operator --
-            VectorReverseIterator operator --(void) // todo: --a
+            treeReverseIterator operator --(void) // todo: --a
             {
                 ++_ptr;
                 return (*this);
             }
 
-            VectorReverseIterator operator --(int) // todo: a--
+            treeReverseIterator operator --(int) // todo: a--
             {
-                VectorReverseIterator tmp = *this;
+                treeReverseIterator tmp = *this;
                 --(*this);
                 return (tmp);
             }
             // ! operator -=
-            VectorReverseIterator& operator-=(difference_type n)
+            treeReverseIterator& operator-=(difference_type n)
             {
                 _ptr += n;
                 return (*this);
@@ -138,57 +137,57 @@ class VectorReverseIterator
     private:
         iterator_type _ptr;
 
-}; /* class VectorReverseIterator */
+}; /* class treeReverseIterator */
 
 // ! Relational operators
 template <class Iterator1, class Iterator2>
-bool operator==( const ft::VectorReverseIterator<Iterator1>& lhs, const ft::VectorReverseIterator<Iterator2>& rhs) 
+bool operator==( const ft::treeReverseIterator<Iterator1>& lhs, const ft::treeReverseIterator<Iterator2>& rhs) 
 {
     return (lhs.base() == rhs.base());
 }
 
 template <class Iterator1, class Iterator2>
-bool operator!=( const ft::VectorReverseIterator<Iterator1>& lhs, const ft::VectorReverseIterator<Iterator2>& rhs) 
+bool operator!=( const ft::treeReverseIterator<Iterator1>& lhs, const ft::treeReverseIterator<Iterator2>& rhs) 
 {
     return (lhs.base() != rhs.base());
 }
 
 template <class Iterator1, class Iterator2>
-bool operator>( const ft::VectorReverseIterator<Iterator1>& lhs, const ft::VectorReverseIterator<Iterator2>& rhs) 
+bool operator>( const ft::treeReverseIterator<Iterator1>& lhs, const ft::treeReverseIterator<Iterator2>& rhs) 
 {
     return (lhs.base() < rhs.base());
 }
 
 template <class Iterator1, class Iterator2>
-bool operator>=( const ft::VectorReverseIterator<Iterator1>& lhs, const ft::VectorReverseIterator<Iterator2>& rhs) 
+bool operator>=( const ft::treeReverseIterator<Iterator1>& lhs, const ft::treeReverseIterator<Iterator2>& rhs) 
 {
     return (lhs.base() <= rhs.base());
 }
 
 template <class Iterator1, class Iterator2>
-bool operator<( const ft::VectorReverseIterator<Iterator1>& lhs, const ft::VectorReverseIterator<Iterator2>& rhs) 
+bool operator<( const ft::treeReverseIterator<Iterator1>& lhs, const ft::treeReverseIterator<Iterator2>& rhs) 
 {
     return (lhs.base() > rhs.base());
 }
 
 template <class Iterator1, class Iterator2>
-bool operator<=( const ft::VectorReverseIterator<Iterator1>& lhs, const ft::VectorReverseIterator<Iterator2>& rhs) 
+bool operator<=( const ft::treeReverseIterator<Iterator1>& lhs, const ft::treeReverseIterator<Iterator2>& rhs) 
 {
     return (lhs.base() >= rhs.base());
 }
 
 // ! operator +
 template <class Iterator>
-VectorReverseIterator<Iterator>
-operator + (typename VectorReverseIterator<Iterator>::difference_type n, const VectorReverseIterator<Iterator>& it)
+treeReverseIterator<Iterator>
+operator + (typename treeReverseIterator<Iterator>::difference_type n, const treeReverseIterator<Iterator>& it)
 {
     return (it + n);
 }
 
 // ! operator -
 template <class Iterator>
-typename VectorReverseIterator<Iterator>::difference_type
-operator - (const VectorReverseIterator<Iterator>& lhs, const VectorReverseIterator<Iterator>& rhs)
+typename treeReverseIterator<Iterator>::difference_type
+operator - (const treeReverseIterator<Iterator>& lhs, const treeReverseIterator<Iterator>& rhs)
 {
     return (lhs.base() - rhs.base());
 }

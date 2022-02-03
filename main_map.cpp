@@ -13,6 +13,7 @@
 #include "./map/pair.hpp"
 #include "./map/treeNode.hpp"
 
+
 void        print_test_name(std::string name)
 {
     std::cout << "\n------- TEST ";
@@ -533,6 +534,137 @@ void        test_operator_equal(std::string test)
     std::cout << "Size of second: " << second.size() << '\n';
 }
 
+void        test_lower_bound(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<char,int> mymap;
+    ft::map<char,int>::iterator itlow,itup;
+
+    mymap['a']=20;
+    mymap['b']=40;
+    mymap['c']=60;
+    mymap['d']=80;
+    mymap['e']=100;
+
+    itlow=mymap.lower_bound ('b');  // itlow points to b
+    itup=mymap.upper_bound ('d');   // itup points to e (not d!)
+
+    mymap.erase(itlow,itup);        // erases [itlow,itup)
+
+    // print content:
+    for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+}
+
+void        test_upper_bound(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<char,int> mymap;
+    ft::map<char,int>::iterator itlow,itup;
+
+    mymap['a']=20;
+    mymap['b']=40;
+    mymap['c']=60;
+    mymap['d']=80;
+    mymap['e']=100;
+
+    itlow=mymap.lower_bound ('b');  // itlow points to b
+    itup=mymap.upper_bound ('d');   // itup points to e (not d!)
+
+    mymap.erase(itlow,itup);        // erases [itlow,itup)
+
+    // print content:
+    for (ft::map<char,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+}
+
+void    test_equal_range(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<char,int> mymap;
+
+    mymap['a']=10;
+    mymap['b']=20;
+    mymap['c']=30;
+
+    ft::pair<ft::map<char,int>::iterator,ft::map<char,int>::iterator> ret;
+    ret = mymap.equal_range('b');
+
+    std::cout << "lower bound points to: ";
+    std::cout << ret.first->first << " => " << ret.first->second << '\n';
+
+    std::cout << "upper bound points to: ";
+    std::cout << ret.second->first << " => " << ret.second->second << '\n';
+
+}
+
+void    test_get_allocator(std::string test)
+{
+    print_test_name(test);
+
+    int psize;
+    ft::map<char,int> mymap;
+    ft::pair<const char,int>* p;
+
+    // allocate an array of 5 elements using mymap's allocator:
+    p=mymap.get_allocator().allocate(5);
+
+    // assign some values to array
+    psize = sizeof(ft::map<char,int>::value_type)*5;
+
+    std::cout << "The allocated array has a size of " << psize << " bytes.\n";
+
+    mymap.get_allocator().deallocate(p,5);
+
+}
+
+void    test_relational_operator(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<char,int> foo, foo2, bar;
+    foo['a']=100;
+    foo['b']=200;
+    foo2['a']=100;
+    foo2['b']=200;
+    bar['a']=100;
+    bar['z']=1000;
+
+    // foo ({{a,100},{b,200}}) vs bar ({a,10},{z,1000}}):
+    if (foo==foo2) std::cout << "foo and foo2 are equal\n";
+    if (foo!=bar) std::cout << "foo and bar are not equal\n";
+    if (bar < foo) std::cout << "bar is less than foo\n";
+    if (foo> bar) std::cout << "foo is greater than bar\n";
+    if (bar <= foo) std::cout << "bar is less than or equal to foo\n";
+    if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
+}
+
+void    test_swap_non_member(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<char,int> foo,bar;
+
+    foo['x']=100;
+    foo['y']=200;
+
+    bar['a']=11;
+    bar['b']=22;
+    bar['c']=33;
+
+    swap(foo,bar);
+
+    std::cout << "foo contains:\n";
+    for (ft::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+
+    std::cout << "bar contains:\n";
+    for (ft::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+}
 
 void        test_map(std::string test_type)
 {
@@ -567,9 +699,19 @@ void        test_map(std::string test_type)
     test_value_comp("Value_compare");
 
     test_find("find");
-    test_count("count"); 
+    test_count("count");
+    test_lower_bound("lower bound");
+    test_upper_bound("upper bound");
+    test_equal_range("equal_range");
 
-    // Todo: lower bound...operator, swap of non member
+    test_get_allocator("get_allocator");
+
+    test_swap_non_member("Swap non member");
+    test_relational_operator("Relational operators");
+
+    // Todo: non member: operator overload and swap
+
+
 
 }
 

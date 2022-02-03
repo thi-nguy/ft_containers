@@ -4,6 +4,8 @@ green=`tput setaf 2`
 yellow=`tput setaf 3`
 reset=`tput sgr0`
 
+make fclean
+
 # Change ft::vector to std::vector and create a new main
 sed 's/ft::vector/std::vector/g' main_vector.cpp > main_vector_tmp.cpp
 # Change ft::VectorReverseIterator to std::reverse_iterator and create a new main

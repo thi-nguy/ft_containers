@@ -16,7 +16,9 @@ namespace ft
             typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::iterator_category     iterator_category;
             typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::difference_type       difference_type;
             typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::pointer               pointer;
+            typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::const_pointer               const_pointer;
             typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::reference             reference;
+            typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::const_reference             const_reference;
 
             // Todo: Constructor, Destructor
             treeIterator()
@@ -51,25 +53,35 @@ namespace ft
             }
 
             // Todo: a == b, a != b
-            bool operator==(const treeIterator& rhs) // overload at treeNode
+            bool operator==(const treeIterator& rhs) const// overload at treeNode
             {
-                return (this->_node == rhs._node);
+                return (_node == rhs._node);
             }
 
-            bool operator!=(const treeIterator& rhs)
+            bool operator!=(const treeIterator& rhs) const
             {
-                return (this->_node != rhs._node);
+                return (_node != rhs._node);
             }
 
             // Todo: *a, a->m
-            reference operator*() const
+            reference operator*()
             {
-                return (this->_node->value);
+                return (_node->value);
             }
 
-            pointer     operator->() const
+            const_reference operator*() const
             {
-                return (&this->_node->value);
+                return (_node->value);
+            }
+
+            pointer     operator->()
+            {
+                return (&_node->value);
+            }
+
+            const_pointer     operator->() const
+            {
+                return (&_node->value);
             }
 
             // ++a
