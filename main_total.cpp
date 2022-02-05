@@ -1559,10 +1559,10 @@ void my_map_overloads(void)
     first['d'] = 70;
 
     NS::map<char, int> second;
-    first['e'] = 90;
-    first['f'] = 110;
-    first['g'] = 130;
-    first['h'] = 150;
+    second['e'] = 90;
+    second['f'] = 110;
+    second['g'] = 130;
+    second['h'] = 150;
 
     std::cout << (first == second) << std::endl;
     std::cout << (first != second) << std::endl;

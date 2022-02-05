@@ -6,6 +6,7 @@
 #include <cstddef>      // ptrdiff_t
 #include <functional>   //std::less, std::binary_function
 // #include <iterator>     //std::distance
+#include <exception> //std::exceptioin
 #include "red_black_tree.hpp"
 #include "pair.hpp"
 #include "tree_iterator.hpp"
@@ -103,18 +104,29 @@ namespace ft
 			{
 				if (this != &x)
                 {
+                    this->clear();
+                    this->insert(x.begin(), x.end());
                     _alloc = x._alloc;
                     _compare = x._compare;
-                    _rbt = x._rbt;
-                    // ! do something
-                    // this->clear();
-                    // this->insert(x.begin(), x.end());
                 }
 				return (*this);
 			}
 
-            ~map(void)
+            virtual ~map(void)
             {
+                // this->clear();
+                
+                size_type n = this->size();
+                if (n >= 0)
+                {
+                    // std::cout << "size is: " << n << "\n";
+                    while (n)
+                    {
+                        this->erase(this->begin());
+                        n--;
+                    }
+
+                }
                 // std::cout << "Map Deconstructor called\n";
 
             }
@@ -143,13 +155,15 @@ namespace ft
             iterator    end()
             {
                 iterator    last_it = iterator(_rbt.getLastNode());
-                return (++last_it);
+                last_it++;
+                return (last_it);
             }
 
             const_iterator  end() const
             {
                 const_iterator    last_it = const_iterator(_rbt.getLastNode());
-                return (++last_it);
+                last_it++;
+                return (last_it);
             }
 
             reverse_iterator rbegin()
@@ -289,10 +303,15 @@ namespace ft
                     this->erase(first++);
             }
 
-            // ! clear - bug
+            // ! clear
             void        clear()
             {
-                this->erase(this->begin(), this->end());
+                size_type n = this->size();
+                while (n)
+                {
+                    this->erase(this->begin());
+                    n--;
+                }
             }
 
             // * count Ok
@@ -307,7 +326,18 @@ namespace ft
             // ! swap
             void    swap(map& x)
             {
+                allocator_type temp_alloc_type = this->_alloc;
+                key_compare temp_key_compare = this->_compare;
+                // ft::RedBlackTree<value_type> temp_rbt = this->_rbt;
+
+                this->_alloc = x._alloc;
+                this->_compare = x._compare;
+                // this->_rbt = x._rbt;
+
+                x._alloc = temp_alloc_type;
+                x._compare = temp_key_compare;
                 _rbt.swap(x._rbt);
+                // x._rbt = temp_rbt;
             }
 
             iterator    lower_bound(const key_type& k)

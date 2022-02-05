@@ -196,7 +196,7 @@ namespace ft
                 _alloc_node.destroy(node);
                 _alloc_node.deallocate(node, 1);
             }
-
+        
             // ! Xoa node b, truoc khi xoa thi point node b vao node c
             void    changePointer(Node* node_to_delete, Node* replacement)
             {
@@ -208,11 +208,6 @@ namespace ft
                     parent->right = replacement;
                 replacement->parent = parent;
                 node_to_delete->parent = NULL;
-                
-
-
-
-
             }
 
             void    deleteNode(Node *v) // ! bug here, in map.erase, cannot delete last element

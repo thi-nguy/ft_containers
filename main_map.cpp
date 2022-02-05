@@ -180,6 +180,7 @@ void        test_insert(std::string test_type)
     mymap.insert ( ft::pair<char,int>('g',200) );
     mymap.insert (it, ft::pair<char,int>('e',300));  // max efficiency inserting
     mymap.insert (it, ft::pair<char,int>('i',400));  // no max efficiency inserting
+    // mymap.insert(ft::make_pair("g", 123));
     
     // showing contents:
     std::cout << "mymap contains:\n";
@@ -361,7 +362,7 @@ void        test_clear(std::string test_type)
     std::cout << "mymap sizes: " << mymap.size() << "\n";
     // mymap.get_tree().print2D();
 
-    std::cout << "\n-------------- afterb clear --------------\n";
+    std::cout << "\n-------------- after clear --------------\n";
     mymap.clear();
     std::cout << "mymap sizes: " << mymap.size() << "\n";
     // mymap.get_tree().print2D();
@@ -655,7 +656,7 @@ void    test_swap_non_member(std::string test)
     bar['b']=22;
     bar['c']=33;
 
-    swap(foo,bar);
+    ft::swap(foo,bar);
 
     std::cout << "foo contains:\n";
     for (ft::map<char,int>::iterator it=foo.begin(); it!=foo.end(); ++it)
@@ -666,9 +667,105 @@ void    test_swap_non_member(std::string test)
         std::cout << it->first << " => " << it->second << '\n';
 }
 
-void        test_map(std::string test_type)
+void    test_swap_moving_pointer(std::string test)
 {
-    print_test_name(test_type);
+    print_test_name(test);
+
+    ft::map<char,int> foo,bar;
+
+    foo['x']=100;
+    foo['y']=200;
+
+    bar['a']=11;
+    bar['b']=22;
+    bar['c']=33;
+
+    std::cout << "Begin of foo: " << foo.begin()->first << "\n";
+    std::cout << "Begin of bar: " << bar.begin()->first << "\n";
+
+    std::cout << "After swaping:\n";
+
+    ft::swap(foo, bar);
+    std::cout << "Begin of foo: " << foo.begin()->first << "\n";
+    std::cout << "Begin of bar: " << bar.begin()->first << "\n";
+
+    ft::pair<int, int> pair1, pair2;
+    pair1 = ft::make_pair(1, 2);
+    pair2 = ft::make_pair(3, 4);
+    ft::map<int, int> map1;
+    map1.insert(pair1);
+    ft::map<int, int>::iterator it1 = map1.begin();
+    ft::map<int, int> map2;
+    map2.insert(pair2);
+    ft::map<int, int>::iterator it2 = map2.begin();
+
+    ft::swap(map1, map2);
+    std::cout << (it1 == map1.begin()) << std::endl;
+	std::cout << (it2 == map2.begin()) << std::endl;
+
+
+}
+
+void    test_time_insert(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<int, char> mymap;
+
+    clock_t start, end;
+    start = clock();
+    for (int i = 0; i <= 1000000; i++)
+    {
+        mymap.insert ( ft::pair<int, char>(i, 'a'));
+    }
+    end = clock();
+    std::cout << "Process took: " << (double(end - start) / CLOCKS_PER_SEC) << " seconds" << "\n";
+
+}
+
+
+void    test_time_erase(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<int, char> mymap;
+
+    clock_t start, end;
+    start = clock();
+    for (int i = 0; i <= 1000000; i++)
+    {
+        mymap.insert ( ft::pair<int, char>(i, 'a'));
+    }
+    for (int i = 0; i <= 1000000; i++)
+    {
+        mymap.erase(mymap.begin());
+    }
+    end = clock();
+    std::cout << "Process took: " << (double(end - start) / CLOCKS_PER_SEC) << " seconds" << "\n";
+
+}
+
+void    test_time_clear(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<int, char> mymap;
+
+    clock_t start, end;
+    start = clock();
+    for (int i = 0; i <= 1000000; i++)
+    {
+        mymap.insert ( ft::pair<int, char>(i, 'a'));
+    }
+    mymap.clear();
+    end = clock();
+    std::cout << "Process took: " << (double(end - start) / CLOCKS_PER_SEC) << " seconds" << "\n";
+
+}
+
+int main(void)
+{
+    print_test_name("TEST MAP");
     // test_tree_Node("Tree Node");
     // test_red_black_tree("Red Black Tree");
     // test_G("map iterator");
@@ -709,12 +806,12 @@ void        test_map(std::string test_type)
     test_swap_non_member("Swap non member");
     test_relational_operator("Relational operators");
 
-    // Todo: non member: operator overload and swap
-
-}
-
-int main(void)
-{
-    test_map("MAP");
+    test_swap_moving_pointer("Swap moving pointer, not data");
+    test_time_insert("Time function the map - Insert");
+    test_time_erase("Time function the map - Erase");
+    test_time_clear("Time function the map - Clear");
+    // while (1);
     return (0);
+
+
 }

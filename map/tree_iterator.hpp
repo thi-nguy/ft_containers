@@ -131,6 +131,8 @@ namespace ft
 
             void nextNode (void)
             {
+                if (_node == NULL)
+                    return ;
                 if (_node->right != NULL)
                 {
                     _node = _node->right;

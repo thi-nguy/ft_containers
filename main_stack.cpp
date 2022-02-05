@@ -143,5 +143,6 @@ void        test_stack(std::string test_type)
 int main(void)
 {
     test_stack("STACK");
+    // while(1);
     return (0);
 }

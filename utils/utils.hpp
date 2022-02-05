@@ -1,16 +1,25 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
+#include "random_access_iterator_tag.hpp"
+#include "bidirectional_iterator_tag.hpp"
+#include <exception>
+#include <string>
+
 namespace ft
 {
     template<bool B, class T = void>
-    struct enable_if 
-    {};
+    struct enable_if {};
     
     template<class T>
-    struct enable_if<true, T>
-    { typedef T type; };
+    struct enable_if<true, T> { typedef T type; };
 
+	template <class T, class U>
+	struct is_same { static const bool value = false; };
+
+	template <class T>
+	struct is_same<T, T> { static const bool value = true; };
+    
     template <bool is_integral, typename T>
     struct is_integral_res {
         typedef T type;
@@ -71,6 +80,41 @@ namespace ft
     template< class T >
     struct is_integral: public is_integral_type<T>
     {};
+
+
+
+    template <bool is_valid, typename T>
+    struct valid_iterator_tag_res { typedef T type; const static bool value = is_valid; };
+    
+
+    template <typename T>
+    struct is_input_iterator_tagged : public valid_iterator_tag_res<false, T> { };
+
+    /* Check is_input_iterator_tagged from ft::random_access_iterator_tag */
+    template <>
+    struct is_input_iterator_tagged<ft::random_access_iterator_tag>
+        : public valid_iterator_tag_res<true, ft::random_access_iterator_tag> { };
+
+    /* Check is_input_iterator_tagged from ft::bidirectional_iterator_tag */
+    template <>
+    struct is_input_iterator_tagged<ft::bidirectional_iterator_tag>
+        : public valid_iterator_tag_res<true, ft::bidirectional_iterator_tag> { };
+
+
+    template <typename T>
+    class InvalidIteratorException : public std::exception
+    {
+        private:
+            std::string _msg;
+        
+        public :
+            InvalidIteratorException () throw() { _msg = "Is invalid iterator tag : " + std::string(typeid(T).name()); }
+            InvalidIteratorException (const InvalidIteratorException&) throw() {}
+            InvalidIteratorException& operator= (const InvalidIteratorException&) throw() {}
+            virtual ~InvalidIteratorException() throw() {}
+            virtual const char* what() const throw() { return (_msg.c_str()); }
+    };
+
 
 } /* namespace ft */
 

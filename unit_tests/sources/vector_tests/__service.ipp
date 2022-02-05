@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __SERVICE_IPP
+#define __SERVICE_IPP
 #include "../system/lib.hpp"
 #include VECTOR
 
@@ -50,3 +51,5 @@ int run_vector_allocator_unit_test(std::string test_name, void (func)(_vector<T,
         return (1);
     }
 }
+
+#endif

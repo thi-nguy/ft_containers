@@ -597,7 +597,7 @@ void        test_reverse_iterator_operator_increase(std::string test_type)
 
 void        test_reverse_iterator_relation(std::string test_type)
 {
-     print_test_name(test_type);
+    print_test_name(test_type);
     ft::vector<int> myvector;
     for (int i=9; i>=0; i--)
         myvector.push_back(i);
@@ -776,5 +776,6 @@ void        test_vector(std::string test_type)
 int main(void)
 {
     test_vector("VECTOR");
+    // while (1);
     return (0);
 }

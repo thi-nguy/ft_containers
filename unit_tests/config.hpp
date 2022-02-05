@@ -5,7 +5,6 @@
 #define STACK			"../../../stack/stack.hpp"
 #define MAP			  	"../../../map/map.hpp"
 // #define SET			  	"../../../Set.hpp"
-// #define UTILITIES		"../../../Utility.hpp"
 
 /* comment this to turn OFF flags (-WWW, -std=98) */
 #define FLAGS   -Wall -Wextra -Werror -std=c++98

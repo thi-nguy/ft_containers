@@ -9,7 +9,9 @@ sed 's/ft::map/std::map/g' main_map.cpp > main_map_tmp2.cpp
 # Change ft::pair to std::pair and create a new main
 sed 's/ft::pair/std::pair/g' main_map_tmp2.cpp > main_map_tmp3.cpp
 # Change ft::make_pair to std::make_pair and create a new main
-sed 's/ft::make_pair/std::make_pair/g' main_map_tmp3.cpp > main_map_tmp.cpp
+sed 's/ft::make_pair/std::make_pair/g' main_map_tmp3.cpp > main_map_tmp4.cpp
+# Change ft::swap to std::swap and create a new main
+sed 's/ft::swap/std::swap/g' main_map_tmp4.cpp > main_map_tmp.cpp
 
 # Change ft::mapReverseIterator to std::reverse_iterator and create a new main
 sed 's/ft::mapReverseIterator/std::reverse_iterator/g' main_map_tmp.cpp > main_map_real.cpp
@@ -39,4 +41,5 @@ rm my_out
 rm main_map_tmp.cpp
 rm main_map_tmp2.cpp
 rm main_map_tmp3.cpp
+rm main_map_tmp4.cpp
 rm main_map_real.cpp
