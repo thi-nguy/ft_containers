@@ -9,8 +9,8 @@ sed 's/main_tmp.cpp/main_stack.cpp/g' pre_makefile > Makefile
 
 # Change ft::stack to std::stack and create a new main
 sed 's/ft::stack/std::stack/g' main_stack.cpp > main_stack_tmp.cpp
-# Change ft::stackReverseIterator to std::reverse_iterator and create a new main
-sed 's/ft::stackReverseIterator/std::reverse_iterator/g' main_stack_tmp.cpp > main_stack_real.cpp
+# Change ft::vector to std::vector and create a new main
+sed 's/ft::vector/std::vector/g' main_stack_tmp.cpp > main_stack_real.cpp
 
 # Compile with new main and put result into out1
 c++ -Wall -Wextra -Werror -std=c++98 -fsanitize=address main_stack_real.cpp
@@ -36,4 +36,5 @@ rm a.out
 rm real_out
 rm my_out
 rm main_stack_tmp.cpp
+rm main_stack_tmp2.cpp
 rm main_stack_real.cpp
