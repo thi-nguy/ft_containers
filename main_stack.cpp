@@ -140,9 +140,21 @@ void        test_stack(std::string test_type)
     test_operator("operator");
 }
 
+void    test_speed_stack(std::string test)
+{
+    print_test_name(test);
+    clock_t start, end;
+    start = clock();
+    test_stack("Stack");
+    end = clock();
+    std::cout << "Process took: " << (double(end - start)) << " miliseconds" << "\n";
+
+}
+
 int main(void)
 {
-    test_stack("STACK");
+    // test_stack("STACK");
+    test_speed_stack("SPEED STACK");
     // while(1);
     return (0);
 }

@@ -760,6 +760,15 @@ void    test_time_clear(std::string test)
 
 }
 
+void    test_speed(std::string test)
+{
+    print_test_name(test);
+    test_time_insert("Time function the map - Insert");
+    test_time_erase("Time function the map - Erase");
+    test_time_clear("Time function the map - Clear");
+
+}
+
 int main(void)
 {
     print_test_name("TEST MAP");
@@ -804,9 +813,8 @@ int main(void)
     test_relational_operator("Relational operators");
 
     test_swap_moving_pointer("Swap moving pointer, not data");
-    // test_time_insert("Time function the map - Insert");
-    // test_time_erase("Time function the map - Erase");
-    // test_time_clear("Time function the map - Clear");
+
+    test_speed("Map Performance");
     // while (1);
     return (0);
 

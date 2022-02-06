@@ -9,6 +9,8 @@
 #include "./vector/vector.hpp"
 #include "./utils/utils.hpp"
 
+#define TEST_CASE 1000000
+
 void        print_test_name(std::string name)
 {
     std::cout << "\n------- TEST ";
@@ -1147,21 +1149,158 @@ void        test_vector(std::string test_type)
     test_swap_moving_pointer("Swap moving pointert, not data");
 }
 
-void    test_speed_vector(std::string test)
+void    test_speed_push_back(std::string test)
 {
     print_test_name(test);
     clock_t start, end;
+
+    ft::vector<int> myvector;
+
     start = clock();
-    test_vector("Vector");
+    for (int i=0; i< TEST_CASE; i++) 
+        myvector.push_back(i);
     end = clock();
     std::cout << "Process took: " << (double(end - start)) << " miliseconds" << "\n";
+}
 
+void    test_speed_insert(std::string test)
+{
+    print_test_name(test);
+    clock_t start, end;
+
+    ft::vector<int> myvector, othervector;
+
+    start = clock();
+    for (int i=0; i< TEST_CASE; i++) 
+        myvector.push_back(i);
+    ft::vector<int>::iterator it;
+    it = myvector.end();
+    // insert single element
+    it = myvector.insert ( it-- , 200 );
+
+    // insert range
+    othervector.insert(othervector.begin(), myvector.begin(), myvector.end());
+
+    // insert fill
+    othervector.insert(othervector.end(), TEST_CASE, 42);
+    
+    end = clock();
+    std::cout << "Process took: " << (double(end - start)) << " miliseconds" << "\n";
+}
+
+void    test_speed_erase(std::string test)
+{
+    print_test_name(test);
+    clock_t start, end;
+
+    ft::vector<int> myvector;
+
+    start = clock();
+    for (int i=0; i< TEST_CASE; i++) 
+        myvector.push_back(i);
+    ft::vector<int>::iterator it;
+    it = myvector.begin();
+    myvector.erase(it + TEST_CASE - 1);
+    
+    end = clock();
+    std::cout << "Process took: " << (double(end - start)) << " miliseconds" << "\n";
+}
+
+void    test_speed_clear(std::string test)
+{
+    print_test_name(test);
+    clock_t start, end;
+
+    ft::vector<int> myvector;
+
+    start = clock();
+    for (int i=0; i< TEST_CASE; i++) 
+        myvector.push_back(i);
+    myvector.clear();
+    
+    end = clock();
+    std::cout << "Process took: " << (double(end - start)) << " miliseconds" << "\n";
+}
+
+void    test_speed_swap(std::string test)
+{
+    print_test_name(test);
+    clock_t start, end;
+
+    ft::vector<int> myvector, other;
+
+    start = clock();
+    for (int i=0; i< TEST_CASE; i++) 
+        myvector.push_back(i);
+    for (int i=TEST_CASE; i > 0; i--) 
+        other.push_back(i);
+    ft::swap(myvector, other);
+    end = clock();
+    std::cout << "Process took: " << (double(end - start)) << " miliseconds" << "\n";
+}
+
+void    test_speed_resize(std::string test)
+{
+    print_test_name(test);
+    clock_t start, end;
+
+    ft::vector<int> myvector;
+
+    start = clock();
+    for (int i=0; i< TEST_CASE; i++) 
+        myvector.push_back(i);
+    myvector.resize(TEST_CASE * 2);
+    end = clock();
+    std::cout << "Process took: " << (double(end - start)) << " miliseconds" << "\n";
+}
+void    test_speed_assign(std::string test)
+{
+    print_test_name(test);
+    clock_t start, end;
+
+    ft::vector<int> first, second;
+
+    start = clock();
+    first.assign (TEST_CASE, 42);
+    second.assign (first.begin() + 1, first.end() - 1);
+    end = clock();
+    std::cout << "Process took: " << (double(end - start)) << " miliseconds" << "\n";
+}
+
+void    test_speed_constructor(std::string test)
+{
+    print_test_name(test);
+    clock_t start, end;
+
+    ft::vector<int> first;
+
+    start = clock();
+    for (int i=0; i< TEST_CASE; i++) 
+        first.push_back(i);
+    ft::vector<int> second(TEST_CASE, 42);
+    ft::vector<int> third(first.begin(), first.end());
+    ft::vector<int> fourth (third);
+    end = clock();
+    std::cout << "Process took: " << (double(end - start)) << " miliseconds" << "\n";
+}
+
+void    test_speed_vector(std::string test)
+{
+    print_test_name(test);
+    test_speed_constructor("Time constructor");
+    test_speed_push_back("Time Push_Back");
+    test_speed_insert("Time insert");
+    test_speed_erase("Time erase");
+    test_speed_clear("Time clear");
+    test_speed_swap("Time swap");
+    test_speed_resize("Time resize");
+    test_speed_assign("Time assigne");
 }
 
 int main(void)
 {
     test_vector("VECTOR");
-    // test_speed_vector("SPEED VECTOR");
+    // test_speed_vector("PERFORMANCE VECTOR");
     // while (1);
     return (0);
 }
