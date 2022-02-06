@@ -10,11 +10,12 @@
 #include "red_black_tree.hpp"
 #include "pair.hpp"
 #include "tree_iterator.hpp"
-#include "tree_reverse_iterator.hpp"
+// #include "tree_reverse_iterator.hpp"
 #include "../utils/utils.hpp"
 #include "../utils/distance_iterator.hpp"
 #include "../utils/equal.hpp"
 #include "../utils/lexicographical_compare.hpp"
+#include "../utils/reverse_iterator.hpp"
 
 namespace ft
 {
@@ -40,8 +41,8 @@ namespace ft
             typedef typename allocator_type::const_pointer                          const_pointer;
             typedef typename ft::RedBlackTree<value_type>::iterator                 iterator;
             typedef typename ft::RedBlackTree<value_type>::const_iterator           const_iterator;
-            typedef typename ft::treeReverseIterator<iterator>         reverse_iterator;
-            typedef typename ft::treeReverseIterator<const_iterator>   const_reverse_iterator;
+            typedef typename ft::reverse_iterator<iterator>                         reverse_iterator;
+            typedef typename ft::reverse_iterator<const_iterator>                   const_reverse_iterator;
             typedef typename std::ptrdiff_t                                         difference_type;
             typedef typename allocator_type::size_type                              size_type;
             

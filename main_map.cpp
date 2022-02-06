@@ -9,9 +9,6 @@
 #include <string>
 
 #include "./map/map.hpp"
-#include "./map/red_black_tree.hpp"
-#include "./map/pair.hpp"
-#include "./map/treeNode.hpp"
 
 
 void        print_test_name(std::string name)
@@ -778,8 +775,8 @@ int main(void)
     
     test_begin("begin");
     test_end("end");
-    test_rbegin("rbegin");
-    test_rend("rend");
+    // test_rbegin("rbegin");
+    // test_rend("rend");
 
     test_empty("empty");
     test_size("size");
@@ -792,10 +789,10 @@ int main(void)
     test_swap("swap");
     test_clear("clear");
 
-    test_key_comp("key compare");
-    test_value_comp("Value_compare");
+    // test_key_comp("key compare");
+    // test_value_comp("Value_compare");
 
-    test_find("find");
+    // test_find("find");
     test_count("count");
     test_lower_bound("lower bound");
     test_upper_bound("upper bound");
@@ -807,9 +804,9 @@ int main(void)
     test_relational_operator("Relational operators");
 
     test_swap_moving_pointer("Swap moving pointer, not data");
-    test_time_insert("Time function the map - Insert");
-    test_time_erase("Time function the map - Erase");
-    test_time_clear("Time function the map - Clear");
+    // test_time_insert("Time function the map - Insert");
+    // test_time_erase("Time function the map - Erase");
+    // test_time_clear("Time function the map - Clear");
     // while (1);
     return (0);
 

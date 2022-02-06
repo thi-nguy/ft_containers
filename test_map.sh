@@ -4,6 +4,9 @@ green=`tput setaf 2`
 yellow=`tput setaf 3`
 reset=`tput sgr0`
 
+# Change main_tmp.cpp to main_map.cpp in Makefile
+sed 's/main_tmp.cpp/main_map.cpp/g' pre_makefile > Makefile
+
 # Change ft::map to std::map and create a new main
 sed 's/ft::map/std::map/g' main_map.cpp > main_map_tmp2.cpp
 # Change ft::pair to std::pair and create a new main
@@ -13,8 +16,8 @@ sed 's/ft::make_pair/std::make_pair/g' main_map_tmp3.cpp > main_map_tmp4.cpp
 # Change ft::swap to std::swap and create a new main
 sed 's/ft::swap/std::swap/g' main_map_tmp4.cpp > main_map_tmp.cpp
 
-# Change ft::mapReverseIterator to std::reverse_iterator and create a new main
-sed 's/ft::mapReverseIterator/std::reverse_iterator/g' main_map_tmp.cpp > main_map_real.cpp
+# Change ft::reverse_iterator to std::reverse_iterator and create a new main
+sed 's/ft::reverse_iterator/std::reverse_iterator/g' main_map_tmp.cpp > main_map_real.cpp
 
 # Compile with new main and put result into out1
 c++ -Wall -Wextra -Werror -std=c++98 main_map_real.cpp
@@ -34,8 +37,9 @@ else
     echo "${yellow}$result${reset}"
 fi
 
-rm a.out
 make fclean
+rm Makefile
+rm a.out
 rm real_out
 rm my_out
 rm main_map_tmp.cpp

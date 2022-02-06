@@ -15,13 +15,13 @@ namespace ft
     class iterator
     {
         public:
-            typedef Category    iterator_category;
-            typedef T           value_type;
-            typedef Distance    difference_type;
-            typedef Pointer     pointer;
-            typedef const Pointer     const_pointer;
-            typedef Reference   reference;
-            typedef const Reference   const_reference;
+            typedef Category            iterator_category;
+            typedef T                   value_type;
+            typedef Distance            difference_type;
+            typedef Pointer             pointer;
+            typedef const Pointer       const_pointer;
+            typedef Reference           reference;
+            typedef const Reference     const_reference;
     };
 
 } /* namespace ft */

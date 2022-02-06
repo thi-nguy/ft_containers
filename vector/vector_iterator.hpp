@@ -62,8 +62,6 @@ class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
             return (_ptr);
         }
 
-        //todo: *a = t
-
         vectorIterator& operator ++(void) // todo: ++a
         {
             _ptr++;
@@ -75,9 +73,6 @@ class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
             _ptr++;
             return (vectorIterator(_ptr - 1));
         }
-
-        //todo: *a++
-
 
         vectorIterator operator --(void) // todo: --a
         {
@@ -91,15 +86,10 @@ class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
             return (vectorIterator(_ptr + 1));
         }
 
-        //todo: *a--
-
         vectorIterator operator +(difference_type n) const // todo: a+n
         {
             return (vectorIterator(_ptr + n));
         }
-
-        //todo: n+a
-        
 
         vectorIterator operator -(difference_type n) const // todo: a - n
         {
@@ -138,7 +128,7 @@ class vectorIterator: public ft::iterator<ft::random_access_iterator_tag, T>
             return (*(_ptr + n));
         }
 
-        pointer     getPointer(void) const // ! protected here?
+        pointer     getPointer(void) const
         {
             return (_ptr);
         }

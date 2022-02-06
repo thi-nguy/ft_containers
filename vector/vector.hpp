@@ -4,8 +4,9 @@
 #include "../utils/utils.hpp"
 #include "../utils/equal.hpp"
 #include "../utils/lexicographical_compare.hpp"
+#include "../utils/reverse_iterator.hpp"
 #include "vector_iterator.hpp"
-#include "vector_reverse_iterator.hpp"
+// #include "vector_reverse_iterator.hpp"
 #include <memory>       // Allocator
 #include <cstddef>      // nullptr_t(), ptrdiff_t
 #include <stdexcept>    // std::out_of_range
@@ -27,8 +28,8 @@ namespace ft
             
             typedef typename ft::vectorIterator<T>                      iterator;
             typedef typename ft::vectorIterator<T>                const_iterator;
-            typedef typename ft::VectorReverseIterator<iterator>        reverse_iterator;
-            typedef typename ft::VectorReverseIterator<const_iterator>  const_reverse_iterator;
+            typedef typename ft::reverse_iterator<iterator>        reverse_iterator;
+            typedef typename ft::reverse_iterator<const_iterator>  const_reverse_iterator;
 
             typedef typename std::ptrdiff_t                     difference_type;
             typedef typename allocator_type::size_type          size_type;
@@ -503,9 +504,25 @@ namespace ft
                 return (_alloc);
             }
 
+            template < typename Tn, class AllocN >
+                friend bool operator== (const ft::vector<Tn, AllocN>& lhs, const ft::vector<Tn, AllocN>& rhs);
+
+            template < typename Tn, class AllocN >
+                friend bool operator!= (const ft::vector<Tn, AllocN>& lhs, const ft::vector<Tn, AllocN>& rhs);
+
+            template < typename Tn, class AllocN >
+                friend bool operator< (const ft::vector<Tn, AllocN>& lhs, const ft::vector<Tn, AllocN>& rhs);
+
+            template < typename Tn, class AllocN >
+                friend bool operator<= (const ft::vector<Tn, AllocN>& lhs, const ft::vector<Tn, AllocN>& rhs);
+
+            template < typename Tn, class AllocN >
+                friend bool operator> (const ft::vector<Tn, AllocN>& lhs, const ft::vector<Tn, AllocN>& rhs);
+
+            template < typename Tn, class AllocN >
+                friend bool operator>= (const ft::vector<Tn, AllocN>& lhs, const ft::vector<Tn, AllocN>& rhs);
+
         /* public */
-
-
         private:
             allocator_type      _alloc;
             pointer             _start;
@@ -562,8 +579,6 @@ namespace ft
         x = y;
         y = tmp;
     }
-
-
 
 } /* namespace ft */
 

@@ -4,15 +4,19 @@ green=`tput setaf 2`
 yellow=`tput setaf 3`
 reset=`tput sgr0`
 
-make fclean
+# Change main_tmp.cpp to main_vector.cpp in Makefile
+sed 's/main_tmp.cpp/main_vector.cpp/g' pre_makefile > Makefile
 
 # Change ft::vector to std::vector and create a new main
 sed 's/ft::vector/std::vector/g' main_vector.cpp > main_vector_tmp.cpp
 # Change ft::VectorReverseIterator to std::reverse_iterator and create a new main
-sed 's/ft::VectorReverseIterator/std::reverse_iterator/g' main_vector_tmp.cpp > main_vector_real.cpp
+sed 's/ft::reverse_iterator/std::reverse_iterator/g' main_vector_tmp.cpp > main_vector_tmp2.cpp
+# Change ft::swap to std::swap and create a new main
+sed 's/ft::swap/std::swap/g' main_vector_tmp2.cpp > main_vector_real.cpp
+
 
 # Compile with new main and put result into out1
-c++ -Wall -Wextra -Werror -std=c++98 -fsanitize=address main_vector_real.cpp
+clang++ -Wall -Wextra -Werror -std=c++98 main_vector_real.cpp
 ./a.out > real_out
 
 # Compile our main and put result into out2
@@ -29,9 +33,11 @@ else
     echo "${yellow}$result${reset}"
 fi
 
-rm a.out
 make fclean
+rm Makefile
+rm a.out
 rm real_out
 rm my_out
 rm main_vector_tmp.cpp
+rm main_vector_tmp2.cpp
 rm main_vector_real.cpp

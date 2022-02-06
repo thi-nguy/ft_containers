@@ -4,6 +4,9 @@ green=`tput setaf 2`
 yellow=`tput setaf 3`
 reset=`tput sgr0`
 
+# Change main_tmp.cpp to main_stack.cpp in Makefile
+sed 's/main_tmp.cpp/main_stack.cpp/g' pre_makefile > Makefile
+
 # Change ft::stack to std::stack and create a new main
 sed 's/ft::stack/std::stack/g' main_stack.cpp > main_stack_tmp.cpp
 # Change ft::stackReverseIterator to std::reverse_iterator and create a new main
@@ -27,8 +30,9 @@ else
     echo "${yellow}$result${reset}"
 fi
 
-rm a.out
 make fclean
+rm Makefile
+rm a.out
 rm real_out
 rm my_out
 rm main_stack_tmp.cpp

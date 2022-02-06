@@ -66,6 +66,13 @@
         "__tree": "cpp",
         "queue": "cpp",
         "stack": "cpp",
-        "__memory": "cpp"
+        "__memory": "cpp",
+        "csignal": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "list": "cpp",
+        "set": "cpp",
+        "filesystem": "cpp",
+        "memory_resource": "cpp"
     }
 }
