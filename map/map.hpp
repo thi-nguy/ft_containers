@@ -10,7 +10,7 @@
 #include "red_black_tree.hpp"
 #include "pair.hpp"
 #include "tree_iterator.hpp"
-// #include "tree_reverse_iterator.hpp"
+#include "tree_reverse_iterator.hpp"
 #include "../utils/utils.hpp"
 #include "../utils/distance_iterator.hpp"
 #include "../utils/equal.hpp"
@@ -41,8 +41,8 @@ namespace ft
             typedef typename allocator_type::const_pointer                          const_pointer;
             typedef typename ft::RedBlackTree<value_type>::iterator                 iterator;
             typedef typename ft::RedBlackTree<value_type>::const_iterator           const_iterator;
-            typedef typename ft::reverse_iterator<iterator>                         reverse_iterator;
-            typedef typename ft::reverse_iterator<const_iterator>                   const_reverse_iterator;
+            typedef typename ft::tree_reverse_iterator<iterator>                         reverse_iterator;
+            typedef typename ft::tree_reverse_iterator<const_iterator>                   const_reverse_iterator;
             typedef typename std::ptrdiff_t                                         difference_type;
             typedef typename allocator_type::size_type                              size_type;
             
@@ -171,18 +171,21 @@ namespace ft
 			{ 
                 iterator it_last = this->_rbt.getLastNode();
                 return (reverse_iterator(it_last)); 
+                // return (reverse_iterator(this->end()));
             }
 
             const_reverse_iterator rbegin() const
 			{ 
                 const_iterator it_last = this->_rbt.getLastNode();
-                return (const_reverse_iterator(it_last)); 
+                return (const_reverse_iterator(it_last));
+                // return (reverse_iterator(this->end())); 
             }
 
             reverse_iterator rend()
 			{ 
                 iterator rit_begin = this->_rbt.getFirstNode();
                 return (reverse_iterator(--rit_begin)); 
+                // return (const_reverse_iterator(this->begin())); 
             }
 
             const_reverse_iterator rend() const
@@ -190,6 +193,7 @@ namespace ft
                 
                 const_iterator rit_begin = this->_rbt.getFirstNode();
                 return (const_reverse_iterator(--rit_begin)); 
+                // return (const_reverse_iterator(this->begin())); 
             }
             
             // ! insert
@@ -290,18 +294,18 @@ namespace ft
 
             void        erase(iterator first, iterator last)
             {
-                // iterator it, next;
-                // it = first;
-                // next = it;
-                // next++;
-                // while (it != last)
-                // {
-                //     this->erase(it);
-                //     it = next;
-                //     next++;
-                // }
-                while (first != last)
-                    this->erase(first++);
+                iterator it, next;
+                it = first;
+                next = it;
+                next++;
+                while (it != last)
+                {
+                    this->erase(it);
+                    it = next;
+                    next++;
+                }
+                // while (first != last)
+                //     this->erase(++first);
             }
 
             // ! clear

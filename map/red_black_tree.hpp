@@ -234,7 +234,10 @@ namespace ft
                     if (v->parent == NULL && v->left == NULL && v->right == NULL)
                     {
                         // v is root, making root null
-                        _root = NULL;
+                        _root = u;
+                        _alloc_node.destroy(v);
+                        _alloc_node.deallocate(v, 1);
+                        return;
                     } 
                     else
                     {

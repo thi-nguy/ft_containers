@@ -10,6 +10,8 @@
 
 #include "./map/map.hpp"
 
+#define TEST_CASE 1000000
+
 
 void        print_test_name(std::string name)
 {
@@ -84,6 +86,7 @@ void        test_red_black_tree(std::string test_type)
 void        test_pair(std::string test_type)
 {
     print_test_name(test_type);
+    print_test_name("Pair Constructor");
     ft::pair<std::string, double> product1;
     ft::pair<std::string, double> product2 ("tomatoes", 2.30);
     ft::pair<std::string, double> product3 (product2);
@@ -100,6 +103,17 @@ void        test_pair(std::string test_type)
     std::cout << "The price of " << product2.first << " is $" << product2.second << '\n';
     std::cout << "The price of " << product3.first << " is $" << product3.second << '\n';
 
+    print_test_name("Pair operator = ");
+    ft::pair <std::string,int> planet, homeplanet;
+
+    planet = ft::make_pair("Earth",6371);
+
+    homeplanet = planet;
+
+    std::cout << "Home planet: " << homeplanet.first << '\n';
+    std::cout << "Planet size: " << homeplanet.second << '\n';
+
+    print_test_name("Pair Relational Operators");
     ft::pair<int,char> foo (10,'z');
     ft::pair<int,char> foo2 (10,'z');
     ft::pair<int,char> bar (90,'a');
@@ -118,6 +132,19 @@ void        test_empty(std::string test_type)
 
     ft::map<char, int> map_a;
     std::cout << map_a.empty() << "\n";
+
+    std::cout << "-----Test on cplusplus-----\n";
+    ft::map<char,int> mymap;
+
+    mymap['a']=10;
+    mymap['b']=20;
+    mymap['c']=30;
+
+    while (!mymap.empty())
+    {
+        std::cout << mymap.begin()->first << " => " << mymap.begin()->second << '\n';
+        mymap.erase(mymap.begin());
+    }
 }
 
 bool fncomp (char lhs, char rhs) {return lhs<rhs;}
@@ -147,22 +174,22 @@ void        test_constructor(std::string test_type)
     bool(*fn_pt)(char,char) = fncomp;
     ft::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
 
+
 }
 
 void        test_insert(std::string test_type)
 {
     print_test_name(test_type);
 
+    std::cout << "-----Test on cplusplus----\n";
     ft::map<char,int> mymap;
 
     // first insert function version (single parameter):
     mymap.insert ( ft::pair<char,int>('a',100) );
-    mymap.insert ( ft::pair<char,int>('b',200) );
-    mymap.insert ( ft::pair<char,int>('c',100) );
-    mymap.insert ( ft::pair<char,int>('d',200) );
-    
+    mymap.insert ( ft::pair<char,int>('z',200) );
+
     ft::pair<ft::map<char,int>::iterator,bool> ret;
-    ret = mymap.insert ( ft::pair<char,int>('z',500) ); // ! Tao them mot tree nua la sao?
+    ret = mymap.insert ( ft::pair<char,int>('z',500) );
     if (ret.second==false) {
         std::cout << "element 'z' already existed";
         std::cout << " with a value of " << ret.first->second << '\n';
@@ -170,37 +197,26 @@ void        test_insert(std::string test_type)
 
     // second insert function version (with hint position):
     ft::map<char,int>::iterator it = mymap.begin();
-    mymap.insert ( ft::pair<char,int>('h',100) );
-    mymap.insert ( ft::pair<char,int>('x',200) );
-    mymap.insert ( ft::pair<char,int>('z',200) );
-    mymap.insert ( ft::pair<char,int>('f',100) );
-    mymap.insert ( ft::pair<char,int>('g',200) );
-    mymap.insert (it, ft::pair<char,int>('e',300));  // max efficiency inserting
-    mymap.insert (it, ft::pair<char,int>('i',400));  // no max efficiency inserting
-    // mymap.insert(ft::make_pair("g", 123));
-    
-    // showing contents:
-    std::cout << "mymap contains:\n";
-    it = mymap.begin();
-    ft::map<char, int>::iterator it_end = mymap.end();
-    while(it != it_end)
-    {
-        std::cout << it->first << " => " << it->second << '\n';
-        ++it;
-    }
+    mymap.insert (it, ft::pair<char,int>('b',300));  // max efficiency inserting
+    mymap.insert (it, ft::pair<char,int>('c',400));  // no max efficiency inserting
 
     // third insert function version (range insertion):
     ft::map<char,int> anothermap;
-    anothermap.insert(mymap.begin(), mymap.find('c'));
+    anothermap.insert(mymap.begin(),mymap.find('c'));
 
     // showing contents:
+    std::cout << "mymap contains:\n";
+    for (it=mymap.begin(); it!=mymap.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+
     std::cout << "anothermap contains:\n";
     for (it=anothermap.begin(); it!=anothermap.end(); ++it)
         std::cout << it->first << " => " << it->second << '\n';
 
-    // Print tree of map
-    // anothermap.get_tree().print2D();
+    std::cout << "---My test----\n";
 
+    ft::map<int, int> sixth;
+    sixth.insert(ft::make_pair(10, 24));
 }
 
 void        test_size(std::string test_type)
@@ -209,13 +225,21 @@ void        test_size(std::string test_type)
 
     ft::map<char, int> my_map;
     std::cout << "mymap.size() is " << my_map.size() << '\n';
+
+    std::cout << "---Tests on Cplusplus----\n";
+    ft::map<char,int> mymap;
+    mymap['a']=101;
+    mymap['b']=202;
+    mymap['c']=302;
+
+    std::cout << "mymap.size() is " << mymap.size() << '\n';
 }
 
 void        test_max_size(std::string test_type)
 {
     print_test_name(test_type);
 
-      int i;
+    int i;
     ft::map<int,int> mymap;
 
     if (mymap.max_size()>1000)
@@ -337,6 +361,31 @@ void        test_erase(std::string test_type)
     for (it=mymap.begin(); it!=mymap.end(); ++it)
         std::cout << it->first << " => " << it->second << '\n';
 
+    std::cout << " ----- Test on cpp-----\n";
+    ft::map<char,int> a_map;
+    ft::map<char,int>::iterator my_it;
+
+    // insert some values:
+    a_map['a']=10;
+    a_map['b']=20;
+    a_map['c']=30;
+    a_map['d']=40;
+    a_map['e']=50;
+    a_map['f']=60;
+
+    my_it=a_map.find('b');
+    a_map.erase (my_it);                   // erasing by my_iterator
+
+    a_map.erase ('c');                  // erasing by key
+
+    my_it=a_map.find ('e');
+    a_map.erase ( my_it, a_map.end() );    // erasing by range
+
+    // show content:
+    for (my_it=a_map.begin(); my_it!=a_map.end(); ++my_it)
+        std::cout << my_it->first << " => " << my_it->second << '\n';
+
+
 }
 
 
@@ -363,6 +412,26 @@ void        test_clear(std::string test_type)
     mymap.clear();
     std::cout << "mymap sizes: " << mymap.size() << "\n";
     // mymap.get_tree().print2D();
+
+
+
+    ft::map<char,int> my_map;
+
+    my_map['x']=100;
+    my_map['y']=200;
+    my_map['z']=300;
+
+    std::cout << "my_map contains:\n";
+    for (ft::map<char,int>::iterator it=my_map.begin(); it!=my_map.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
+
+    my_map.clear();
+    my_map['a']=1101;
+    my_map['b']=2202;
+
+    std::cout << "my_map contains:\n";
+    for (ft::map<char,int>::iterator it=my_map.begin(); it!=my_map.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
 }
 
 void        test_find(std::string test_type)
@@ -507,7 +576,7 @@ void        test_make_pair(std::string test)
     ft::pair <int,int> bar;
 
     foo = ft::make_pair (10,20);
-    bar = ft::make_pair (11 , 22); // ok: implicit conversion from pair<double,char>
+    bar = ft::make_pair (10.5,'A'); // ok: implicit conversion from pair<double,char>
 
     std::cout << "foo: " << foo.first << ", " << foo.second << '\n';
     std::cout << "bar: " << bar.first << ", " << bar.second << '\n';
@@ -711,7 +780,7 @@ void    test_time_insert(std::string test)
 
     clock_t start, end;
     start = clock();
-    for (int i = 0; i <= 1000000; i++)
+    for (int i = 0; i <= TEST_CASE; i++)
     {
         mymap.insert ( ft::pair<int, char>(i, 'a'));
     }
@@ -729,11 +798,11 @@ void    test_time_erase(std::string test)
 
     clock_t start, end;
     start = clock();
-    for (int i = 0; i <= 1000000; i++)
+    for (int i = 0; i <= TEST_CASE; i++)
     {
         mymap.insert ( ft::pair<int, char>(i, 'a'));
     }
-    for (int i = 0; i <= 1000000; i++)
+    for (int i = 0; i <= TEST_CASE; i++)
     {
         mymap.erase(mymap.begin());
     }
@@ -750,7 +819,7 @@ void    test_time_clear(std::string test)
 
     clock_t start, end;
     start = clock();
-    for (int i = 0; i <= 1000000; i++)
+    for (int i = 0; i <= TEST_CASE; i++)
     {
         mymap.insert ( ft::pair<int, char>(i, 'a'));
     }
@@ -759,6 +828,71 @@ void    test_time_clear(std::string test)
     std::cout << "Process took: " << (double(end - start) / CLOCKS_PER_SEC) << " seconds" << "\n";
 
 }
+void    test_time_constructor(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<int, char> mymap;
+    clock_t start, end;
+
+    start = clock();
+    for(int i = 0; i <= TEST_CASE; i++)
+    {
+        mymap.insert ( ft::make_pair(i, 'a'));
+    }
+    ft::map<int, char> second (mymap.begin(),mymap.end());
+    ft::map<int,char> third (second);
+    end = clock();
+    std::cout << "Process took: " << (double(end - start) / CLOCKS_PER_SEC) << " seconds" << "\n";
+}
+
+void    test_time_find(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<int, char> mymap;
+    clock_t start, end;
+
+    start = clock();
+    for(int i = 0; i <= TEST_CASE; i++)
+    {
+        mymap.insert ( ft::make_pair(i, 'a'));
+    }
+
+    ft::map<int, char>::iterator it = mymap.find(0);
+    ft::map<int, char>::iterator it2 = mymap.find(TEST_CASE);
+    ft::map<int, char>::iterator it3 = mymap.find(TEST_CASE/2);
+    if (it != mymap.end())
+        mymap.erase (it);
+    if (it2 != mymap.end())
+        mymap.erase (it2);
+    if (it3 != mymap.end())
+        mymap.erase (it3);
+    end = clock();
+    std::cout << "Process took: " << (double(end - start) / CLOCKS_PER_SEC) << " seconds" << "\n";
+}
+
+void    test_time_swap(std::string test)
+{
+    print_test_name(test);
+
+    ft::map<int, char> mymap, othermap;
+    clock_t start, end;
+
+    start = clock();
+    for(int i = 0; i <= TEST_CASE; i++)
+    {
+        mymap.insert ( ft::make_pair(i, 'a'));
+    }
+    for(int i = TEST_CASE; i >= 0; i--)
+    {
+        othermap.insert ( ft::make_pair(i, 'a'));
+    }
+    ft::swap(mymap, othermap);
+    mymap.swap(othermap);
+    end = clock();
+    std::cout << "Process took: " << (double(end - start) / CLOCKS_PER_SEC) << " seconds" << "\n";
+}
 
 void    test_speed(std::string test)
 {
@@ -766,26 +900,23 @@ void    test_speed(std::string test)
     test_time_insert("Time function the map - Insert");
     test_time_erase("Time function the map - Erase");
     test_time_clear("Time function the map - Clear");
+    test_time_constructor("Time function the map - constructor");
+    test_time_find("Time function the map - find");
+    test_time_swap("Time function the map - swap");
 
 }
 
-int main(void)
+void    test_map(std::string test)
 {
-    print_test_name("TEST MAP");
-    // test_tree_Node("Tree Node");
-    // test_red_black_tree("Red Black Tree");
-    // test_G("map iterator");
-
-    test_pair("pair");
-    test_make_pair("make pair");
+    print_test_name(test);
 
     test_constructor("constructor");
     test_operator_equal(" operator = ");
     
     test_begin("begin");
     test_end("end");
-    // test_rbegin("rbegin");
-    // test_rend("rend");
+    test_rbegin("rbegin");
+    test_rend("rend");
 
     test_empty("empty");
     test_size("size");
@@ -798,10 +929,10 @@ int main(void)
     test_swap("swap");
     test_clear("clear");
 
-    // test_key_comp("key compare");
-    // test_value_comp("Value_compare");
+    test_key_comp("key compare");
+    test_value_comp("Value_compare");
 
-    // test_find("find");
+    test_find("find");
     test_count("count");
     test_lower_bound("lower bound");
     test_upper_bound("upper bound");
@@ -811,12 +942,22 @@ int main(void)
 
     test_swap_non_member("Swap non member");
     test_relational_operator("Relational operators");
+}
 
+int main(void)
+{
+    print_test_name("TEST MAP");
+
+    test_map("MAP");
+
+    // Todo: Advanced tests
+    test_pair("pair");
+    test_make_pair("make pair");
     test_swap_moving_pointer("Swap moving pointer, not data");
 
-    test_speed("Map Performance");
+    // Todo: Performance tests
+    // test_speed("Map Performance");
+
     // while (1);
     return (0);
-
-
 }

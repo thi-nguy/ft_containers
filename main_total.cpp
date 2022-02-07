@@ -1648,66 +1648,66 @@ void my_stack_correc(void)
 //https://www.geeksforgeeks.org/pair-in-cpp-stl/#:~:text=Another%20way%20to%20initialize%20a,%3D%20%7B1%2C%20'a'%7D%3B
 void my_map_correc(void)
 {
-    std::cout << "Testing pair : " << std::endl;
-    NS::pair<int, char> mypair;
-    mypair.first = 1;
-    mypair.second = 'a';
-    std::cout << "Pair first is : " << mypair.first << ", pair second is : " << mypair.second << std::endl;
-    std::cout << "Testing pair OK !" << std::endl;
-    std::cout << "-------" << std::endl;
-    std::cout << "Testing make pair :" << std::endl;
+    // std::cout << "Testing pair : " << std::endl;
+    // NS::pair<int, char> mypair;
+    // mypair.first = 1;
+    // mypair.second = 'a';
+    // std::cout << "Pair first is : " << mypair.first << ", pair second is : " << mypair.second << std::endl;
+    // std::cout << "Testing pair OK !" << std::endl;
+    // std::cout << "-------" << std::endl;
+    // std::cout << "Testing make pair :" << std::endl;
 
-    NS::pair<int, int> foo;
-    NS::pair<int, int> bar;
+    // NS::pair<int, int> foo;
+    // NS::pair<int, int> bar;
 
-    foo = NS::make_pair(1, 2);
-    bar = NS::make_pair(3, 4);
+    // foo = NS::make_pair(1, 2);
+    // bar = NS::make_pair(3, 4);
 
-    std::cout << "foo: " << foo.first << ", " << foo.second << std::endl;
-    std::cout << "bar: " << bar.first << ", " << bar.second << std::endl;
-    std::cout << "-------" << std::endl;
-    std::cout << "Checking if keys are unique : " << std::endl;
-    NS::map<int, int> map;
-    map.insert(NS::pair<int, int>(1, 10));
-    std::cout << "Adding 1, 10 successfully." << std::endl;
-    map.insert(NS::pair<int, int>(-2, -20));
-    std::cout << "Adding 2, -20 successfully." << std::endl;
-    map.insert(NS::pair<int, int>(0, 0));
-    std::cout << "Adding 0, 0 successfully." << std::endl;
-    map.insert(NS::pair<int, int>(1, -20));
-    std::cout << "Tried to add 1, -20" << std::endl;
-    std::cout << "-------" << std::endl;
-    std::cout << "Let's check if it was added : " << std::endl;
-    NS::map<int, int>::iterator it = map.begin();
-    NS::map<int, int>::iterator ite = map.end();
-    int check = (*it).first;
-    while (it != ite)
-    {
-        if (check > (*it).first)
-        {
-            std::cout << "Error, the map is not ordered !" << std::endl; //will never happen
-        }
-        check = (*it).first;
-        std::cout << "First is : " << (*it).first << ", second is : " << (*it).second << std::endl;
-        it++;
-    }
-    std::cout << "-------" << std::endl;
-    std::cout << "Wow, the map is ordered as well !" << std::endl;
-    std::cout << "-------" << std::endl;
-    std::cout << std::endl;
-    std::cout << "For further iterator test use the tester." << std::endl;
-    std::cout << "Testing if swap is moving pointers and not data :" << std::endl;
-    std::cout << std::endl;
+    // std::cout << "foo: " << foo.first << ", " << foo.second << std::endl;
+    // std::cout << "bar: " << bar.first << ", " << bar.second << std::endl;
+    // std::cout << "-------" << std::endl;
+    // std::cout << "Checking if keys are unique : " << std::endl;
+    // NS::map<int, int> map;
+    // map.insert(NS::pair<int, int>(1, 10));
+    // std::cout << "Adding 1, 10 successfully." << std::endl;
+    // map.insert(NS::pair<int, int>(-2, -20));
+    // std::cout << "Adding 2, -20 successfully." << std::endl;
+    // map.insert(NS::pair<int, int>(0, 0));
+    // std::cout << "Adding 0, 0 successfully." << std::endl;
+    // map.insert(NS::pair<int, int>(1, -20));
+    // std::cout << "Tried to add 1, -20" << std::endl;
+    // std::cout << "-------" << std::endl;
+    // std::cout << "Let's check if it was added : " << std::endl;
+    // NS::map<int, int>::iterator it = map.begin();
+    // NS::map<int, int>::iterator ite = map.end();
+    // int check = (*it).first;
+    // while (it != ite)
+    // {
+    //     if (check > (*it).first)
+    //     {
+    //         std::cout << "Error, the map is not ordered !" << std::endl; //will never happen
+    //     }
+    //     check = (*it).first;
+    //     std::cout << "First is : " << (*it).first << ", second is : " << (*it).second << std::endl;
+    //     it++;
+    // }
+    // std::cout << "-------" << std::endl;
+    // std::cout << "Wow, the map is ordered as well !" << std::endl;
+    // std::cout << "-------" << std::endl;
+    // std::cout << std::endl;
+    // std::cout << "For further iterator test use the tester." << std::endl;
+    // std::cout << "Testing if swap is moving pointers and not data :" << std::endl;
+    // std::cout << std::endl;
     //A montrer en correction car ca va faire forcement une diff
-    NS::map<int, int> map1;
-    map1.insert(bar);
-    NS::map<int, int>::iterator it1 = map1.begin();
-    NS::map<int, int> map2;
-    map2.insert(foo);
-    NS::map<int, int>::iterator it2 = map2.begin();
-    NS::swap(map1, map2);
-    std::cout << (it1 == map2.begin()) << std::endl;
-	std::cout << (it2 == map1.begin()) << std::endl;
+    // NS::map<int, int> map1;
+    // map1.insert(bar);
+    // NS::map<int, int>::iterator it1 = map1.begin();
+    // NS::map<int, int> map2;
+    // map2.insert(foo);
+    // NS::map<int, int>::iterator it2 = map2.begin();
+    // NS::swap(map1, map2);
+    // std::cout << (it1 == map2.begin()) << std::endl;
+	// std::cout << (it2 == map1.begin()) << std::endl;
     return;
 }
 

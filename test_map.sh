@@ -38,7 +38,7 @@ else
 fi
 
 make fclean
-rm Makefile
+# rm Makefile
 rm a.out
 rm real_out
 rm my_out

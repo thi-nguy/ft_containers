@@ -61,6 +61,7 @@ class reverse_iterator
                 
                 iterator_type tmp = _ptr;
                 return (*(--tmp));
+                // return (*_ptr);
             }
             // ! operator +
             reverse_iterator operator+(difference_type n) const
